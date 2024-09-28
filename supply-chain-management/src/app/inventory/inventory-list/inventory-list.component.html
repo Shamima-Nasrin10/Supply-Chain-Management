@@ -1,0 +1,11 @@
+<div *ngIf="inventories.length > 0; else noData">
+    <ul>
+      <li *ngFor="let inventory of inventories">
+        <button class="btn btn-link" (click)="viewInventory(inventory.id)">{{ inventory.name }}</button>
+      </li>
+    </ul>
+  </div>
+  <ng-template #noData>
+    <p>No inventory data available.</p>
+  </ng-template>
+  
