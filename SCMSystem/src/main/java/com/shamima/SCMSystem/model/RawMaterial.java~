@@ -26,8 +26,8 @@ public class RawMaterial {
     @Column(name = "material_name")
     private String materialName;
 
-//    @Column(name = "material_type")
-//    private String materialType;
+    @Column(name = "material_type")
+    private String materialType;
 
 
     @JsonIgnore

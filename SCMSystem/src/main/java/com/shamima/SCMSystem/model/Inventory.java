@@ -1,5 +1,6 @@
 package com.shamima.SCMSystem.model;
 
+import com.shamima.SCMSystem.model.account.Procurement;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
