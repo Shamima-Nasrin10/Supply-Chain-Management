@@ -1,0 +1,5 @@
+.sidebar {
+  position: fixed;  /* If fixed, make sure it only takes up the left side of the page */
+  width: 250px;     /* Adjust width */
+  height: 100%;
+}

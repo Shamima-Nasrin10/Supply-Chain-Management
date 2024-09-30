@@ -1,0 +1,88 @@
+/* General styling for the buttons */
+.btn-success {
+    background-color: #28a745;
+    border-color: #28a745;
+    color: white;
+  }
+  
+  .btn-success:hover {
+    background-color: #218838;
+    border-color: #1e7e34;
+  }
+  
+  .btn-link {
+    color: #007bff;
+  }
+  
+  .btn-link:hover {
+    color: #0056b3;
+    text-decoration: none;
+  }
+  
+  /* Card styling */
+  .card {
+    border: 1px solid #e3e6f0;
+    border-radius: 0.35rem;
+    box-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.15);
+  }
+  
+  .card-body {
+    padding: 1.25rem;
+  }
+  
+  /* Table styling */
+  .table-responsive {
+    margin-top: 1rem;
+  }
+  
+  .table {
+    width: 100%;
+    margin-bottom: 1rem;
+    color: #858796;
+  }
+  
+  .table th,
+  .table td {
+    padding: 0.75rem;
+    vertical-align: top;
+    border-top: 1px solid #e3e6f0;
+  }
+  
+  .table thead th {
+    vertical-align: bottom;
+    border-bottom: 2px solid #e3e6f0;
+  }
+  
+  .table tbody + tbody {
+    border-top: 2px solid #e3e6f0;
+  }
+  
+  .table-striped tbody tr:nth-of-type(odd) {
+    background-color: rgba(0, 0, 0, 0.05);
+  }
+  
+  .table-hover tbody tr:hover {
+    color: #212529;
+    background-color: rgba(0, 0, 0, 0.075);
+  }
+  
+  /* Image styling */
+  img {
+    border-radius: 0.25rem;
+  }
+  
+  /* Action buttons */
+  .form-button-action {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .form-button-action .btn {
+    margin-right: 0.5rem;
+  }
+  
+  .form-button-action .btn:last-child {
+    margin-right: 0;
+  }
+  

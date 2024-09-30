@@ -1,0 +1,32 @@
+<div class="container mt-5">
+    <form (ngSubmit)="onSubmit()">
+        <div class="form-group">
+            <label for="companyName">Company Name</label>
+            <input type="text" class="form-control" id="companyName" [(ngModel)]="supplier.companyName" name="companyName" required />
+        </div>
+        <div class="form-group">
+            <label for="contactPerson">Contact Person</label>
+            <input type="text" class="form-control" id="contactPerson" [(ngModel)]="supplier.contactPerson" name="contactPerson" required />
+        </div>
+        <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" class="form-control" id="email" [(ngModel)]="supplier.email" name="email" required />
+        </div>
+        <div class="form-group">
+            <label for="cellNo">Cell No</label>
+            <input type="text" class="form-control" id="cellNo" [(ngModel)]="supplier.cellNo" name="cellNo" required />
+        </div>
+        <div class="form-group">
+            <label for="address">Address</label>
+            <textarea class="form-control" id="address" [(ngModel)]="supplier.address" name="address" rows="3" required></textarea>
+        </div>
+        <div class="card-action">
+            <button class="btn btn-success me-2">
+                <span *ngIf="supplierId; else save">
+                    Update
+                </span>
+                <ng-template #save>Save</ng-template>
+            </button>
+        </div>
+    </form>
+</div>

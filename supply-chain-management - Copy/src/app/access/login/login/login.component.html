@@ -1,0 +1,20 @@
+<div class="container">
+  <h2> Login</h2>
+  <form [formGroup]="loginForm" >
+    <div class="mb-3">
+      <label for="email" class="form-label"><i class="fas fa-envelope"></i></label>
+      <input type="email" id="email" formControlName="email" class="form-control">
+    </div>
+    <div class="mb-3">
+      <label for="password" class="form-label"><i class="fas fa-lock"></i></label>
+      <input type="password" id="password" formControlName="password" class="form-control">
+    </div>
+    <a class="btn btn-primary" (click)="onSubmit()">
+      <i class="fa fa-sign-in"></i> Log in
+    </a>
+
+
+
+  </form>
+  <!-- <a href="/reg"><i class="fa fa-sign-in"></i> Register</a> -->
+</div>

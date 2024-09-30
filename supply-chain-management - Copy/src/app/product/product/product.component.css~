@@ -1,0 +1,102 @@
+.container {
+  margin-top: 20px;
+}
+
+h2, h3 {
+  font-weight: 500;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+label {
+  font-weight: 500;
+  color: #555;
+}
+
+input, select {
+  padding: 8px;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+input:focus, select:focus {
+  border-color: #999;
+  outline: none;
+}
+
+button {
+  padding: 8px 12px;
+  font-size: 0.9rem;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+button.btn-success {
+  background-color: #28a745;
+  border: none;
+  color: white;
+}
+
+button.btn-secondary {
+  background-color: #6c757d;
+  border: none;
+  color: white;
+}
+
+button.btn-warning {
+  background-color: #ffc107;
+  border: none;
+  color: white;
+}
+
+button.btn-danger {
+  background-color: #dc3545;
+  border: none;
+  color: white;
+}
+
+button.btn-sm {
+  font-size: 0.8rem;
+  padding: 6px 10px;
+}
+
+button:focus {
+  outline: none;
+}
+
+.card {
+  border: 1px solid #e0e0e0;
+  border-radius: 4px;
+  transition: box-shadow 0.2s;
+}
+
+.card-body {
+  padding: 15px;
+}
+
+.card-title {
+  font-size: 1.2rem;
+  font-weight: 500;
+  color: #333;
+}
+
+.card-text {
+  font-size: 0.95rem;
+  color: #555;
+}
+
+.card:hover {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.col-md-4 {
+  padding-left: 15px;
+  padding-right: 15px;
+}

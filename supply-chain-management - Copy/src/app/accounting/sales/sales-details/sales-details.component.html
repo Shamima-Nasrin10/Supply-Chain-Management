@@ -1,0 +1,66 @@
+<div class="container">
+  <div class="card mt-4">
+    <div class="card-header">
+      <h4>Sales Details</h4>
+    </div>
+    <div class="card-body">
+      <table class="table table-bordered">
+        <thead>
+        <tr>
+          <th>#</th>
+          <th>Sales ID</th>
+          <th>Product Name</th>
+          <th>Quantity</th>
+          <th>Unit Price</th>
+          <th>Total Price</th>
+          <th>Discount</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let salesDetail of salesDetails; let i = index">
+          <td>{{ i + 1 }}</td>
+          <td>{{ salesDetail.sales.id }}</td>
+          <td>{{ salesDetail.product.name }}</td>
+          <td>{{ salesDetail.quantity }}</td>
+          <td>{{ salesDetail.unitPrice }}</td>
+          <td>{{ salesDetail.totalPrice }}</td>
+          <td>{{ salesDetail.discount }}</td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="card mt-4">
+    <div class="card-header">
+      <h4>Grouped Sales Details</h4>
+    </div>
+    <div class="card-body">
+      <div *ngFor="let salesDetailGroup of groupedSalesDetails | keyvalue; let i = index">
+        <h5>Sales ID: {{ i + 1 }}</h5>
+        <table class="table table-bordered">
+          <thead>
+          <tr>
+            <th>#</th>
+            <th>Product Name</th>
+            <th>Quantity</th>
+            <th>Unit Price</th>
+            <th>Total Price</th>
+            <th>Discount</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let salesDetail of salesDetailGroup.value; let j = index">
+            <td>{{ j + 1 }}</td>
+            <td>{{ salesDetail.product.name }}</td>
+            <td>{{ salesDetail.quantity }}</td>
+            <td>{{ salesDetail.unitPrice }}</td>
+            <td>{{ salesDetail.totalPrice }}</td>
+            <td>{{ salesDetail.discount }}</td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,26 @@
+<div class="container">
+  <!-- Button to open the modal for creating a new retailer -->
+  <button class="btn btn-primary" (click)="openDialog()">Create Retailer</button>
+
+  <!-- Retailer List Section -->
+  <div class="retailer-list">
+    <h3>Retailer List</h3>
+    <div class="row">
+      <div class="col-sm-4" *ngFor="let retailer of retailers">
+        <div class="card mt-3">
+          <div class="card-body">
+            <h5 class="card-title">{{ retailer.firstName }} {{ retailer.lastName }}</h5>
+            <p class="card-text">
+              <strong>Email:</strong> {{ retailer.email }} <br>
+              <strong>Phone:</strong> {{ retailer.phone }} <br>
+              <strong>Address:</strong> {{ retailer.addressLine }} <br>
+              <strong>Postal Code:</strong> {{ retailer.postalCode }}
+            </p>
+            <button class="btn btn-primary" (click)="openDialog(retailer)">Edit</button>
+            <button class="btn btn-danger" (click)="deleteRetailer(retailer.id)">Delete</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

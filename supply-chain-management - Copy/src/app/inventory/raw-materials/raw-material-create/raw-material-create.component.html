@@ -1,0 +1,40 @@
+<div class="container mt-5">
+  <form (ngSubmit)="onSubmit()">
+    <input type="hidden" class="form-control" [(ngModel)]="rawMaterial.id" name="id">
+    <div class="form-group">
+      <label for="name">Name</label>
+      <input type="text" class="form-control" id="name" [(ngModel)]="rawMaterial.name" name="name">
+    </div>
+    <div class="form-group">
+      <label for="price">Price</label>
+      <input type="number" class="form-control" id="price" [(ngModel)]="rawMaterial.price" name="price">
+    </div>
+    <div class="form-group">
+      <label for="quantity">Quantity</label>
+      <input type="number" class="form-control" id="quantity" [(ngModel)]="rawMaterial.quantity" name="quantity">
+    </div>
+    <div class="form-group">
+      <label for="unit">Unit</label>
+      <select class="form-control" id="unit" [(ngModel)]="rawMaterial.unit" name="unit">
+        <option *ngFor="let unit of units" [value]="unit">{{ unit }}</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label for="image">Image</label>
+      <input type="file" class="form-control" (change)="onImagePicked($event)" id="image" name="image" accept=".png, .jpg, .jpeg">
+    </div>
+    <div class="form-group">
+      <label for="category">Category</label>
+      <select class="form-control" id="category" [(ngModel)]="rawMaterial.category.id" name="category">
+        <option *ngFor="let category of categories" [value]="category.id">{{ category.name }}</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label for="supplier">Supplier</label>
+      <select class="form-control" id="supplier" [(ngModel)]="rawMaterial.supplier.id" name="supplier">
+        <option *ngFor="let supplier of suppliers" [value]="supplier.id">{{ supplier.companyName }}</option>
+      </select>
+    </div>
+    <button type="submit" class="btn btn-primary">Save</button>
+  </form>
+</div>

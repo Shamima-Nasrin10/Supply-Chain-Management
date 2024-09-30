@@ -1,0 +1,22 @@
+<!-- src/app/components/user-profile/user-profile.component.html -->
+
+<div class="container">
+  <h2>User Profile</h2>
+  <div *ngIf="user; else noUser">
+    <p><strong>Name:</strong> {{ user.name }}</p>
+    <p><strong>Email:</strong> {{ user.email }}</p>
+    <p><strong>Role:</strong> {{ user.role }}</p>
+   
+  
+  </div>
+
+  <div class="logout">
+    <a class="btn btn-danger logout p-2 login-btn m-2" href="/logout">
+      Logout
+    </a>
+  </div>
+  
+  <ng-template #noUser>
+    <p>{{ errorMessage }}</p>
+  </ng-template>
+</div>

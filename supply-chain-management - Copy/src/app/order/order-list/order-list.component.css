@@ -1,0 +1,21 @@
+/* order-list.component.css */
+.order-title{
+  color: crimson;
+  background-color: rgb(183, 250, 244);
+  text-align: center;
+  margin: 5px;
+}
+.card {
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(29, 33, 31, 0.1);
+}
+
+.card-title {
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: indianred;
+}
+
+.card-footer {
+  background-color: #a4f5d6; /* Light grey background for the footer */
+}

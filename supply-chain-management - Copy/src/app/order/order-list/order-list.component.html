@@ -1,0 +1,79 @@
+
+
+<!--&lt;!&ndash; order-list.component.html &ndash;&gt;-->
+<!--<div class="container">-->
+<!--  <h2 class="order-title">List of orders</h2>-->
+<!--  <div class="row">-->
+<!--      &lt;!&ndash; Loop through orders and create a card for each one &ndash;&gt;-->
+<!--      <div class="col-md-4 mb-3" *ngFor="let order of orders">-->
+<!--          <div class="card h-100">-->
+<!--              <div class="card-body">-->
+<!--                  <h5 class="card-title">Order ID: {{ order.id }}</h5>-->
+<!--                  <p class="card-text"><strong>Customer:</strong> {{ order.userName }}</p>-->
+<!--                  <p class="card-text"><strong>Product:</strong> {{ order.product.name }}</p>-->
+<!--                  <p class="card-text"><strong>Quantity:</strong> {{ order.quantity }}</p>-->
+<!--                  <p class="card-text"><strong>Total Price:</strong> {{ order.totalPrice | currency }}</p>-->
+<!--                  <p class="card-text"><strong>Status:</strong> {{ order.status }}</p>-->
+<!--                  <p class="card-text"><strong>Manufacturing Stage:</strong> -->
+<!--                      <span *ngIf="isAdmin">-->
+<!--                          <select [(ngModel)]="order.manufacturingStage" (change)="updateManufacturingStage(order)">-->
+<!--                              <option *ngFor="let stage of manufacturingStages" [value]="stage">{{ stage }}</option>-->
+<!--                          </select>-->
+<!--                      </span>-->
+<!--                      <span *ngIf="!isAdmin">{{ order.manufacturingStage }}</span>-->
+<!--                  </p>-->
+<!--                  <p class="card-text"><strong>Required Delivery Date:</strong> {{ order.requiredDeliveryDate | date }}</p>-->
+<!--              </div>-->
+<!--              <div class="card-footer">-->
+<!--                  <button *ngIf="isAdmin && order.status === status.PENDING" class="btn btn-success btn-sm m-2" (click)="approveOrder(order)">Approve</button>-->
+<!--                  <button *ngIf="isAdmin && order.status === status.PENDING" class="btn btn-danger btn-sm m-2" (click)="rejectOrder(order)">Reject</button>-->
+<!--                  -->
+<!--              </div>-->
+<!--          </div>-->
+<!--      </div>-->
+<!--  </div>-->
+<!--</div>-->
+
+
+
+<!--&lt;!&ndash; <div class="container">-->
+<!--    <h2>Order List</h2>-->
+<!--    <table class="table table-bordered">-->
+<!--      <thead>-->
+<!--        <tr>-->
+<!--          <th>ID</th>-->
+<!--          <th>Customer</th>-->
+<!--          <th>Product</th>-->
+<!--          <th>Quantity</th>-->
+<!--          <th>Total Price</th>-->
+<!--          <th>Status</th>-->
+<!--          <th>Manufacturing Stage</th>-->
+<!--          <th>Required Delivery Date</th>-->
+<!--          <th>Actions</th>-->
+<!--        </tr>-->
+<!--      </thead>-->
+<!--      <tbody>-->
+<!--        <tr *ngFor="let order of orders">-->
+<!--          <td>{{ order.id }}</td>-->
+<!--          <td>{{ order.userName }}</td>-->
+<!--          <td>{{ order.product.name }}</td>-->
+<!--          <td>{{ order.quantity }}</td>-->
+<!--          <td>{{ order.totalPrice | currency}}</td>-->
+<!--          <td>{{ order.status }}</td>-->
+<!--          <td>-->
+<!--            <select *ngIf="isAdmin" [(ngModel)]="order.manufacturingStage" (change)="updateManufacturingStage(order)">-->
+<!--              <option *ngFor="let stage of manufacturingStages" [value]="stage">{{ stage }}</option>-->
+<!--            </select>-->
+<!--            <span *ngIf="!isAdmin">{{ order.manufacturingStage }}</span>-->
+<!--          </td>-->
+<!--          <td>{{ order.requiredDeliveryDate | date }}</td>-->
+<!--          <td>-->
+<!--            <button *ngIf="isAdmin && order.status === status.PENDING" class="btn btn-success" (click)="approveOrder(order)">Approve</button>-->
+<!--            <button *ngIf="isAdmin && order.status === status.PENDING" class="btn btn-danger" (click)="rejectOrder(order)">Reject</button>-->
+<!--             Other actions can be added here &ndash;&gt;-->
+<!--          &lt;!&ndash; </td>-->
+<!--        </tr>-->
+<!--      </tbody>-->
+<!--    </table>-->
+<!--  </div> &ndash;&gt;-->
+<!--   -->

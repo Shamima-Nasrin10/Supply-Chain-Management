@@ -1,0 +1,88 @@
+<div class="container">
+  <h2>Inventory Management</h2>
+
+  <!-- Inventory Form -->
+  <form (ngSubmit)="onSubmit()" #inventoryForm="ngForm">
+    <input type="hidden" class="form-control" [(ngModel)]="inventory.id" name="id">
+    <div class="form-group">
+      <label for="name">Inventory Name:</label>
+      <input
+        type="text"
+        id="name"
+        class="form-control"
+        [(ngModel)]="inventory.name"
+        name="name"
+        placeholder="Enter inventory name"
+        required>
+    </div>
+
+    <div class="form-group">
+      <label for="capacity">Capacity:</label>
+      <input
+        type="number"
+        id="capacity"
+        class="form-control"
+        [(ngModel)]="inventory.capacity"
+        name="capacity"
+        placeholder="Enter inventory capacity"
+        required>
+    </div>
+
+    <!-- Warehouse Selection -->
+    <div class="form-group">
+      <label for="warehouse">Select Warehouse:</label>
+      <select
+        id="warehouse"
+        class="form-control"
+        [(ngModel)]="inventory.warehouse.id"
+        name="warehouse"
+        required>
+        <option *ngFor="let warehouse of warehouses" [value]="warehouse.id">
+          {{ warehouse.name }} - {{ warehouse.location }}
+        </option>
+      </select>
+    </div>
+
+    <button type="submit" class="btn btn-primary">
+      {{ this.inventory.id ? 'Update Inventory' : 'Create Inventory' }}
+    </button>
+    <button type="button" class="btn btn-secondary" (click)="resetInventoryForm()">Clear</button>
+  </form>
+
+  <h3 class="mt-4">Inventory List</h3>
+  <ul class="list-group">
+    <li
+      *ngFor="let inv of inventories"
+      class="list-group-item">
+      <div>
+        <strong>{{ inv.name }}</strong> - {{ inv.capacity }} units
+        <br>
+        <small>Warehouse: {{ inv.warehouse.name }}</small>
+      </div>
+      <button
+        class="btn btn-warning btn-sm float-right"
+        (click)="loadProductsByInventoryId(inv.id);">
+        View Products
+      </button>
+      <button
+        class="btn btn-warning btn-sm float-right"
+        (click)="loadInventory(inv.id);">
+        Edit
+      </button>
+      <button
+        class="btn btn-danger btn-sm float-right mr-2"
+        (click)="deleteInventory(inv.id);">
+        Delete
+      </button>
+    </li>
+  </ul>
+
+  <div *ngIf="products.length > 0" class="mt-4">
+    <h3>Products in Selected Inventory</h3>
+    <ul class="list-group">
+      <li *ngFor="let product of products" class="list-group-item">
+        {{ product.name }} - Stock: {{ product.stock }} - Unit Price: {{ product.unitPrice | currency }}
+      </li>
+    </ul>
+  </div>
+</div>

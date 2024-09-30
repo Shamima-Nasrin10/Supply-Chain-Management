@@ -1,0 +1,55 @@
+<!--<div class="container">-->
+<!--    <h2>Create Order</h2>-->
+<!--    <form (ngSubmit)="placeOrder()">-->
+<!--        <div class="form-group">-->
+<!--            <label for="userName">Customer Name</label>-->
+<!--            <input type="text" id="userName" class="form-control" [(ngModel)]="order.userName" name="userName" disabled />-->
+<!--        </div>-->
+
+<!--        <div class="form-group">-->
+<!--            <label for="phoneNumber">Phone Number</label>-->
+<!--            <input type="text" id="phoneNumber" class="form-control" [(ngModel)]="order.phoneNumber" name="phoneNumber" required />-->
+<!--        </div>-->
+
+<!--        <div class="form-group">-->
+<!--            <label for="address">Address</label>-->
+<!--            <input type="text" id="address" class="form-control" [(ngModel)]="order.address" name="address" required />-->
+<!--        </div>-->
+
+<!--        <div class="form-group">-->
+<!--            <label for="product">Product</label>-->
+<!--            <select id="product" class="form-control" [(ngModel)]="order.product" name="product" (change)="updateProductDetails(order.product)" required>-->
+<!--                <option *ngFor="let product of products" [ngValue]="product">{{ product.name }}</option>-->
+<!--            </select>-->
+<!--        </div>-->
+
+<!--        <div class="form-group">-->
+<!--            <label for="unitPrice">Unit Price</label>-->
+<!--            <input type="text" id="unitPrice" class="form-control" [(ngModel)]="order.unitPrice" name="unitPrice" disabled />-->
+<!--        </div>-->
+
+<!--        <div class="form-group">-->
+<!--            <label for="availableStock">Available Stock</label>-->
+<!--            <input type="text" id="availableStock" class="form-control" [(ngModel)]="order.stock" name="stock" disabled />-->
+<!--        </div>-->
+
+<!--        <div class="form-group">-->
+<!--            <label for="quantity">Quantity</label>-->
+<!--            <input type="number" id="quantity" class="form-control" [(ngModel)]="order.quantity" name="quantity" (change)="calculateTotalPrice()" min="1" required />-->
+<!--        </div>-->
+
+<!--        <div class="form-group">-->
+<!--            <label for="totalPrice">Total Price</label>-->
+<!--            <input type="text" id="totalPrice" class="form-control" [(ngModel)]="order.totalPrice" name="totalPrice" disabled />-->
+<!--        </div>-->
+
+<!--        <div class="form-group">-->
+<!--            <label for="requiredDeliveryDate">Required Delivery Date</label>-->
+<!--            <input type="date" id="requiredDeliveryDate" class="form-control" [(ngModel)]="order.requiredDeliveryDate" name="requiredDeliveryDate" />-->
+<!--        </div>-->
+
+<!--        <button type="submit" class="btn btn-primary">Place Order</button>-->
+<!--    </form>-->
+
+<!--    <div *ngIf="errorMessage" class="alert alert-danger mt-3">{{ errorMessage }}</div>-->
+<!--</div>-->

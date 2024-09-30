@@ -1,0 +1,10 @@
+<div>
+    <h2>Notifications</h2>
+    <ul>
+      <li *ngFor="let notification of notifications">
+        {{ notification.message }} - {{ notification.status }}
+        <button (click)="markAsRead(notification)">Mark as Read</button>
+      </li>
+    </ul>
+  </div>
+  

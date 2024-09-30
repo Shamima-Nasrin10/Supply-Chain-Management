@@ -1,0 +1,79 @@
+/* Container styling for centering the form and adding some padding */
+.container {
+    max-width: 500px;
+    margin: 50px auto;
+    padding: 20px;
+    background-color: rgba(255, 255, 255, 0.5);
+    border-radius: 8px;
+     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+/* Heading styling for the form title */
+h2.text-center {
+    margin-bottom: 20px;
+    font-size: 24px;
+    color: #333;
+    font-weight: bold;
+}
+
+/* Input group styling for consistent alignment and appearance */
+.input-group {
+    margin-bottom: 15px;
+}
+
+.input-group-text {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 4px 0 0 4px;
+}
+
+.form-control {
+    border-radius: 0 4px 4px 0;
+    border: 1px solid #ced4da;
+    box-shadow: none;
+}
+
+/* Button styling for a modern, consistent appearance */
+.btn-primary {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    font-weight: bold;
+    background-color: #007bff;
+    border: none;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+}
+
+.btn-primary:hover {
+    background-color: #0056b3;
+}
+
+/* Icon styling for consistent sizing and spacing */
+.input-group-text i,
+.btn-primary i {
+    margin-right: 8px;
+    font-size: 18px;
+}
+
+/* Media query for responsiveness */
+@media (max-width: 576px) {
+    .container {
+        padding: 15px;
+        margin: 20px auto;
+    }
+
+    .form-control, .input-group-text {
+        font-size: 14px;
+    }
+
+    .btn-primary {
+        padding: 8px;
+        font-size: 14px;
+    }
+}

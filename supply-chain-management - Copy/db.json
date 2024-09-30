@@ -1,0 +1,270 @@
+{
+  "users": [
+    {
+      "name":"Admin",
+      "email":"nasrin05shamima@gmail.com",
+      "password":"12345678",
+      "cell":"01521499594",
+      "role":"ADMIN"
+      }
+  ],
+  "rawMaterials": [
+    {
+      "id": "1",
+      "name": "Cotton",
+      "quantity": 1000,
+      "unit": "metre",
+      "supplier": {
+        "id": 1,
+        "name": "Supplier A",
+        "email": "email@supplierA.com",
+        "phone": "123456789"
+      },
+      "unitPrice": 105
+    },
+    {
+      "id": "eea5",
+      "supplier": {
+        "id": "3",
+        "name": "Supplier C",
+        "email": "email@supplierC.com",
+        "phone": "987654322"
+      },
+      "name": "Button",
+      "quantity": 500,
+      "unit": "Pcs",
+      "unitPrice": 5
+    }
+  ],
+  "suppliers": [
+    {
+      "id": 1,
+      "companyName": "ABC Raw Materials Ltd.",
+      "contactPerson": "John Doe",
+      "email": "john.doe@abcrawmaterials.com",
+      "cellNo": "+1234567890",
+      "address": "123 Industrial Park, Cityville"
+    },
+    {
+      "id": 2,
+      "companyName": "XYZ Supplies Inc.",
+      "contactPerson": "Jane Smith",
+      "email": "jane.smith@xyzsupplies.com",
+      "cellNo": "+0987654321",
+      "address": "456 Commerce Street, Townsville"
+    }
+  ],
+  "orders": [
+    {
+      "id": "aa86",
+      "userId": null,
+      "userName": "Anika Sultana",
+      "status": "Approved",
+      "product": {
+        "id": "1",
+        "name": "Sample Product",
+        "photo": "https://fabrilife.com/products/646c762a7496e-square.jpg",
+        "price": 99.99,
+        "stock": 50,
+        "features": "Feature 1, Feature 2",
+        "benefits": "Benefit 1, Benefit 2"
+      },
+      "quantity": 50,
+      "requiredDeliveryDate": "2024-09-29",
+      "orderDate": "2024-08-31T22:27:27.304Z",
+      "totalPrice": 4999.5,
+      "manufacturingStage": "Sewing"
+    },
+    {
+      "id": "8854",
+      "userId": null,
+      "userName": "Anika Sultana",
+      "status": "Approved",
+      "product": {
+        "id": "1",
+        "name": "Sample Product",
+        "photo": "https://fabrilife.com/products/646c762a7496e-square.jpg",
+        "price": 99.99,
+        "stock": 50,
+        "features": "Feature 1, Feature 2",
+        "benefits": "Benefit 1, Benefit 2"
+      },
+      "quantity": 50,
+      "requiredDeliveryDate": "2024-09-29",
+      "orderDate": "2024-08-31T22:27:27.310Z",
+      "totalPrice": 4999.5,
+      "manufacturingStage": "Washing"
+    },
+    {
+      "id": "e3c8",
+      "userId": "f3aa",
+      "userName": "Adiba",
+      "phoneNumber": "0181454545",
+      "address": "Dhaka",
+      "product": {
+        "id": "2",
+        "name": "Sample Product",
+        "photo": "https://t3.ftcdn.net/jpg/04/83/25/50/360_F_483255019_m1r1ujM8EOkr8PamCHF85tQ0rHG3Fiqz.jpg",
+        "price": 99.99,
+        "stock": 50,
+        "features": "Feature 1, Feature 2",
+        "benefits": "Benefit 1, Benefit 2"
+      },
+      "quantity": 5,
+      "orderDate": "2024-09-01T09:28:48.322Z",
+      "requiredDeliveryDate": "2024-10-12",
+      "status": "Approved",
+      "manufacturingStage": "Quality Control"
+    },
+    {
+      "id": "29d9",
+      "userId": "f3aa",
+      "userName": "Adiba",
+      "phoneNumber": "0181454545",
+      "address": "Dhaka",
+      "product": {
+        "id": "1",
+        "name": "Sample Product",
+        "photo": "https://fabrilife.com/products/646c762a7496e-square.jpg",
+        "price": 99.99,
+        "stock": 50,
+        "features": "Feature 1, Feature 2",
+        "benefits": "Benefit 1, Benefit 2"
+      },
+      "quantity": 1,
+      "orderDate": "2024-09-01T09:38:48.728Z",
+      "requiredDeliveryDate": "2024-09-18",
+      "status": "Rejected",
+      "manufacturingStage": "Sewing"
+    },
+    {
+      "id": "7927",
+      "userId": "4b39",
+      "userName": "Anika Sultana",
+      "phoneNumber": "0181454545",
+      "address": "Mirpur",
+      "product": {
+        "id": "76d5",
+        "name": "T-Shirt",
+        "photo": "https://dictionary.cambridge.org/images/thumb/Tshirt_noun_001_18267_2.jpg?version=6.0.31",
+        "price": 450,
+        "stock": 1000,
+        "features": [
+          "Color"
+        ],
+        "benefits": [
+          "Currently available in four colors: White, Black, Grey and Blue"
+        ]
+      },
+      "quantity": 100,
+      "orderDate": "2024-09-01T11:39:46.543Z",
+      "requiredDeliveryDate": "2024-10-12",
+      "status": "Approved",
+      "manufacturingStage": "Cutting"
+    },
+    {
+      "id": "f4be",
+      "userId": "4b39",
+      "userName": "Anika Sultana",
+      "phoneNumber": "0181454545",
+      "address": "Dhaka",
+      "product": {
+        "id": "2",
+        "name": "Jeans",
+        "photo": "https://t3.ftcdn.net/jpg/04/83/25/50/360_F_483255019_m1r1ujM8EOkr8PamCHF85tQ0rHG3Fiqz.jpg",
+        "price": 99.99,
+        "stock": 50,
+        "features": "Feature 1, Feature 2",
+        "benefits": "Benefit 1, Benefit 2"
+      },
+      "quantity": 33,
+      "orderDate": "2024-09-01T11:51:42.307Z",
+      "requiredDeliveryDate": "2024-09-03",
+      "status": "Approved",
+      "manufacturingStage": "Cutting"
+    },
+    {
+      "id": "7b45",
+      "userId": "4b39",
+      "userName": "Anika Sultana",
+      "phoneNumber": "01838020680",
+      "address": "Rajshahi",
+      "product": {
+        "id": "76d5",
+        "name": "T-Shirt",
+        "photo": "https://dictionary.cambridge.org/images/thumb/Tshirt_noun_001_18267_2.jpg?version=6.0.31",
+        "price": 450,
+        "stock": 1000,
+        "features": [
+          "Color"
+        ],
+        "benefits": [
+          "Currently available in four colors: White, Black, Grey and Blue"
+        ]
+      },
+      "quantity": 1,
+      "orderDate": "2024-09-02T00:38:11.440Z",
+      "requiredDeliveryDate": "2024-10-06",
+      "totalPrice": 450,
+      "status": "Approved",
+      "manufacturingStage": "Quality Control"
+    },
+    {
+      "id": "d376",
+      "userId": "4b39",
+      "userName": "Anika Sultana",
+      "orderDate": "2024-09-02T11:55:16.535Z",
+      "phoneNumber": "0181454545",
+      "address": "Sandwip",
+      "product": {
+        "id": "2",
+        "name": "Jeans",
+        "photo": "https://t3.ftcdn.net/jpg/04/83/25/50/360_F_483255019_m1r1ujM8EOkr8PamCHF85tQ0rHG3Fiqz.jpg",
+        "price": 99.99,
+        "stock": 50,
+        "features": "Feature 1, Feature 2",
+        "benefits": "Benefit 1, Benefit 2"
+      },
+      "unitPrice": 99.99,
+      "stock": 50,
+      "totalPrice": 499.95,
+      "quantity": 5,
+      "requiredDeliveryDate": "2024-10-12",
+      "status": "Rejected"
+    }
+  ],
+  "notifications": [],
+  "products": [
+    {
+      "id": "1",
+      "name": "Cotton Shirt",
+      "photo": "https://fabrilife.com/products/646c762a7496e-square.jpg",
+      "price": 99.99,
+      "stock": 50,
+      "features": "Feature 1, Feature 2",
+      "benefits": "Benefit 1, Benefit 2"
+    },
+    {
+      "id": "2",
+      "name": "Jeans",
+      "photo": "https://t3.ftcdn.net/jpg/04/83/25/50/360_F_483255019_m1r1ujM8EOkr8PamCHF85tQ0rHG3Fiqz.jpg",
+      "price": 99.99,
+      "stock": 50,
+      "features": "Feature 1, Feature 2",
+      "benefits": "Benefit 1, Benefit 2"
+    },
+    {
+      "id": "76d5",
+      "name": "T-Shirt",
+      "photo": "https://dictionary.cambridge.org/images/thumb/Tshirt_noun_001_18267_2.jpg?version=6.0.31",
+      "price": 450,
+      "stock": 999,
+      "features": [
+        "Color"
+      ],
+      "benefits": [
+        "Currently available in four colors: White, Black, Grey and Blue"
+      ]
+    }
+  ]
+}

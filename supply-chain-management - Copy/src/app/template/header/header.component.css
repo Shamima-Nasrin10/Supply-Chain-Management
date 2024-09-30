@@ -1,0 +1,66 @@
+
+
+/* Common styles for both buttons */
+.btn.logout {
+    display: flex;
+    align-items: center;
+  }
+  
+  .btn.logout img {
+    margin-right: 10px;
+  }
+  
+  /* Specific styles for the login button */
+  .login-btn {
+    background-color: #007bff; /* Bootstrap primary color */
+    border-color: #007bff;
+  }
+  
+  .login-btn:hover {
+    background-color: #0056b3;
+    border-color: #004085;
+  }
+  
+  /* Specific styles for the registration button */
+  .reg-btn {
+    background-color: #6c757d; /* Bootstrap secondary color */
+    border-color: #6c757d;
+  }
+  
+  .reg-btn:hover {
+    background-color: #5a6268;
+    border-color: #545b62;
+  }
+  /* CSS for Profile Button */
+
+.profiles {
+  display: flex;
+  justify-content: center; /* Center align the button horizontally */
+  align-items: center; /* Center align the button vertically */
+  margin-top: 2px; /* Add space above the profile section */
+}
+
+.profile-btn {
+  padding: 10px 20px; /* Add padding to the button */
+  background-color: #94fae9; /* Set the button background color */
+  color: #ce7474; /* Set the text color to white */
+  border: none; /* Remove any default border */
+  border-radius: 5px; /* Add rounded corners to the button */
+  text-decoration: none; /* Remove underline from the link */
+  font-size: 16px; /* Set font size */
+  font-weight: bold; /* Make text bold */
+  transition: background-color 0.3s ease; /* Smooth transition effect for hover */
+}
+
+.profile-btn:hover {
+  background-color: #0056b3; /* Change background color on hover */
+  color: #ffffff; /* Keep text color white on hover */
+  text-decoration: none; /* Keep underline removed on hover */
+}
+
+
+.m-3 {
+  margin: 1rem !important; /* Add margin around the button */
+}
+
+  

@@ -1,0 +1,39 @@
+<div class="container">
+  <h2 class="text-center">Registration</h2>
+  <form [formGroup]="regForm" (ngSubmit)="onSubmit()">
+    
+ 
+    <div class="mb-3 input-group">
+      <span class="input-group-text"><i class="fas fa-user"></i></span>
+      <input type="text" id="name" formControlName="name" class="form-control" placeholder="Name" required>
+    </div>
+    <div *ngIf="regForm.get('name')?.invalid && (regForm.get('name')?.dirty || regForm.get('name')?.touched)" class="text-danger">
+      <div *ngIf="regForm.get('name')?.errors?.['required']">Name is required.</div>
+    </div>
+    
+
+    <div class="mb-3 input-group">
+      <span class="input-group-text"><i class="fas fa-envelope"></i></span>
+      <input type="email" id="email" formControlName="email" class="form-control" placeholder="Email" required>
+    </div>
+    <div *ngIf="regForm.get('email')?.invalid && (regForm.get('email')?.dirty || regForm.get('email')?.touched)" class="text-danger">
+      <div *ngIf="regForm.get('email')?.errors?.['required']">Email is required.</div>
+      <div *ngIf="regForm.get('email')?.errors?.['email']">Invalid email format.</div>
+      <div *ngIf="errorMessage">{{ errorMessage }}</div> 
+    </div>
+    
+ 
+    <div class="mb-3 input-group">
+      <span class="input-group-text"><i class="fas fa-lock"></i></span>
+      <input type="password" id="password" formControlName="password" class="form-control" placeholder="Password" required>
+    </div>
+    <div *ngIf="regForm.get('password')?.invalid && (regForm.get('password')?.dirty || regForm.get('password')?.touched)" class="text-danger">
+      <div *ngIf="regForm.get('password')?.errors?.['required']">Password is required.</div>
+    </div>
+
+ 
+    <div *ngIf="errorMessage" class="alert alert-danger mt-3">{{ errorMessage }}</div>
+
+    <button type="submit" class="btn btn-primary"><i class="fas fa-user"></i> Register</button>
+  </form>
+</div>

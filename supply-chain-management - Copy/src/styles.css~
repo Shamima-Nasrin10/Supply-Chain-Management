@@ -1,0 +1,39 @@
+/* Global styles */
+html, body {
+  height: auto;
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+/* Style for Angular Material dialog container */
+.mat-dialog-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1050 !important; /* Ensure it's above other elements */
+  padding: 0 !important; /* Remove any padding */
+  background-color: white; /* Ensure proper background color */
+}
+
+/* Ensure custom modal container is properly centered */
+.custom-dialog-container {
+  max-width: 100%; /* Prevent the modal from going off-screen */
+  max-height: 100%; /* Make it scrollable if content overflows */
+  width: 400px; /* Adjust the width */
+  padding: 16px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2); /* Add some shadow */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Make sure that the container inside the modal is centered */
+.mat-dialog-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
