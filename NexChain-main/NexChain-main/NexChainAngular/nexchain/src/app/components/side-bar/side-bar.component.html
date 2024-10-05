@@ -1,0 +1,35 @@
+<div class="sidenav" [ngClass]="{'sidenav-collapsed': collapsed}">
+    <div class="logo-container">
+        <button class="logo" (click)="toggleCollapse()">N</button>
+        <div class="logo-text" @fadeInOut *ngIf="collapsed">NexChain</div>
+        <button class="btn-close" @rotate *ngIf="collapsed" (click)="closeSidenav()">
+            <i class="fal fa-times close-icon"></i>
+        </button>
+    </div>
+
+    <ul class="sidenav-nav">
+        <ng-container *ngFor="let data of navData">
+            <li class="sidenav-nav-item" *ngIf="data.items && data.items.length > 0">
+                <a class="sidenav-nav-link" (click)="handleClick(data)">
+                    <i class="sidenav-link-icon" [class]="data.icon"></i>
+                    <span class="sidenav-link-text" @fadeInOut *ngIf="collapsed">{{ data.label }}</span>
+                    <i class="menu-collapse-icon" [ngClass]="{'fal fa-angle-right': collapsed, 'fal fa-angle-down': !collapsed && data.expanded}"></i>
+                </a>
+                <ul class="sublevel-nav" *ngIf="data.expanded">
+                    <li class="sublevel-nav-item" *ngFor="let subItem of data.items">
+                        <a class="sublevel-nav-link" [routerLink]="[subItem.routeLink]" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">
+                            <i class="sublevel-link-icon" [class]="subItem.icon"></i>
+                            <span class="sublevel-link-text">{{ subItem.label }}</span>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+            <li class="sidenav-nav-item" *ngIf="!data.items || data.items.length === 0">
+                <a class="sidenav-nav-link" [routerLink]="[data.routeLink]" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">
+                    <i class="sidenav-link-icon" [class]="data.icon"></i>
+                    <span class="sidenav-link-text" @fadeInOut *ngIf="collapsed">{{ data.label }}</span>
+                </a>
+            </li>
+        </ng-container>
+    </ul>
+</div>

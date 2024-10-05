@@ -1,0 +1,91 @@
+<!-- procurement.component.html -->
+
+<div class="container">
+  <h2>Procurements</h2>
+
+  <!-- Add Procurement Form -->
+  <div class="card">
+    <div class="card-header">
+      Add New Procurement
+    </div>
+    <div class="card-body">
+      <form [formGroup]="procurementForm" (ngSubmit)="addProcurement()">
+        <!-- Supplier Dropdown -->
+        <div class="form-group">
+          <label for="supplier">Supplier</label>
+          <select class="form-control" id="supplier" formControlName="supplier">
+            <option *ngFor="let supplier of suppliers" [value]="supplier.supplierName">{{ supplier.supplierName }}</option>
+          </select>
+        </div>
+
+        <!-- Raw Material Dropdown -->
+        <div class="form-group">
+          <label for="rawMaterial">Raw Material</label>
+          <select class="form-control" id="rawMaterial" formControlName="rawMaterial">
+            <option *ngFor="let material of rawMaterials" [value]="material.materialName">{{ material.materialName }}</option>
+          </select>
+        </div>
+
+        <!-- Quantity -->
+        <div class="form-group">
+          <label for="quantity">Quantity</label>
+          <input type="number" class="form-control" id="quantity" formControlName="quantity" (input)="calculateTotalPrice()">
+        </div>
+      
+        <!-- Unit Price -->
+        <div class="form-group">
+          <label for="unitPrice">Unit Price</label>
+          <input type="number" class="form-control" id="unitPrice" formControlName="unitPrice" (input)="calculateTotalPrice()">
+        </div>
+      
+        <!-- Total Price -->
+        <div class="form-group">
+          <label for="totalPrice">Total Price</label>
+          <input type="number" class="form-control" id="totalPrice" formControlName="totalPrice" readonly>
+        </div>
+      
+        <!-- Procurement Date -->
+        <div class="form-group">
+          <label for="procurementDate">Procurement Date</label>
+          <input type="date" class="form-control" id="procurementDate" formControlName="procurementDate">
+        </div>
+
+        <!-- Submit Button -->
+        <button type="submit" class="btn btn-primary">Add Procurement</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Procurement List -->
+  <div class="mt-4">
+    <h3>Procurement List</h3>
+    <table class="table">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Supplier</th>
+          <th>Raw Material</th>
+          <th>Quantity</th>
+          <th>Unit Price</th>
+          <th>Total Price</th>
+          <th>Procurement Date</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let procurement of procurements">
+          <td>{{ procurement.id }}</td>
+          <td>{{ procurement.supplier?.supplierName }}</td>
+          <td>{{ procurement.rawMaterial?.materialName }}</td>
+          <td>{{ procurement.quantity }}</td>
+          <td>{{ procurement.unitPrice }}</td>
+          <td>{{ procurement.totalPrice }}</td>
+          <td>{{ procurement.procurementDate }}</td>
+          <td>
+            <button class="btn btn-danger" (click)="deleteProcurement(procurement.id)">Delete</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

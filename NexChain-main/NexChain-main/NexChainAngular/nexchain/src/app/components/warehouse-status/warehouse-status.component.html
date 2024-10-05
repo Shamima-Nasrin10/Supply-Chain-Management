@@ -1,0 +1,30 @@
+<div class="container mt-5">
+    <h2>Warehouse Status</h2>
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Product Name</th>
+          <th>Batch Number</th>
+          <th>Quantity</th>
+          <th>Worker Name</th>
+          <th>Trucker Name</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let detail of wareDetails">
+          <td>{{ detail.id }}</td>
+          <td>{{ detail.productName }}</td>
+          <td>{{ detail.batchNumber }}</td>
+          <td>{{ detail.quantity }}</td>
+          <td>{{ detail.workerName }}</td>
+          <td>{{ detail.truckerName }}</td>
+          <td>
+            <span [ngClass]="{'bg-success': detail.status === 'Approved', 'bg-warning': detail.status === 'Pending Approval'}" [ngStyle]="{'color': 'white', 'padding': '3px 6px', 'border-radius': '3px'}">{{ detail.status }}</span>
+          </td>
+         </tr>
+      </tbody>
+    </table>
+  </div>
+  

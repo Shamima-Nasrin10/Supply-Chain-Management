@@ -1,0 +1,65 @@
+<div th:insert="~{header.html}"></div>
+
+<style>
+    body {
+        background-color: #f8f9fa; /* Set a light background color */
+    }
+
+    .container {
+        margin-top: 50px; /* Adjust the margin from the top */
+    }
+
+    form {
+        max-width: 400px; /* Set a max width for the form */
+        margin: auto; /* Center the form horizontally */
+        padding: 20px;
+        background-color: #ffffff; /* Set a white background color for the form */
+        border: 1px solid #dee2e6; /* Add a subtle border */
+        border-radius: 5px; /* Add border-radius for rounded corners */
+    }
+
+    label {
+        font-weight: bold; /* Make labels bold */
+    }
+
+    button {
+        margin-top: 10px; /* Add some space above the button */
+    }
+</style>
+
+<div class="container">
+    <form action="/showProcurement" method="get">
+        <div class="form-group">
+            <label for="procurementId">Procurement ID:</label>
+            <input type="text" id="procurementId" name="procurementId" class="form-control" required>
+        </div>
+        <button type="button" onclick="showProcurement()" class="btn btn-secondary">Show Procurement</button>
+    </form>
+</div>
+
+<hr>
+
+<div id="procurementDetails">
+
+    <!--                Details will be show here-->
+</div>
+
+
+<script th:inline="javascript">
+    function showProcurement() {
+        var procurementId = document.getElementById("procurementId").value;
+
+        // Use AJAX to fetch procurement details
+        var xhr = new XMLHttpRequest();
+        xhr.onreadystatechange = function() {
+            if (xhr.readyState == 4 && xhr.status == 200) {
+                document.getElementById("procurementDetails").innerHTML = xhr.responseText;
+            }
+        };
+
+        xhr.open("GET", "/showProcurement?procurementId=" + procurementId, true);
+        xhr.send();
+    }
+</script>
+
+<div th:insert="~{footer.html}"></div>

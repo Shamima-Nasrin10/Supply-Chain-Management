@@ -1,0 +1,48 @@
+<div class="container">
+  <div class="row">
+      <div class="col text-left">
+          <h2>Total Suppliers: {{ totalSupplier }}</h2>
+      </div>
+      <div class="col text-right">
+          <h2>Total Payment Amount: {{ totalPaymentAmount }}</h2>
+      </div>
+  </div>
+
+  <!-- Production Records Table -->
+  <div class="row">
+      <div class="col">
+          <table class="table">
+              <thead class="thead-dark">
+                  <tr>
+                      <th>Production ID</th>
+                      <th>Batch Number</th>
+                      <th>Production Date</th>
+                      <th>Production Quantity</th>
+                      <th>Quality Control Info</th>
+                      <th>Product Name</th>
+                      <th>Status</th> <!-- Add this column header for "new" status -->
+                  </tr>
+              </thead>
+              <tbody>
+                  <tr *ngFor="let record of productionRecords">
+                      <td>{{ record[0].productionId }}</td>
+                      <td>{{ record[0].batchNumber }}</td>
+                      <!-- <td >{{ record[0].productionDate }}</td> -->
+                      <!-- <td [ngClass]="{'new-text': record[2]}">
+                        {{ record[0].productionDate }}
+                        <span *ngIf="record[2]">New</span>
+                    </td> -->
+                    <td>
+                        {{ record[0].productionDate }}
+                        <span *ngIf="record[2]" class="new-text">New</span>
+                    </td>
+                      <td>{{ record[0].productionQuantity }}</td>
+                      <td>{{ record[0].qualityControlInfo }}</td>
+                      <td>{{ record[1] }}</td>
+                      <td class="new-text">{{ record[2] ? 'New' : '' }}</td>
+                    </tr>
+              </tbody>
+          </table>
+      </div>
+  </div>
+</div>

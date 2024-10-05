@@ -1,0 +1,28 @@
+<div th:insert="~{header.html}"></div>
+
+<div class="container">
+    <h2>Inventory Summary</h2>
+
+    <table class="table table-bordered">
+        <thead>
+        <tr>
+            <th>Material ID</th>
+            <th>Material Name</th>
+            <th>Material Type</th>
+            <th>Total Quantity in Inventory</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="summary : ${inventorySummary}">
+            <td th:text="${summary[0]}"></td>
+            <td th:text="${summary[1]}"></td>
+            <td th:text="${summary[2]}"></td>
+            <td th:text="${summary[3]}"></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+<hr>
+
+</body>
+</html>

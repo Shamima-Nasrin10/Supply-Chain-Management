@@ -1,0 +1,47 @@
+<div th:insert="~{header.html}"></div>
+
+<style>
+    .container {
+        max-width: 600px;
+    }
+
+    form {
+        margin-top: 20px;
+    }
+</style>
+
+<div class="container mt-5">
+    <h2 class="text-center">Add Product</h2>
+    <form action="/add" method="post" enctype="multipart/form-data" th:object="${product}">
+
+        <div class="form-group mb-3">
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name" class="form-control" th:field="*{name}" required/>
+        </div>
+
+        <div class="form-group mb-3">
+            <label for="batchnumber">Batch Number:</label>
+            <input type="text" id="batchnumber" name="batchNumber" class="form-control" th:field="*{batchNumber}" required/>
+        </div>
+
+        <div class="form-group mb-3">
+            <label for="description">Description:</label>
+            <textarea id="description" name="description" class="form-control" th:field="*{description}" required></textarea>
+        </div>
+
+        <div class="form-group mb-3">
+            <label for="price">Price:</label>
+            <input type="number" id="price" name="price" step="0.01" class="form-control" th:field="*{price}" required/>
+        </div>
+
+        <div class="form-group mb-3">
+            <label for="image">Image:</label>
+            <input type="file" id="image" name="image" accept="image/*" class="form-control-file" required/>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Add Product</button>
+    </form>
+</div>
+
+
+<div th:insert="~{footer.html}"></div>

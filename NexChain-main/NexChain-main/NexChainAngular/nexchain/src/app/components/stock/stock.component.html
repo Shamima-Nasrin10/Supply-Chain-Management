@@ -1,0 +1,34 @@
+<div class="container" id="content">
+  <div class="row">
+    <div class="col">
+      <div class="row">
+        <div class="col-md-12">
+          <table class="table custom-table">
+            <thead>
+              <tr>
+                <th class="header-cell">Raw Material</th>
+                <th class="header-cell">Previous Price</th>
+                <th class="header-cell">Unit Price</th>
+                <th class="header-cell">Quantity</th>
+                <th class="header-cell">Last Stock Update Date</th>
+                <th class="header-cell">Increase</th>
+                <th class="header-cell">Decrease</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let stock of stockList" class="data-row">
+                <td>{{ stock.rawMaterial?.materialName }}</td>
+                <td>{{ stock.previousPrice }}</td>
+                <td>{{ stock.unitPrice }}</td>
+                <td>{{ stock.quantity }}</td>
+                <td>{{ stock.lastStockUpdateDate }}</td>
+                <td>{{ stock.increase }}%</td>
+                <td>{{ stock.decrease }}%</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

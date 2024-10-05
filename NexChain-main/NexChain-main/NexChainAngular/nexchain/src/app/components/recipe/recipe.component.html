@@ -1,0 +1,91 @@
+<!-- <div>
+    <h2>Create Recipe</h2>
+    <form [formGroup]="recipeForm" (ngSubmit)="onSubmit()">
+      <div formGroupName="product">
+        <label for="productName">Product:</label>
+        
+        <select id="productName" formControlName="productName">
+          <option value="" disabled selected>Select Product</option>
+          
+          <option *ngFor="let product of productionProducts" [value]="product.productName">{{ product.productName }}</option>
+        </select>
+      </div>
+      
+  
+      <div formArrayName="ingredients" *ngIf="ingredientsArray">
+        <div *ngFor="let ingredientGroup of ingredientsArray.controls; let i = index" [formGroupName]="i">
+          <label for="name{{i}}">Name:</label>
+          
+          <select id="name{{i}}" formControlName="name" required>
+            <option value="" disabled selected>Select Material</option>
+            <option *ngFor="let material of rawMaterials" [value]="material.materialName">{{ material.materialName }}</option>
+          </select>
+      
+          <label for="quantity{{i}}">Quantity:</label>
+          <input type="text" id="quantity{{i}}" formControlName="quantity" required>
+      
+          <button type="button" (click)="removeIngredient(i)">Remove</button>
+        </div>
+      </div>
+      
+      
+      
+      
+  
+      <button type="button" (click)="addIngredient()">Add Ingredient</button>
+  
+      <button type="submit">Create Recipe</button>
+    </form>
+  </div>
+   -->
+
+   <div class="container">
+    <h2>Create Recipe</h2>
+    <form [formGroup]="recipeForm" (ngSubmit)="onSubmit()" class="mt-4">
+      <div formGroupName="product" class="mb-3">
+        <label for="productName" class="form-label">Product:</label>
+        <!-- Use select dropdown for product selection -->
+        <select id="productName" formControlName="productName" class="form-select">
+          <option value="" disabled selected>Select Product</option>
+          <!-- Use productName as value -->
+          <option *ngFor="let product of productionProducts" [value]="product.productName">{{ product.productName }}</option>
+        </select>
+      </div>
+  
+      <div formArrayName="ingredients" *ngIf="ingredientsArray">
+        <div *ngFor="let ingredientGroup of ingredientsArray.controls; let i = index" [formGroupName]="i" class="mb-3">
+          <div class="row align-items-end">
+            <div class="col">
+              <label for="name{{i}}" class="form-label">Name:</label>
+              <!-- Replace input field with select dropdown -->
+              <select id="name{{i}}" formControlName="name" required class="form-select">
+                <option value="" disabled selected>Select Material</option>
+                <option *ngFor="let material of rawMaterials" [value]="material.materialName">{{ material.materialName }}</option>
+              </select>
+            </div>
+            <div class="col">
+              <label for="quantity{{i}}" class="form-label">Quantity:</label>
+              <input type="text" id="quantity{{i}}" formControlName="quantity" required class="form-control">
+            </div>
+            <div class="col-auto">
+              <button type="button" (click)="removeIngredient(i)" class="btn btn-danger">
+                <i class="fas fa-minus"></i> <!-- Font Awesome minus icon -->
+              </button>
+
+              <button type="button" (click)="addIngredient()" class="btn btn-success">
+                <i class="fas fa-plus"></i> <!-- Font Awesome plus icon -->
+              
+              </button>
+ 
+
+            </div>
+          </div>
+        </div>
+      </div>
+  
+
+  
+      <button type="submit" class="btn btn-primary">Create Recipe</button>
+    </form>
+  </div>
+  

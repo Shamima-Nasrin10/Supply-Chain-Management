@@ -1,0 +1,55 @@
+<div class="container">
+    <h2>Add Product</h2>
+    <form [formGroup]="productForm" (ngSubmit)="addProduct()">
+      <div class="form-group">
+        <label for="name">Name</label>
+        <input type="text" class="form-control" id="name" formControlName="name">
+      </div>
+      <div class="form-group">
+        <label for="description">Description</label>
+        <textarea class="form-control" id="description" formControlName="description"></textarea>
+      </div>
+      <div class="form-group">
+        <label for="batchNumber">Batch Number</label>
+        <input type="text" class="form-control" id="batchNumber" formControlName="batchNumber">
+      </div>
+      <div class="form-group">
+        <label for="price">Price</label>
+        <input type="number" class="form-control" id="price" formControlName="price">
+      </div>
+      <div class="form-group">
+        <label for="image">Image</label>
+        <input type="file" class="form-control-file" id="image" (change)="onFileSelected($event)">
+      </div>
+      <button type="submit" class="btn btn-primary" [disabled]="productForm.invalid">Add Product</button>
+    </form>
+  </div>
+  
+  <div class="container mt-4">
+    <h2>Product List</h2>
+    <table class="table">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Name</th>
+          <th>Description</th>
+          <th>Batch Number</th>
+          <th>Price</th>
+          <th>Image</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let product of products">
+          <td>{{ product.id }}</td>
+          <td>{{ product.name }}</td>
+          <td>{{ product.description }}</td>
+          <td>{{ product.batchNumber }}</td>
+          <td>{{ product.price }}</td>
+          <td>
+            <img [src]="'http://localhost:8084' + product.imageUrl" alt="Product Image" width="100">
+        </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  

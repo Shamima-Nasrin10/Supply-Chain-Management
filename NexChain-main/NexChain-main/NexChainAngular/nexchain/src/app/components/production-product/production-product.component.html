@@ -1,0 +1,31 @@
+<div class="container">
+  <h2>Production Products</h2>
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Product ID</th>
+        <th>Product Name</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let product of products">
+        <td>{{ product.productId }}</td>
+        <td>{{ product.productName }}</td>
+        <td>
+         
+
+          <button class="btn btn-danger" (click)="deleteProduct(product.productId)">
+            <i class="fas fa-trash-alt"></i> 
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <h3>Add New Product</h3>
+  <div class="input-group mb-3">
+    <input type="text" class="form-control" placeholder="Enter product name" [(ngModel)]="newProductName">
+    <button class="btn btn-primary" (click)="addProduct()">Add</button>
+  </div>
+</div>
