@@ -7,5 +7,5 @@ export class Inventory {
     quantityInStock?: number;
     unitPrice?: number;
     lastStockUpdateDate?: Date;
-    procurement?: Procurement;
+    procurement!: Procurement;
   }

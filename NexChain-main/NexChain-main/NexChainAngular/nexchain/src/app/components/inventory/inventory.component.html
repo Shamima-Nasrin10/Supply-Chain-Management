@@ -23,13 +23,13 @@
           <label for="quantityInStock">Quantity in Stock</label>
           <input type="number" class="form-control" id="quantityInStock" formControlName="quantityInStock" placeholder="Quantity in Stock">
         </div>
-      
+
         <!-- Unit Price -->
         <div class="form-group">
           <label for="unitPrice">Unit Price</label>
           <input type="number" class="form-control" id="unitPrice" formControlName="unitPrice" placeholder="Unit Price">
         </div>
-      
+
         <!-- Last Stock Update Date -->
         <div class="form-group">
           <label for="lastStockUpdateDate">Last Stock Update Date</label>
@@ -39,7 +39,10 @@
         <!-- Procurement -->
         <div class="form-group">
           <label for="procurement">Procurement</label>
-          <input type="text" class="form-control" id="procurement" formControlName="procurement" placeholder="Procurement">
+          <select class="form-control" id="procurement" formControlName="procurement">
+            <option *ngFor="let procurement of procurements" [ngValue]="procurement.id">
+              {{ procurement.supplier!.supplierName }}</option>
+          </select>
         </div>
 
         <!-- Submit Button -->
@@ -53,11 +56,11 @@
   <!-- Date range inputs -->
   <div class="form-group">
     <label for="startDate">Start Date:</label>
-    <input type="date" class="form-control" formControlName="startDate">
+    <input type="date" class="form-control" id="startDate" formControlName="startDate">
   </div>
   <div class="form-group">
     <label for="endDate">End Date:</label>
-    <input type="date" class="form-control" formControlName="endDate">
+    <input type="date" class="form-control" id="endDate" formControlName="endDate">
   </div>
   <!-- Submit button -->
   <button type="submit" class="btn btn-primary">Filter</button>

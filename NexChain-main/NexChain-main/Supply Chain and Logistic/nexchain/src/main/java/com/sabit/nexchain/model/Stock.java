@@ -41,4 +41,6 @@ public class Stock {
     private int decrease;
 
 
+    public void setProcurement(Procurement procurement) {
+    }
 }

@@ -30,13 +30,6 @@ public class ProcurementRestController {
     private RawMaterialRepository rawMaterialRepository;
 
 
-    @GetMapping
-    public ResponseEntity<List<Procurement>> getAllProcurements(){
-        List<Procurement> procurements=procurementRepository.findAll();
-        return ResponseEntity.ok(procurements);
-    }
-
-
     @PostMapping
     public ResponseEntity<Procurement> saveProcurement(@RequestBody Procurement procurement){
         Procurement saveProcurement=procurementRepository.save(procurement);
@@ -67,5 +60,9 @@ public class ProcurementRestController {
 
         return ResponseEntity.notFound().build();
 
+    }
+    @GetMapping("/list")
+    public List<Procurement> getProcurements() {
+        return procurementService.getAllProcurements();
     }
 }

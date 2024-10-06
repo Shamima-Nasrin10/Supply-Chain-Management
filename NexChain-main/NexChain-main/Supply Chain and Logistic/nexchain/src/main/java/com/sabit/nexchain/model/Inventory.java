@@ -29,8 +29,6 @@ public class Inventory {
     @Column(name = "last_stock_update_date")
     private Date lastStockUpdateDate;
 
-
-
     @ManyToOne
     @JoinColumn(name = "procurement_id")
     private Procurement procurement;

@@ -14,7 +14,7 @@ export class InventoryService {
   constructor(private http: HttpClient) { }
 
   saveInventory(inventory: Inventory): Observable<Inventory> {
-    return this.http.post<Inventory>(`${this.baseUrl}/save`, inventory);
+    return this.http.post<Inventory>(`${this.baseUrl}/save`, inventory,{responseType: "json"});
   }
 
   getInventoryDetails(): Observable<Inventory[]> {

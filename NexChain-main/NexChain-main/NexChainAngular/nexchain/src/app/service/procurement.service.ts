@@ -13,7 +13,7 @@ export class ProcurementService {
   constructor(private http: HttpClient) { }
 
   getAllProcurements(): Observable<Procurement[]> {
-    return this.http.get<Procurement[]>(this.baseUrl);
+    return this.http.get<Procurement[]>(`${this.baseUrl}/list`);  // Update the URL to use /list
   }
 
   addProcurement(procurement: Procurement): Observable<Procurement> {

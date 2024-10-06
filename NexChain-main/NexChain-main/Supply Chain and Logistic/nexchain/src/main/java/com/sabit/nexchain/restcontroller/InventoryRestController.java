@@ -36,22 +36,16 @@ public class InventoryRestController {
 
     @PostMapping("/save")
     public ResponseEntity<String> saveInventory(@RequestBody Inventory inventory){
-        Long procurementId=inventory.getProcurement().getId();
-
         // Check if inventory for this procurement ID already exists
-        Optional<Inventory> existingInventory=inventoryRepository.findByProcurement_Id(procurementId);
+        Optional<Inventory> existingInventory=inventoryRepository.findByProcurement_Id(inventory.getProcurement().getId());
 
         if (existingInventory.isPresent()){
-            return ResponseEntity.status(HttpStatus.CONFLICT).body("Inventory for Procurement ID "+procurementId+ " already exists");
+            return ResponseEntity.status(HttpStatus.CONFLICT).body("Inventory for Procurement ID "+inventory.getProcurement().getId()+ " already exists");
         }
 
-
-
         // Call the addToInventory method in the InventoryService to add inventory
-        inventoryService.addToInventory(inventory.getRawMaterial(),inventory.getQuantityInStock(),inventory.getUnitPrice());
-        inventoryRepository.save(inventory);
+        inventoryService.addToInventory(inventory.getRawMaterial(),inventory.getQuantityInStock(),inventory.getUnitPrice(), inventory.getProcurement().getId());
         return ResponseEntity.status(HttpStatus.CREATED).body("Inventory Saved Successfully");
-
     }
 
 
