@@ -57,25 +57,30 @@ public class AuthService {
     public AuthenticationResponse register(User user) {
 
         // Check if the user already exists
-        if (userRepository.findByEmail(user.getUsername()).isPresent()) {
-            return new AuthenticationResponse(null, "User already exists");
-        }
+        String jwt = null;
+        try {
+            if (userRepository.findByEmail(user.getUsername()).isPresent()) {
+                return new AuthenticationResponse(null, "User already exists");
+            }
 
-        // Create a new user entity and save it to the database
+            // Create a new user entity and save it to the database
 
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
-        user.setRole(Role.valueOf("USER"));
+            user.setPassword(passwordEncoder.encode(user.getPassword()));
+            user.setRole(Role.valueOf("USER"));
 //        user.setLock(true);
-        user.setActive(true);
+            user.setActive(true);
 
-        userRepository.save(user);
+            userRepository.save(user);
 
-        // Generate JWT token for the newly registered user
-        String jwt = jwtService.generateToken(user);
+            // Generate JWT token for the newly registered user
+            jwt = jwtService.generateToken(user);
 
-        // Save the token to the token repository
-        saveUserToken(jwt, user);
+            // Save the token to the token repository
+            saveUserToken(jwt, user);
 //        sendActivationEmail(user);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
 
         return new AuthenticationResponse(jwt, "User registration was successful");
     }

@@ -51,6 +51,7 @@ public class User implements UserDetails {
     private boolean isLock;
 
     @Enumerated(value = EnumType.STRING)
+    @Column(nullable = true)
     private Role role;
 
     @OneToMany(mappedBy = "user")
@@ -59,7 +60,8 @@ public class User implements UserDetails {
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
 
-        return List.of(new SimpleGrantedAuthority(role.name()));
+//        return List.of(new SimpleGrantedAuthority(role.name()));
+        return null;
     }
 
     @Override
