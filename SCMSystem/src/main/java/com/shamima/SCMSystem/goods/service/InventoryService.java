@@ -3,13 +3,12 @@ package com.shamima.SCMSystem.goods.service;
 import com.shamima.SCMSystem.goods.entity.Inventory;
 import com.shamima.SCMSystem.production.entity.Warehouse;
 import com.shamima.SCMSystem.goods.repository.InventoryRepository;
-import com.shamima.SCMSystem.production.repository.ProductRepository;
-import com.shamima.SCMSystem.production.repository.WarehouseRepository;
 import com.shamima.SCMSystem.util.ApiResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -21,6 +20,8 @@ public class InventoryService {
     public ApiResponse saveInventory(Inventory inventory) {
         ApiResponse apiResponse = new ApiResponse(false);
         try {
+            inventory.setCreatedDate(LocalDateTime.now());
+            inventory.setLastUpdatedDate(LocalDateTime.now());
             inventoryRepository.save(inventory);
             apiResponse.setSuccess(true);
             apiResponse.setMessage("Inventory saved successfully");
@@ -72,6 +73,7 @@ public class InventoryService {
             }
             existingInventory.setName(updatedInventory.getName());
             existingInventory.setCapacity(updatedInventory.getCapacity());
+            existingInventory.setLastUpdatedDate(LocalDateTime.now());
             inventoryRepository.save(existingInventory);
             apiResponse.setSuccess(true);
             apiResponse.setMessage("Inventory updated successfully");

@@ -2,51 +2,91 @@
   <h2>Inventory Management</h2>
 
   <!-- Inventory Form -->
-  <form (ngSubmit)="onSubmit()" #inventoryForm="ngForm">
-    <input type="hidden" class="form-control" [(ngModel)]="inventory.id" name="id">
+  <div class="card mb-4">
+    <div class="card-body">
+      <h4 class="card-title">{{ inventory.id ? 'Update Inventory' : 'Create Inventory' }}</h4>
+      <form (ngSubmit)="onSubmit()" #inventoryForm="ngForm">
+        <input type="hidden" class="form-control" [(ngModel)]="inventory.id" name="id">
 
-    <div class="form-group">
-      <label for="name">Inventory Name:</label>
-      <input
-        type="text"
-        id="name"
-        class="form-control"
-        [(ngModel)]="inventory.name"
-        name="name"
-        placeholder="Enter inventory name"
-        required>
+        <div class="form-group">
+          <label for="name">Inventory Name:</label>
+          <input
+            type="text"
+            id="name"
+            class="form-control"
+            [(ngModel)]="inventory.name"
+            name="name"
+            placeholder="Enter inventory name"
+            required>
+        </div>
+
+        <div class="form-group">
+          <label for="capacity">Capacity:</label>
+          <input
+            type="number"
+            id="capacity"
+            class="form-control"
+            [(ngModel)]="inventory.capacity"
+            name="capacity"
+            placeholder="Enter inventory capacity"
+            required>
+        </div>
+
+        <div class="form-group">
+          <label for="createdDate">Created Date:</label>
+          <input
+            type="text"
+            id="createdDate"
+            class="form-control"
+            [value]="inventory.createdDate ? (inventory.createdDate | date:'short') : ''"
+            disabled>
+        </div>
+
+        <div class="form-group">
+          <label for="lastUpdatedDate">Last Updated Date:</label>
+          <input
+            type="text"
+            id="lastUpdatedDate"
+            class="form-control"
+            [value]="inventory.lastUpdatedDate ? (inventory.lastUpdatedDate | date:'short') : ''"
+            disabled>
+        </div>
+
+        <button type="submit" class="btn btn-primary">
+          {{ inventory.id ? 'Update Inventory' : 'Create Inventory' }}
+        </button>
+        <button type="button" class="btn btn-secondary" (click)="resetInventoryForm()">Clear</button>
+      </form>
     </div>
+  </div>
 
-    <div class="form-group">
-      <label for="capacity">Capacity:</label>
-      <input
-        type="number"
-        id="capacity"
-        class="form-control"
-        [(ngModel)]="inventory.capacity"
-        name="capacity"
-        placeholder="Enter inventory capacity"
-        required>
-    </div>
-
-    <button type="submit" class="btn btn-primary">
-      {{ inventory.id ? 'Update Inventory' : 'Create Inventory' }}
-    </button>
-    <button type="button" class="btn btn-secondary" (click)="resetInventoryForm()">Clear</button>
-  </form>
-
-  <h3 class="mt-4">Inventory List</h3>
-  <ul class="list-group">
-    <li *ngFor="let inv of inventories" class="list-group-item">
-      <div>
-        <strong>{{ inv.name }}</strong> - {{ inv.capacity }} units
-      </div>
-      <button class="btn btn-warning btn-sm float-right" (click)="loadInventory(inv.id);">
-        Edit
-      </button>
-      <button class="btn btn-danger btn-sm float-right mr-2" (click)="deleteInventory(inv.id);">
-        Delete
-      </button>
-    </li>
-  </ul>
+  <!-- Inventory List -->
+  <h3>Inventory List</h3>
+  <table class="table table-striped">
+    <thead>
+    <tr>
+      <th>Inventory Name</th>
+      <th>Capacity</th>
+      <th>Created Date</th>
+      <th>Last Updated Date</th>
+      <th>Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let inv of inventories">
+      <td><strong>{{ inv.name }}</strong></td>
+      <td>{{ inv.capacity }} units</td>
+      <td>{{ inv.createdDate | date:'short' }}</td>
+      <td>{{ inv.lastUpdatedDate | date:'short' }}</td>
+      <td>
+        <button class="btn btn-info btn-sm mx-2" (click)="loadInventory(inv.id);">
+          <i class="fa fa-edit"></i>Edit
+        </button>
+        <button class="btn btn-danger btn-sm mx-2" (click)="deleteInventory(inv.id);">
+          <i class="fa fa-trash"></i> Delete
+        </button>
+      </td>
+    </tr>
+    </tbody>
+  </table>
 </div>
