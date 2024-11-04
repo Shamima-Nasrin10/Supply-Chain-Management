@@ -6,9 +6,6 @@ import { AppComponent } from './app.component';
 import { provideHttpClient, withFetch } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule} from '@angular/router';
-import { InventoryListComponent } from './inventory/inventory-list/inventory-list.component';
-import { InventoryDetailComponent } from './inventory/inventory-detail/inventory-detail.component';
-import { OrderComponent } from './order/order/order.component';
 import { ProductComponent } from './product/product/product.component';
 import { CustomerComponent } from './customer/customer/customer.component';
 import { UserComponent } from './user/user.component';
@@ -25,9 +22,6 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 @NgModule({
   declarations: [
     AppComponent,
-    InventoryListComponent,
-    InventoryDetailComponent,
-    OrderComponent,
     ProductComponent,
     CustomerComponent,
     UserComponent,
