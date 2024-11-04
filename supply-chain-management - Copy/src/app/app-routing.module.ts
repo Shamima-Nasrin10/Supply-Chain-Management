@@ -4,15 +4,7 @@ import { RawMaterialCreateComponent } from './inventory/raw-materials/raw-materi
 import { RawMaterialListComponent } from './inventory/raw-materials/raw-material-list/raw-material-list.component';
 import { SupplierCreateComponent } from './inventory/suppliers/supplier-create/supplier-create.component';
 import { NotificationComponent } from './notification/notification/notification.component';
-import { OrderCreateComponent } from './order/order-create/order-create.component';
-import { RegistrationComponent } from './access/registration/registration/registration.component';
-import { LoginComponent } from "./access/login/login/login.component";
-import { LogoutComponent } from "./access/logout/logout/logout.component";
-import { AuthGuard } from './access/auth.guard';
-import { RoleGuard } from './access/role.guard';
-import { UnauthorizedComponent } from './authentication/unauthorized/unauthorized.component';
 import { UserProfileComponent } from './access/user-profile/user-profile.component';
-import { OrderListComponent } from './order/order-list/order-list.component';
 import { SupplierListComponent } from './inventory/suppliers/supplier-list/supplier-list.component';
 import { RawMaterialCategoryCreateComponent } from './inventory/raw-material-category/raw-material-category-create/raw-material-category-create.component';
 import { RawMaterialCategoryListComponent } from './inventory/raw-material-category/raw-material-category-list/raw-material-category-list.component';
@@ -24,21 +16,21 @@ import {SalesCreateComponent} from "./accounting/sales/sales-create/sales-create
 import {SalesDetailsComponent} from "./accounting/sales/sales-details/sales-details.component";
 
 const routes: Routes = [
-  {
-    path: '', redirectTo: 'login', pathMatch: 'full'
-  },
-  {
-    path: "registration", component: RegistrationComponent
-  },
-  {
-    path: 'unathorized', component: UnauthorizedComponent,
-  },
-  {
-    path: "login", component: LoginComponent
-  },
-  {
-    path: "logout", component: LogoutComponent
-  },
+  // {
+  //   path: '', redirectTo: 'login', pathMatch: 'full'
+  // },
+  // {
+  //   path: "registration", component: RegistrationComponent
+  // },
+  // {
+  //   path: 'unathorized', component: UnauthorizedComponent,
+  // },
+  // {
+  //   path: "login", component: LoginComponent
+  // },
+  // {
+  //   path: "logout", component: LogoutComponent
+  // },
   {
     path:"warehouse", component: WarehouseComponent
   },

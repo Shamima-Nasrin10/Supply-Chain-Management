@@ -1,7 +1,8 @@
 <div class="container">
+  <!-- Warehouse Form Card -->
   <div class="card mt-4">
     <div class="card-header">
-      <h4>{{ this.warehouse.id ? 'Edit Warehouse' : 'Add Warehouse' }}</h4>
+      <h4>{{ warehouse.id ? 'Edit Warehouse' : 'Add Warehouse' }}</h4>
     </div>
     <div class="card-body">
       <form (ngSubmit)="onSubmit()">
@@ -11,15 +12,15 @@
         </div>
         <div class="form-group mb-3">
           <label for="location">Location</label>
-          <input type="text" id="location" class="form-control" [(ngModel)]="warehouse.location" name="location"
-                 required>
+          <input type="text" id="location" class="form-control" [(ngModel)]="warehouse.location" name="location" required>
         </div>
-        <button type="submit" class="btn btn-primary">{{ this.warehouse.id ? 'Update Warehouse' : 'Save Warehouse' }}</button>
+        <button type="submit" class="btn btn-primary">{{ warehouse.id ? 'Update Warehouse' : 'Save Warehouse' }}</button>
         <button type="button" class="btn btn-secondary" (click)="resetWarehouseForm()">Reset</button>
       </form>
     </div>
   </div>
 
+  <!-- Warehouse List Card -->
   <div class="card mt-4">
     <div class="card-header">
       <h4>Warehouse List</h4>
@@ -40,36 +41,9 @@
           <td>{{ warehouse.name }}</td>
           <td>{{ warehouse.location }}</td>
           <td>
-            <button class="btn btn-info btn-sm" (click)="loadInventories(warehouse.id)">View Inventory</button>
             <button class="btn btn-info btn-sm" (click)="loadWarehouse(warehouse.id)">Edit</button>
             <button class="btn btn-danger btn-sm" (click)="deleteWarehouse(warehouse.id)">Delete</button>
           </td>
-        </tr>
-        </tbody>
-      </table>
-    </div>
-  </div>
-
-  <div class="card mt-4" *ngIf="inventories.length > 0">
-    <div class="card-header">
-      <h4>Inventory List for {{ warehouse.name }}</h4>
-    </div>
-    <div class="card-body">
-      <table class="table table-bordered">
-        <thead>
-        <tr>
-          <th>#</th>
-          <th>Inventory Name</th>
-          <th>Capacity</th>
-          <th>Category</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr *ngFor="let inventory of inventories; let i = index">
-          <td>{{ i + 1 }}</td>
-          <td>{{ inventory.name }}</td>
-          <td>{{ inventory.capacity }}</td>
-          <td>{{ inventory.category }}</td>
         </tr>
         </tbody>
       </table>

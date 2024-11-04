@@ -34,8 +34,4 @@ export class WarehouseService {
     return this.http.get<ApiResponse>(`${this.apiUrl}/${id}`);
   }
 
-  getProductsByInventoryId(inventoryId: number): Observable<ApiResponse> {
-    return this.http.get<ApiResponse>(`${this.apiUrl}/inventories/${inventoryId}/products`);
-  }
-
 }

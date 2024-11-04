@@ -2,12 +2,9 @@ import {Component, OnInit} from '@angular/core';
 import { NotifyUtil } from '../../../util/notify.util';
 import {ApiResponse} from "../../../util/api.response";
 import {InventoryService} from "../inventory.service";
-import {Product} from "../../../product/model/product.model";
 import {ActivatedRoute, Router} from "@angular/router";
 import {Inventory} from "../model/inventory.model";
-import {WareHouse} from "../../../warehouse/warehouse/warehouse.model";
-import {WarehouseService} from "../../../warehouse/warehouse.service";
-import {ProductService} from "../../../product/product.service";
+
 
 @Component({
   selector: 'app-inventory-create',
@@ -17,20 +14,15 @@ import {ProductService} from "../../../product/product.service";
 export class InventoryCreateComponent implements OnInit{
   inventories: Inventory[] = [];
   inventory: Inventory = new Inventory();
-  warehouses: WareHouse[] = [];
-  products: Product[] = [];
 
   constructor(
     private inventoryService: InventoryService,
-    private warehouseService: WarehouseService,
-    private productService: ProductService,
     private route: ActivatedRoute,
     private router: Router
   ) { }
 
   ngOnInit(): void {
     this.loadInventories();
-    this.loadWarehouses();
   }
 
   public loadInventories(): void {
@@ -38,7 +30,7 @@ export class InventoryCreateComponent implements OnInit{
       next: (response: ApiResponse) => {
         if (response.success) {
           this.inventories = response.data['inventories'];
-          console.log(response)
+          console.log(response);
         } else {
           NotifyUtil.error(response.message);
         }
@@ -65,42 +57,7 @@ export class InventoryCreateComponent implements OnInit{
     });
   }
 
-  public loadWarehouses(): void {
-    this.warehouseService.getAllWarehouses().subscribe({
-      next: (response: ApiResponse) => {
-        if (response.success) {
-          this.warehouses = response.data['warehouses'];
-        } else {
-          NotifyUtil.error(response.message);
-        }
-      },
-      error: (error) => {
-        NotifyUtil.error(error);
-      }
-    });
-  }
-
-  public loadProductsByInventoryId(inventoryId: number): void {
-    this.productService.getProductsByInventoryId(inventoryId).subscribe({
-      next: (response: ApiResponse) => {
-        if (response.success) {
-          this.products = response.data['products'];
-        } else {
-          NotifyUtil.error(response.message);
-        }
-      },
-      error: (error) => {
-        NotifyUtil.error(error);
-      }
-    });
-  }
-
   public onSubmit(): void {
-    // Ensure the warehouse ID is selected before saving or updating
-    if (!this.inventory.warehouse || !this.inventory.warehouse.id) {
-      NotifyUtil.error('Please select a warehouse before saving the inventory.');
-      return;
-    }
     // Decide whether to update or create based on the presence of inventoryId
     const inventoryObservable = this.inventory.id
       ? this.inventoryService.updateInventory(this.inventory)

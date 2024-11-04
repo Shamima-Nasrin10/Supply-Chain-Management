@@ -37,7 +37,4 @@ export class InventoryService {
     return this.http.delete<ApiResponse>(`${this.apiUrl}/delete/${id}`);
   }
 
-  getInventoriesByWarehouseId(warehouseId: number): Observable<ApiResponse> {
-    return this.http.get<ApiResponse>(`${this.apiUrl}/getInventoriesByWarehouseId?warehouseId=${warehouseId}`);
-  }
 }

@@ -2,8 +2,8 @@
   <div class="whirly-loader"> </div>
 </div> -->
 
-<div class="main-wrapper">
-<ng-container *ngIf="authService.userRole$ | async">
+<div class="main-wrapper" p-2>
+<!--<ng-container *ngIf="authService.userRole$ | async">-->
   <app-header></app-header>
 
   <app-sidebar></app-sidebar>
@@ -14,10 +14,10 @@
     </div>
   </div>
 
-</ng-container>
-  <ng-container *ngIf="!(authService.userRole$ | async)">
+<!--</ng-container>-->
+<!--  <ng-container *ngIf="!(authService.userRole$ | async)">-->
     <router-outlet></router-outlet>
-  </ng-container>
+<!--  </ng-container>-->
 
 </div>
 <!-- <div class="container">

@@ -2,7 +2,6 @@ import {Component, OnInit} from '@angular/core';
 import { NotifyUtil } from '../../util/notify.util';
 import {ApiResponse} from "../../util/api.response";
 import {WareHouse} from "./warehouse.model";
-import {Inventory} from "../../inventory/inventory/model/inventory.model";
 import {WarehouseService} from "../warehouse.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import {InventoryService} from "../../inventory/inventory/inventory.service";
@@ -16,8 +15,6 @@ export class WarehouseComponent implements OnInit{
 
   warehouse: WareHouse = new WareHouse();
   warehouses: WareHouse[] = [];
-  inventories: Inventory[] = [];
-  inventory: Inventory = new Inventory();
 
   constructor(
     private warehouseService: WarehouseService,
@@ -62,20 +59,6 @@ export class WarehouseComponent implements OnInit{
     });
   }
 
-  protected loadInventories(warehouseId: number): void {
-    this.inventoryService.getInventoriesByWarehouseId(warehouseId).subscribe({
-      next: (response: ApiResponse) => {
-        if (response && response.success) {
-          this.inventories = response.data['inventories'];
-        } else {
-          NotifyUtil.error(response);
-        }
-      },
-      error: (error) => {
-        NotifyUtil.error(error);
-      }
-    });
-  }
 
   onSubmit(): void {
     const warehouseObservable = this.warehouse.id
