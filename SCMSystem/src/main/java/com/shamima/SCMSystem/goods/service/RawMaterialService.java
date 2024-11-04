@@ -1,7 +1,11 @@
 package com.shamima.SCMSystem.goods.service;
 
+import com.shamima.SCMSystem.goods.entity.Inventory;
 import com.shamima.SCMSystem.goods.entity.RawMaterial;
+import com.shamima.SCMSystem.goods.entity.RawMaterialCategory;
 import com.shamima.SCMSystem.goods.entity.RawMaterialSupplier;
+import com.shamima.SCMSystem.goods.repository.InventoryRepository;
+import com.shamima.SCMSystem.goods.repository.RawMaterialCategoryRepository;
 import com.shamima.SCMSystem.goods.repository.RawMaterialRepository;
 import com.shamima.SCMSystem.goods.repository.RawMaterialSupplierRepository;
 import com.shamima.SCMSystem.util.ApiResponse;
@@ -27,6 +31,12 @@ public class RawMaterialService {
     @Autowired
     private RawMaterialSupplierRepository rawMaterialSupplierRepository;
 
+    @Autowired
+    InventoryRepository inventoryRepository;
+
+    @Autowired
+    RawMaterialCategoryRepository rawMaterialCategoryRepository;
+
     @Value("src/main/resources/static/images")
     private String uploadDir;
 
@@ -46,17 +56,39 @@ public class RawMaterialService {
     public ApiResponse saveRawMaterial(RawMaterial rm, MultipartFile imageFile) {
         ApiResponse apiResponse = new ApiResponse(false);
         try {
+            // Verify Supplier
             RawMaterialSupplier rawMaterialSupplier = rawMaterialSupplierRepository.findById(rm.getSupplier().getId()).orElse(null);
             if (rawMaterialSupplier == null) {
                 apiResponse.setMessage("Supplier not found");
                 return apiResponse;
             }
+            rm.setSupplier(rawMaterialSupplier);
 
+            // Verify Category
+
+                RawMaterialCategory rawMaterialCategory = rawMaterialCategoryRepository.findById(rm.getCategory().getId()).orElse(null);
+                if (rawMaterialCategory == null) {
+                    apiResponse.setMessage("Category not found");
+                    return apiResponse;
+                }
+                rm.setCategory(rawMaterialCategory);
+
+            // Verify Inventory
+
+                Inventory inventory = inventoryRepository.findById(rm.getInventory().getId()).orElse(null);
+                if (inventory == null) {
+                    apiResponse.setMessage("Inventory not found");
+                    return apiResponse;
+                }
+                rm.setInventory(inventory);
+
+            // Handle Image Upload
             if (imageFile != null && !imageFile.isEmpty()) {
                 String imageFileName = saveImage(imageFile, rm);
                 rm.setImage(imageFileName);
             }
-            rm.setSupplier(rawMaterialSupplier);
+
+
             rawMaterialRepository.save(rm);
 
             apiResponse.setSuccess(true);
@@ -115,6 +147,28 @@ public class RawMaterialService {
                 apiResponse.setMessage("Supplier not found");
                 return apiResponse;
             }
+
+            // Update Category if provided
+            if (updatedRM.getCategory() != null && updatedRM.getCategory().getId() != null) {
+                RawMaterialCategory rmCategory = rawMaterialCategoryRepository.findById(updatedRM.getCategory().getId()).orElse(null);
+                if (rmCategory != null) {
+                    existingRM.setCategory(rmCategory);
+                } else {
+                    apiResponse.setMessage("Category not found");
+                    return apiResponse;
+                }
+            }
+
+            // Update Inventory if provided
+
+                Inventory inventory = inventoryRepository.findById(updatedRM.getInventory().getId()).orElse(null);
+                if (inventory != null) {
+                    existingRM.setInventory(inventory);
+                } else {
+                    apiResponse.setMessage("Inventory not found");
+                    return apiResponse;
+                }
+
 
             // Update Raw Material details
             existingRM.setName(updatedRM.getName());

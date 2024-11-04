@@ -7,6 +7,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { NotifyUtil } from '../../../util/notify.util';
 import { RawMaterialCategory } from '../../raw-material-category/model/raw-material-category.model';
 import { RawMaterialCategoryService } from '../../raw-material-category/raw-material-category.service';
+import {Inventory} from "../../inventory/model/inventory.model";
+import {InventoryService} from "../../inventory/inventory.service";
 
 @Component({
   selector: 'app-raw-material-create',
@@ -20,6 +22,7 @@ export class RawMaterialCreateComponent implements OnInit {
 
   categories: RawMaterialCategory[] = [];
   suppliers: SupplierModel[] = [];
+  inventories: Inventory[]=[];
   units = Object.values(Unit);
 
   rawMaterialId?: number;
@@ -28,6 +31,7 @@ export class RawMaterialCreateComponent implements OnInit {
     private supplierService: SupplierService,
     private rawMaterialService: RawMaterialService,
     private rawMaterialCategoryService: RawMaterialCategoryService,
+    private inventoryService: InventoryService,
     private route: ActivatedRoute,
     private router: Router
   ) { }
@@ -35,6 +39,7 @@ export class RawMaterialCreateComponent implements OnInit {
   ngOnInit(): void {
     this.loadRawMaterialSuppliers();
     this.loadRawMaterialCategories();
+    this.loadInventories();
 
     this.rawMaterialId = this.route.snapshot.params['id'];
     if (this.rawMaterialId) {
@@ -47,7 +52,7 @@ export class RawMaterialCreateComponent implements OnInit {
       next: apiResponse => {
         if (apiResponse && apiResponse.success) {
           this.suppliers = apiResponse.data['rawMaterialSuppliers'];
-          
+
         } else {
           NotifyUtil.error(apiResponse);
         }
@@ -63,13 +68,28 @@ export class RawMaterialCreateComponent implements OnInit {
       next: apiResponse => {
         if (apiResponse && apiResponse.success) {
           this.categories = apiResponse.data['categories'];
-          
+
         } else {
           NotifyUtil.error(apiResponse);
         }
       },
       error: (apiResponse) => {
         NotifyUtil.error(apiResponse);
+      }
+    });
+  }
+
+  private loadInventories(): void {
+    this.inventoryService.getAllInventories().subscribe({
+      next: apiResponse => {
+        if (apiResponse && apiResponse.success) {
+          this.inventories = apiResponse.data['inventories'];
+        } else {
+          NotifyUtil.error(apiResponse.message);
+        }
+      },
+      error: apiResponse => {
+        NotifyUtil.error(apiResponse.message);
       }
     });
   }

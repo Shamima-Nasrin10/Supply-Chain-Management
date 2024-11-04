@@ -1,49 +1,31 @@
-
-<div class="row">
-    <div class="col-md-12 mb-2">
-      <div class="pull-right">
-        <button class="btn btn-success" [routerLink]="['/rawMaterialCategory']">
-          <i class="fa fa-plus"></i>Add New RM Category
-        </button>
-      </div>
+<div class="container m-4">
+  <div class="row mb-3">
+    <div class="col-12 text-end">
+      <button class="btn btn-success" [routerLink]="['/rawMaterialCategory']">
+        <i class="fa fa-plus"></i> Add New RM Category
+      </button>
     </div>
   </div>
 
-  <div class="row">
-    <div class="col-md-12">
-      <div class="card">
-        <div class="card-body">
-          <div class="table-responsive">
-            <table class="display table table-striped table-hover" id="add-row">
-              <thead>
-                <tr>
-                  <th class="col-md-1">SL</th>
-                  <th>Name</th>
-                  <th class="text-center col-md-1">Action</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr *ngFor="let category of categories; let i = index;">
-                  <td>{{ i + 1 }}</td>
-                  <td>{{ category.name || '-' }}</td>
-                  <td>
-                    <div class="form-button-action">
-                      <button [routerLink]="['/rawMaterialCategory', category.id]" class="btn btn-link btn-primary btn-sm me-2"
-                        title="Edit" type="button">
-                        <i class="fa fa-edit"></i>
-                      </button>
-                      <button (click)="deleteCategory(category.id)" class="btn btn-link btn-danger btn-sm"
-                        title="Delete" type="button">
-                        <i class="fa fa-times"></i>
-                      </button>
-                    </div>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
+  <div class="row justify-content-center">
+    <div class="col-lg-4 col-md-6 col-sm-12 mb-4" *ngFor="let category of categories; let i = index;">
+      <div class="card shadow-sm rounded border-0 d-flex flex-column align-items-center" style="min-width: 280px; min-height: 300px;">
+        <div class="card-body text-center d-flex flex-column align-items-center p-4">
+          <div class="icon-box mb-3">
+            <i class="fa fa-folder-open fa-2x text-primary"></i>
           </div>
+          <h5 class="card-title mb-2">{{ category.name || 'Untitled Category' }}</h5>
+          <p class="text-muted mb-4">Category #{{ i + 1 }}</p>
+        </div>
+        <div class="card-footer w-100 d-flex justify-content-center gap-2">
+          <button [routerLink]="['/rawMaterialCategory', category.id]" class="btn btn-outline-primary btn-sm px-3" title="Edit">
+            <i class="fa fa-edit"></i> Edit
+          </button>
+          <button (click)="deleteCategory(category.id)" class="btn btn-outline-danger btn-sm px-3" title="Delete">
+            <i class="fa fa-trash"></i> Delete
+          </button>
         </div>
       </div>
     </div>
   </div>
-  
+</div>
