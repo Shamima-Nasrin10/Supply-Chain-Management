@@ -1,6 +1,5 @@
-package com.shamima.SCMSystem.production.entity;
+package com.shamima.SCMSystem.products.entity;
 
-import com.shamima.SCMSystem.goods.entity.Inventory;
 import com.shamima.SCMSystem.goods.entity.RawMaterial;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;

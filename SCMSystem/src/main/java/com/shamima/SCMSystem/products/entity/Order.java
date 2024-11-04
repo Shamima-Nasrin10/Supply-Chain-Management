@@ -1,4 +1,4 @@
-package com.shamima.SCMSystem.production.entity;
+package com.shamima.SCMSystem.products.entity;
 
 import com.shamima.SCMSystem.security.entity.User;
 import jakarta.persistence.*;

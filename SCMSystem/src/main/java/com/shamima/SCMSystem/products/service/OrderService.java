@@ -1,13 +1,9 @@
-package com.shamima.SCMSystem.production.service;
+package com.shamima.SCMSystem.products.service;
 
-import com.shamima.SCMSystem.goods.entity.RawMaterial;
-import com.shamima.SCMSystem.production.entity.Order;
-import com.shamima.SCMSystem.production.repository.OrderRepository;
+import com.shamima.SCMSystem.products.repository.OrderRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Service
 public class OrderService {

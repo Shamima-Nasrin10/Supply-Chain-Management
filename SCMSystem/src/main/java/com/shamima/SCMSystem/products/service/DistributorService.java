@@ -1,7 +1,7 @@
-package com.shamima.SCMSystem.production.service;
+package com.shamima.SCMSystem.products.service;
 
-import com.shamima.SCMSystem.production.entity.Distributor;
-import com.shamima.SCMSystem.production.repository.DistributorRepository;
+import com.shamima.SCMSystem.products.entity.Distributor;
+import com.shamima.SCMSystem.products.repository.DistributorRepository;
 import com.shamima.SCMSystem.util.ApiResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

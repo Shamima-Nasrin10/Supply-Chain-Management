@@ -1,10 +1,10 @@
 package com.shamima.SCMSystem.accounting.service;
 
 import com.shamima.SCMSystem.accounting.entity.Procurement;
-import com.shamima.SCMSystem.accounting.entity.ProcurementDetails;
-import com.shamima.SCMSystem.accounting.repository.ProcurementDetailsRepository;
 import com.shamima.SCMSystem.accounting.repository.ProcurementRepository;
 import com.shamima.SCMSystem.goods.entity.RawMaterial;
+import com.shamima.SCMSystem.goods.entity.RawMaterialStock;
+import com.shamima.SCMSystem.goods.repository.RMStockRepository;
 import com.shamima.SCMSystem.goods.repository.RawMaterialRepository;
 import com.shamima.SCMSystem.util.ApiResponse;
 import jakarta.transaction.Transactional;
@@ -23,8 +23,7 @@ public class ProcurementService {
     private ProcurementRepository procurementRepository;
 
     @Autowired
-    private ProcurementDetailsRepository procurementDetailsRepository;
-
+    private RMStockRepository rmStockRepository;
 
     public ApiResponse getAllProcurement() {
         ApiResponse apiResponse = new ApiResponse(false);
@@ -39,36 +38,35 @@ public class ProcurementService {
     }
 
     @Transactional
+    public ApiResponse saveProcurements(List<Procurement> procurements) {
+        ApiResponse apiResponse = new ApiResponse(false);
+        try {
+            List<Procurement> savedProcurements = procurementRepository.saveAll(procurements);
+
+            for (Procurement procurement : savedProcurements) {
+                if (procurement.getStatus().equals(Procurement.Status.APPROVED)) {
+                    updateRawMaterialStock(procurement);
+                }
+            }
+
+            apiResponse.setSuccess(true);
+            apiResponse.setMessage("Procurements saved successfully");
+            apiResponse.setData("procurements", savedProcurements);
+        } catch (Exception e) {
+            apiResponse.setMessage(e.getMessage());
+        }
+        return apiResponse;
+    }
+
+    @Transactional
     public ApiResponse saveProcurement(Procurement procurement) {
         ApiResponse apiResponse = new ApiResponse(false);
         try {
-            // Save the procurement first to get the generated ID
             Procurement savedProcurement = procurementRepository.save(procurement);
 
-            // Update product stock
-            // Create SalesDetails for each product
-            savedProcurement.getRawMaterial().forEach(purchasedRawMaterial -> {
-                RawMaterial rawMaterial = rawMaterialRepository.findById(purchasedRawMaterial.getId())
-                        .orElseThrow(() -> new RuntimeException("Product not found with ID " + purchasedRawMaterial.getId()));
-                int newStock = rawMaterial.getStock() + purchasedRawMaterial.getQuantity();
-                if (newStock < 0) {
-                    throw new RuntimeException("Not enough stock for product " + rawMaterial.getName());
-                }
-                rawMaterial.setStock(newStock);
-                rawMaterialRepository.save(rawMaterial);
-                ProcurementDetails procurementDetails = new ProcurementDetails();
-                procurementDetails.setProcurement(savedProcurement);
-                procurementDetails.setRawMaterial(rawMaterial);
-                procurementDetails.setQuantity(purchasedRawMaterial.getQuantity());
-                procurementDetails.setUnitPrice(rawMaterial.getPrice());
-//                procurementDetails.setDiscount(procurement.getDiscount());
-//                double discount = procurement.getDiscount();
-                double unitPrice = rawMaterial.getPrice();
-                long quantity = purchasedRawMaterial.getQuantity();
-                double totalPrice = quantity * unitPrice;
-                procurementDetails.setTotalPrice(totalPrice);
-                procurementDetailsRepository.save(procurementDetails);
-            });
+            if (procurement.getStatus().equals(Procurement.Status.APPROVED)) {
+                updateRawMaterialStock(procurement);
+            }
 
             apiResponse.setSuccess(true);
             apiResponse.setMessage("Procurement saved successfully");
@@ -79,17 +77,37 @@ public class ProcurementService {
         return apiResponse;
     }
 
-    // Delete Sales by ID
+    private void updateRawMaterialStock(Procurement procurement) {
+        RawMaterial rawMaterial = procurement.getRawMaterial();
+        RawMaterialStock stock = rmStockRepository.findByRawMaterial(rawMaterial);
+
+        if (stock != null) {
+            stock.setQuantity(stock.getQuantity() + procurement.getQuantity());
+        } else {
+            stock = new RawMaterialStock();
+            stock.setRawMaterial(rawMaterial);
+            stock.setQuantity(procurement.getQuantity());
+        }
+        rmStockRepository.save(stock);
+    }
+
     @Transactional
     public ApiResponse deleteProcurementById(long id) {
         ApiResponse apiResponse = new ApiResponse(false);
         try {
             if (procurementRepository.existsById(id)) {
+                Procurement procurement = procurementRepository.findById(id).orElse(null);
+                if (procurement == null) {
+                    apiResponse.setMessage("Procurement not found");
+                    return apiResponse;
+                }
+
                 procurementRepository.deleteById(id);
+
                 apiResponse.setSuccess(true);
-                apiResponse.setMessage("Sales deleted successfully");
+                apiResponse.setMessage("Procurement deleted successfully");
             } else {
-                apiResponse.setMessage("Sales not found with ID " + id);
+                apiResponse.setMessage("Procurement not found with ID " + id);
             }
         } catch (Exception e) {
             apiResponse.setMessage(e.getMessage());

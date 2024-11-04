@@ -25,32 +25,30 @@ public class Procurement {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @JsonIgnore
+    @ManyToOne
+    @JoinColumn(name = "rawmaterial_id")
+    private RawMaterial rawMaterial;
+
     @ManyToOne
     @JoinColumn(name = "supplier_id")
     private RawMaterialSupplier rawMaterialSupplier;
-    private Date salesdate;
-    private int totalprice;
+
+    private Date procurementDate;
+
+    private double unitPrice;
 
     private int quantity;
-    private float discount;
 
+    private double totalPrice;
 
-    @JsonIgnore
-    @ManyToMany
-    private List<RawMaterial> rawMaterial=new ArrayList<>();
+    @Enumerated(EnumType.STRING)
+    @Column(name = "status")
+    private Procurement.Status status;
 
-    public List<RawMaterial> getRawMaterial() {
-        return rawMaterial;
+    public enum Status {
+        PENDING,
+        APPROVED,
+        REJECTED
     }
-
-
-    public void setRawMaterial(List<RawMaterial> rawMaterial) {
-        this.rawMaterial = rawMaterial;
-    }
-
-
-//    @ManyToOne
-//    private SalesDetails salesDetails;
 
 }

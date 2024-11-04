@@ -1,5 +1,6 @@
 package com.shamima.SCMSystem.goods.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -20,15 +21,6 @@ public class RawMaterial {
 
     @Column(name = "name", nullable = false)
     private String name;
-    
-    @Column(name = "price")
-    private Double price;
-    
-    @Column(name = "quantity")
-    private Integer quantity;
-
-    @Column(name = "stock")
-    private Integer stock;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "unit")
@@ -40,14 +32,6 @@ public class RawMaterial {
     @ManyToOne()
     @JoinColumn(name = "category_id")
     private RawMaterialCategory category;
-
-    @ManyToOne()
-    @JoinColumn(name = "supplier_id", nullable = false)
-    private RawMaterialSupplier supplier;
-
-    @ManyToOne() // This establishes the relationship with Inventory
-    @JoinColumn(name = "inventory_id", nullable = false) // Foreign key column in RawMaterial
-    private Inventory inventory;
 
     public enum Unit {
         LETTER,

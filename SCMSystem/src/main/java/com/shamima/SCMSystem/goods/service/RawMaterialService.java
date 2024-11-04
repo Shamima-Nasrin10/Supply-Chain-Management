@@ -29,12 +29,6 @@ public class RawMaterialService {
     private RawMaterialRepository rawMaterialRepository;
 
     @Autowired
-    private RawMaterialSupplierRepository rawMaterialSupplierRepository;
-
-    @Autowired
-    InventoryRepository inventoryRepository;
-
-    @Autowired
     RawMaterialCategoryRepository rawMaterialCategoryRepository;
 
     @Value("src/main/resources/static/images")
@@ -56,31 +50,13 @@ public class RawMaterialService {
     public ApiResponse saveRawMaterial(RawMaterial rm, MultipartFile imageFile) {
         ApiResponse apiResponse = new ApiResponse(false);
         try {
-            // Verify Supplier
-            RawMaterialSupplier rawMaterialSupplier = rawMaterialSupplierRepository.findById(rm.getSupplier().getId()).orElse(null);
-            if (rawMaterialSupplier == null) {
-                apiResponse.setMessage("Supplier not found");
+            // Verify Category
+            RawMaterialCategory rawMaterialCategory = rawMaterialCategoryRepository.findById(rm.getCategory().getId()).orElse(null);
+            if (rawMaterialCategory == null) {
+                apiResponse.setMessage("Category not found");
                 return apiResponse;
             }
-            rm.setSupplier(rawMaterialSupplier);
-
-            // Verify Category
-
-                RawMaterialCategory rawMaterialCategory = rawMaterialCategoryRepository.findById(rm.getCategory().getId()).orElse(null);
-                if (rawMaterialCategory == null) {
-                    apiResponse.setMessage("Category not found");
-                    return apiResponse;
-                }
-                rm.setCategory(rawMaterialCategory);
-
-            // Verify Inventory
-
-                Inventory inventory = inventoryRepository.findById(rm.getInventory().getId()).orElse(null);
-                if (inventory == null) {
-                    apiResponse.setMessage("Inventory not found");
-                    return apiResponse;
-                }
-                rm.setInventory(inventory);
+            rm.setCategory(rawMaterialCategory);
 
             // Handle Image Upload
             if (imageFile != null && !imageFile.isEmpty()) {
@@ -88,9 +64,7 @@ public class RawMaterialService {
                 rm.setImage(imageFileName);
             }
 
-
             rawMaterialRepository.save(rm);
-
             apiResponse.setSuccess(true);
             apiResponse.setMessage("Raw Material saved successfully");
         } catch (Exception e) {
@@ -142,12 +116,6 @@ public class RawMaterialService {
                 return apiResponse;
             }
 
-            RawMaterialSupplier rmSupplier = rawMaterialSupplierRepository.findById(updatedRM.getSupplier().getId()).orElse(null);
-            if (rmSupplier == null) {
-                apiResponse.setMessage("Supplier not found");
-                return apiResponse;
-            }
-
             // Update Category if provided
             if (updatedRM.getCategory() != null && updatedRM.getCategory().getId() != null) {
                 RawMaterialCategory rmCategory = rawMaterialCategoryRepository.findById(updatedRM.getCategory().getId()).orElse(null);
@@ -159,25 +127,9 @@ public class RawMaterialService {
                 }
             }
 
-            // Update Inventory if provided
-
-                Inventory inventory = inventoryRepository.findById(updatedRM.getInventory().getId()).orElse(null);
-                if (inventory != null) {
-                    existingRM.setInventory(inventory);
-                } else {
-                    apiResponse.setMessage("Inventory not found");
-                    return apiResponse;
-                }
-
-
             // Update Raw Material details
             existingRM.setName(updatedRM.getName());
-            existingRM.setPrice(updatedRM.getPrice());
-            existingRM.setQuantity(updatedRM.getQuantity());
             existingRM.setUnit(updatedRM.getUnit());
-
-            // Update Supplier
-            existingRM.setSupplier(rmSupplier);
 
             // Update image if provided
             if (imageFile != null && !imageFile.isEmpty()) {
@@ -188,18 +140,6 @@ public class RawMaterialService {
             rawMaterialRepository.save(existingRM);
             apiResponse.setSuccess(true);
             apiResponse.setMessage("Raw Material updated successfully");
-        } catch (Exception e) {
-            apiResponse.setMessage(e.getMessage());
-        }
-        return apiResponse;
-    }
-
-    public ApiResponse findRawMaterialsBySupplierId(long supplierId) {
-        ApiResponse apiResponse = new ApiResponse(false);
-        try {
-            List<RawMaterial> rawMaterials = rawMaterialRepository.findRawMaterialsBySupplierId(supplierId);
-            apiResponse.setSuccess(true);
-            apiResponse.setData("rawMaterials", rawMaterials);
         } catch (Exception e) {
             apiResponse.setMessage(e.getMessage());
         }

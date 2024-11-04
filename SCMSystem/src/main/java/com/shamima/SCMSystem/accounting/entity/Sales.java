@@ -1,8 +1,8 @@
 package com.shamima.SCMSystem.accounting.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.shamima.SCMSystem.production.entity.Product;
-import com.shamima.SCMSystem.production.entity.Distributor;
+import com.shamima.SCMSystem.products.entity.Product;
+import com.shamima.SCMSystem.products.entity.Distributor;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

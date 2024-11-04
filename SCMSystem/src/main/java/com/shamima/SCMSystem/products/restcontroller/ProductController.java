@@ -1,7 +1,7 @@
-package com.shamima.SCMSystem.production.restcontroller;
+package com.shamima.SCMSystem.products.restcontroller;
 
-import com.shamima.SCMSystem.production.entity.Product;
-import com.shamima.SCMSystem.production.service.ProductService;
+import com.shamima.SCMSystem.products.entity.Product;
+import com.shamima.SCMSystem.products.service.ProductService;
 import com.shamima.SCMSystem.util.ApiResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;

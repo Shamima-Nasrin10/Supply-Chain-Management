@@ -35,11 +35,7 @@ public class RawMaterialController {
     public ApiResponse findRawMaterialById(@PathVariable long id) {
         return rawMaterialService.findRawMaterialById(id);
     }
-
-    @GetMapping("/search")
-    public ApiResponse findRawMaterialsBySupplierId(@RequestParam long supplierId) {
-        return rawMaterialService.findRawMaterialsBySupplierId(supplierId);
-    }
+    
 
     @DeleteMapping("/delete/{id}")
     public ApiResponse deleteRawMaterialById(@PathVariable long id) {

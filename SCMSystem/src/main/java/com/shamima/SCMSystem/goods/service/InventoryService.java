@@ -1,7 +1,6 @@
 package com.shamima.SCMSystem.goods.service;
 
 import com.shamima.SCMSystem.goods.entity.Inventory;
-import com.shamima.SCMSystem.production.entity.Warehouse;
 import com.shamima.SCMSystem.goods.repository.InventoryRepository;
 import com.shamima.SCMSystem.util.ApiResponse;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -8,6 +8,8 @@ import com.shamima.SCMSystem.util.ApiResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/procurement")
 public class ProcurementController {
@@ -15,16 +17,19 @@ public class ProcurementController {
     @Autowired
     private ProcurementService procurementService;
 
-
     @GetMapping("/list")
-    public ApiResponse getAllSales() {
+    public ApiResponse getAllProcurement() {
         return procurementService.getAllProcurement();
     }
 
-
     @PostMapping("/save")
-    public ApiResponse saveSales(@RequestBody Procurement procurement) {
+    public ApiResponse saveProcurement(@RequestBody Procurement procurement) {
         return procurementService.saveProcurement(procurement);
+    }
+
+    @PostMapping("/saveAll")
+    public ApiResponse saveProcurements(@RequestBody List<Procurement> procurements) {
+        return procurementService.saveProcurements(procurements);
     }
 
     @DeleteMapping("/delete/{id}")

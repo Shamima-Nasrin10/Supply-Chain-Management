@@ -1,7 +1,7 @@
-package com.shamima.SCMSystem.production.repository;
+package com.shamima.SCMSystem.products.repository;
 
 import com.shamima.SCMSystem.goods.entity.Inventory;
-import com.shamima.SCMSystem.production.entity.Warehouse;
+import com.shamima.SCMSystem.products.entity.Warehouse;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
