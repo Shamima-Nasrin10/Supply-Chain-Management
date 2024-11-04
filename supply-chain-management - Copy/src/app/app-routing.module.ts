@@ -40,74 +40,54 @@ const routes: Routes = [
     path: "logout", component: LogoutComponent
   },
   {
-    path:"warehouse", component: WarehouseComponent, canActivate: [AuthGuard, RoleGuard],
-    data: { roles: ['ADMIN'] }
+    path:"warehouse", component: WarehouseComponent
   },
   {
-    path:"inventory", component: InventoryCreateComponent, canActivate: [AuthGuard, RoleGuard],
-    data: { roles: ['ADMIN'] }
+    path:"inventory", component: InventoryCreateComponent
   },
   {
-    path: "rawMaterial", component: RawMaterialCreateComponent, canActivate: [AuthGuard, RoleGuard],
-    data: { roles: ['ADMIN'] }
+    path: "rawMaterial", component: RawMaterialCreateComponent
   },
   {
-    path: "rawMaterial/:id", component: RawMaterialCreateComponent, canActivate: [AuthGuard, RoleGuard],
-    data: { roles: ['ADMIN'] }
+    path: "rawMaterial/:id", component: RawMaterialCreateComponent
   },
   {
-    path: "rawMaterial-list", component: RawMaterialListComponent, canActivate: [AuthGuard, RoleGuard],
-    data: { roles: ['ADMIN'] }
+    path: "rawMaterial-list", component: RawMaterialListComponent
   },
   {
-    path: "rawMaterialCategory", component: RawMaterialCategoryCreateComponent, canActivate: [AuthGuard, RoleGuard],
-    data: { roles: ['ADMIN'] }
+    path: "rawMaterialCategory", component: RawMaterialCategoryCreateComponent
   },
   {
-    path: "rawMaterialCategory/:id", component: RawMaterialCategoryCreateComponent, canActivate: [AuthGuard, RoleGuard],
-    data: { roles: ['ADMIN'] }
+    path: "rawMaterialCategory/:id", component: RawMaterialCategoryCreateComponent
   },
   {
-    path: "rawMaterialCategory-list", component: RawMaterialCategoryListComponent, canActivate: [AuthGuard, RoleGuard],
-    data: { roles: ['ADMIN'] }
+    path: "rawMaterialCategory-list", component: RawMaterialCategoryListComponent
   },
   {
-    path: "retailer", component: RetailerComponent, canActivate: [AuthGuard, RoleGuard],
-    data: { roles: ['ADMIN'] }
+    path: "retailer", component: RetailerComponent
   },
   {
-    path: "supplier", component: SupplierCreateComponent, canActivate: [AuthGuard, RoleGuard],
-    data: { roles: ['ADMIN'] }
+    path: "supplier", component: SupplierCreateComponent
   },
   {
-    path: "supplier/:id", component: SupplierCreateComponent, canActivate: [AuthGuard, RoleGuard],
-    data: { roles: ['ADMIN'] }
+    path: "supplier/:id", component: SupplierCreateComponent
   },
   {
-    path: "supplier-list", component: SupplierListComponent, canActivate: [AuthGuard, RoleGuard],
-    data: { roles: ['ADMIN'] }
+    path: "supplier-list", component: SupplierListComponent
   },
   {
     path: 'product',
-    component: ProductComponent,
-    canActivate: [AuthGuard, RoleGuard],
-    data: { roles: ['ADMIN', 'USER'] }
+    component: ProductComponent
   },
   {
-    path:'sales-create', component: SalesCreateComponent, canActivate: [AuthGuard, RoleGuard],
-    data: { roles: ['ADMIN'] }
+    path:'sales-create', component: SalesCreateComponent
   },
   {
-    path:'sales-details', component: SalesDetailsComponent, canActivate: [AuthGuard, RoleGuard],
-    data: { roles: ['ADMIN'] }
+    path:'sales-details', component: SalesDetailsComponent
   },
   {
     path: "notification", component: NotificationComponent
   },
-  {
-    path: "order-create", component: OrderCreateComponent
-  },
-  { path: 'order-list', component: OrderListComponent, canActivate: [AuthGuard] },
 
   {
     path: 'userprofile', component: UserProfileComponent
