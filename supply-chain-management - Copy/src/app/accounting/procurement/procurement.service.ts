@@ -27,5 +27,5 @@ export class ProcurementService {
   deleteProcurementById(id: number): Observable<ApiResponse> {
     return this.http.delete<ApiResponse>(`${this.apiUrl}/delete/${id}`);
   }
-  
+
 }

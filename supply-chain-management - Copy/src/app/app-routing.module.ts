@@ -14,6 +14,8 @@ import {ProductComponent} from "./product/product/product.component";
 import {RetailerComponent} from "./product/retailer/retailer/retailer.component";
 import {SalesCreateComponent} from "./accounting/sales/sales-create/sales-create.component";
 import {SalesDetailsComponent} from "./accounting/sales/sales-details/sales-details.component";
+import {ProcurementComponent} from "./accounting/procurement/procurement/procurement.component";
+import {ProcurementListComponent} from "./accounting/procurement/procurement-list/procurement-list.component";
 
 const routes: Routes = [
   // {
@@ -66,6 +68,12 @@ const routes: Routes = [
   },
   {
     path: "supplier-list", component: SupplierListComponent
+  },
+  {
+    path:"procurements-create",component:ProcurementComponent
+  },
+  {
+    path:"procurements-list",component:ProcurementListComponent
   },
   {
     path: 'product',

@@ -1,1 +1,110 @@
-<p>procurement works!</p>
+<div class="container mt-4">
+  <h2>Create New Procurement</h2>
+  <form (ngSubmit)="onSubmit()">
+
+    <div class="form-group mb-3">
+      <label for="rawMaterial">Raw Material</label>
+      <select
+        class="form-control"
+        id="rawMaterial"
+        [(ngModel)]="procurement.rawMaterial"
+        name="rawMaterial"
+        required
+      >
+        <option *ngFor="let material of rawMaterials" [ngValue]="material">
+          {{ material.name }}
+        </option>
+      </select>
+    </div>
+
+
+    <div class="form-group mb-3">
+      <label for="supplier">Supplier</label>
+      <select
+        class="form-control"
+        id="supplier"
+        [(ngModel)]="procurement.rawMaterialSupplier"
+        name="rawMaterialSupplier"
+        required
+      >
+        <option *ngFor="let supplier of suppliers" [ngValue]="supplier">
+          {{ supplier.companyName }}
+        </option>
+      </select>
+    </div>
+
+
+    <div class="form-group mb-3">
+      <label for="procurementDate">Procurement Date</label>
+      <input
+        type="date"
+        class="form-control"
+        id="procurementDate"
+        [(ngModel)]="procurement.procurementDate"
+        name="procurementDate"
+        required
+      />
+    </div>
+
+
+    <div class="form-group mb-3">
+      <label for="quantity">Quantity</label>
+      <input
+        type="number"
+        class="form-control"
+        id="quantity"
+        [(ngModel)]="procurement.quantity"
+        name="quantity"
+        (input)="updateTotalPrice()"
+        required
+      />
+    </div>
+
+
+    <div class="form-group mb-3">
+      <label for="unitPrice">Unit Price</label>
+      <input
+        type="number"
+        class="form-control"
+        id="unitPrice"
+        [(ngModel)]="procurement.unitPrice"
+        name="unitPrice"
+        (input)="updateTotalPrice()"
+        required
+      />
+    </div>
+
+
+    <div class="form-group mb-3">
+      <label for="totalPrice">Total Price</label>
+      <input
+        type="number"
+        class="form-control"
+        id="totalPrice"
+        [(ngModel)]="procurement.totalPrice"
+        name="totalPrice"
+        readonly
+      />
+    </div>
+
+
+    <div class="form-group mb-3">
+      <label for="status">Status</label>
+      <select
+        class="form-control"
+        id="status"
+        [(ngModel)]="procurement.status"
+        name="status"
+        required
+      >
+        <option *ngFor="let status of procurementStatusOptions" [value]="status">
+          {{ status }}
+        </option>
+      </select>
+    </div>
+
+
+    <button type="submit" class="btn btn-primary mt-4">Save Procurement</button>
+  </form>
+</div>
+

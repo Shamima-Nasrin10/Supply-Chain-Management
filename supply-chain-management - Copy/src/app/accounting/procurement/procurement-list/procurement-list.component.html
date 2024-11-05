@@ -1,1 +1,36 @@
-<p>procurement-list works!</p>
+<div class="container mt-4">
+  <h2>Procurement List</h2>
+  <button class="btn btn-primary mb-3" [routerLink]="['/procurements-create']">Add New Procurement</button>
+  <table class="table table-striped">
+    <thead>
+    <tr>
+      <th>#</th>
+      <th>Raw Material</th>
+      <th>Supplier</th>
+      <th>Date</th>
+      <th>Quantity</th>
+      <th>Unit Price</th>
+      <th>Total Price</th>
+      <th>Status</th>
+      <th>Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let procurement of procurements; let i = index">
+      <td>{{ i + 1 }}</td>
+      <td>{{ procurement.rawMaterial?.name || '-' }}</td>
+      <td>{{ procurement.rawMaterialSupplier?.companyName || '-' }}</td>
+      <td>{{ procurement.procurementDate | date }}</td>
+      <td>{{ procurement.quantity }}</td>
+      <td>{{ procurement.unitPrice | currency }}</td>
+      <td>{{ procurement.totalPrice | currency }}</td>
+      <td>{{ procurement.status }}</td>
+      <td>
+        <button class="btn btn-info btn-sm me-2" (click)="onView(procurement.id)">View</button>
+        <button class="btn btn-danger btn-sm" (click)="onDelete(procurement.id)">Delete</button>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</div>
+
