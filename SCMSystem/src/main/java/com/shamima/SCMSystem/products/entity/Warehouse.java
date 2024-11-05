@@ -23,4 +23,11 @@ public class Warehouse {
     @Column(nullable = false)
     private String location;
 
+    @Enumerated(EnumType.STRING)
+    private ApprovalStatus approvalStatus = ApprovalStatus.PENDING;
+
+    public enum ApprovalStatus {
+        PENDING, APPROVED, REJECTED
+    }
+
 }

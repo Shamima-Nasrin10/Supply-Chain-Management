@@ -33,26 +33,26 @@
           <th>Actions</th>
         </tr>
         </thead>
-        <tbody>
-        <tr *ngFor="let product of sales.product; let i = index">
-          <td>{{ i + 1 }}</td>
-          <td>
-            <select [(ngModel)]="product.id" (ngModelChange)="setProductDetails(product.id)">
-              <option *ngFor="let p of products" [ngValue]="p.id">{{ p.name }}</option>
-            </select>
-          </td>
-          <td>
-            <input type="number" [(ngModel)]="product.quantity" placeholder="Quantity" (ngModelChange)="calculateTotalPrice()">
-          </td>
-          <td>
-            <input type="number" [(ngModel)]="product.unitPrice" placeholder="Unit Price" [disabled]="true">
-          </td>
-          <td>
-            <button type="button" class="btn btn-danger btn-sm" (click)="removeProduct(i)">Remove</button>
-          </td>
-        </tr>
+<!--        <tbody>-->
+<!--        <tr *ngFor="let product of sales.product; let i = index">-->
+<!--          <td>{{ i + 1 }}</td>-->
+<!--          <td>-->
+<!--            <select [(ngModel)]="product.id" (ngModelChange)="setProductDetails(product.id)">-->
+<!--              <option *ngFor="let p of products" [ngValue]="p.id">{{ p.name }}</option>-->
+<!--            </select>-->
+<!--          </td>-->
+<!--          <td>-->
+<!--            <input type="number" [(ngModel)]="product.quantity" placeholder="Quantity" (ngModelChange)="calculateTotalPrice()">-->
+<!--          </td>-->
+<!--          <td>-->
+<!--            <input type="number" [(ngModel)]="product.unitPrice" placeholder="Unit Price" [disabled]="true">-->
+<!--          </td>-->
+<!--          <td>-->
+<!--            <button type="button" class="btn btn-danger btn-sm" (click)="removeProduct(i)">Remove</button>-->
+<!--          </td>-->
+<!--        </tr>-->
 
-        </tbody>
+<!--        </tbody>-->
       </table>
       <button type="button" class="btn btn-primary" (click)="saveSales()">Save Sales</button>
     </div>

@@ -5,6 +5,7 @@ import com.shamima.SCMSystem.products.service.ProductService;
 import com.shamima.SCMSystem.util.ApiResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 @RestController
 @RequestMapping("/api/product")
@@ -13,19 +14,16 @@ public class ProductController {
     @Autowired
     private ProductService productService;
 
-    @GetMapping("/getByNameAndUnitPrice")
-    public ApiResponse getByNameAndUnitPrice(@RequestParam String name, @RequestParam Double unitPrice) {
-        return productService.getByNameAndUnitPrice(name, unitPrice);
-    }
-
     @PostMapping("/save")
-    public ApiResponse saveProduct(@RequestBody Product product) {
-        return productService.saveProduct(product);
+    public ApiResponse saveProduct(@RequestPart Product product,
+                                   @RequestPart(required = false) MultipartFile imageFile) {
+        return productService.saveProduct(product, imageFile);
     }
 
     @PutMapping("/update")
-    public ApiResponse updateProduct(@RequestBody Product product) {
-        return productService.updateProduct(product);
+    public ApiResponse updateProduct(@RequestPart Product product,
+                                     @RequestPart(required = false) MultipartFile imageFile) {
+        return productService.updateProduct(product, imageFile);
     }
 
     @GetMapping("/list")
@@ -34,12 +32,12 @@ public class ProductController {
     }
 
     @GetMapping("/{id}")
-    public ApiResponse findProductById(@PathVariable Long id) {
+    public ApiResponse findProductById(@PathVariable long id) {
         return productService.findProductById(id);
     }
 
     @DeleteMapping("/delete/{id}")
-    public ApiResponse deleteProductById(@PathVariable Long id) {
+    public ApiResponse deleteProductById(@PathVariable long id) {
         return productService.deleteProductById(id);
     }
 

@@ -1,22 +1,8 @@
-import {Inventory} from "../../inventory/inventory/model/inventory.model";
 
 export class Product {
   id!: number;
   name!: string;
-  unitPrice!: number;
-  stock!: number;
-  quantity!: number;
-  batch!: string;
-  inventory: Inventory = new Inventory();
-  unit!: Unit;
-
+  description!: string;
+  image!: string;
 }
 
-export enum Unit {
-  METER = 'METER',
-  PIECE = 'PIECE',
-  FEET = 'FEET',
-  INCH = 'INCH',
-  KG = 'KG',
-  GRAM = 'GRAM'
-}

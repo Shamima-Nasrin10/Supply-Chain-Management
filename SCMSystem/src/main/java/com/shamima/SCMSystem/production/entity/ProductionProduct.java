@@ -1,11 +1,13 @@
 package com.shamima.SCMSystem.production.entity;
 
 import com.shamima.SCMSystem.products.entity.Product;
+import com.shamima.SCMSystem.products.entity.Warehouse;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -24,5 +26,26 @@ public class ProductionProduct {
 
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     private List<RawMatUsage> rawMatUsages;
+
+    private Date completionDate;
+    private Date movedToWarehouseDate;
+
+    private Long batchNumber;
+    private int quantity;
+
+    @ManyToOne
+    @JoinColumn(name = "warehouse_id")
+    private Warehouse warehouse;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "status")
+    private ProductionProduct.Status status=Status.IN_PROGRESS;
+
+    public enum Status {
+        IN_PROGRESS,
+        COMPLETED,
+        MOVED_TO_WAREHOUSE
+
+    }
 
 }

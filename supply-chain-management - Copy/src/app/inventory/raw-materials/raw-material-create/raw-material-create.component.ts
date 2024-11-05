@@ -21,17 +21,13 @@ export class RawMaterialCreateComponent implements OnInit {
   imageFile?: File;
 
   categories: RawMaterialCategory[] = [];
-  suppliers: SupplierModel[] = [];
-  inventories: Inventory[]=[];
   units = Object.values(Unit);
 
   rawMaterialId?: number;
 
   constructor(
-    private supplierService: SupplierService,
     private rawMaterialService: RawMaterialService,
     private rawMaterialCategoryService: RawMaterialCategoryService,
-    private inventoryService: InventoryService,
     private route: ActivatedRoute,
     private router: Router
   ) { }

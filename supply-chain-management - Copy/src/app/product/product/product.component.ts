@@ -1,11 +1,9 @@
 import {Component, OnInit} from '@angular/core';
 import {ProductService} from "../product.service"; // Import your Product service
-import {ActivatedRoute, Router} from "@angular/router";
-import {Product} from "../model/product.model"; // Ensure correct import path
-import {Inventory} from "../../inventory/inventory/model/inventory.model";
-import {InventoryService} from "../../inventory/inventory/inventory.service";
-import {NotifyUtil} from "../../util/notify.util";
-import {ApiResponse} from "../../util/api.response"; // Import Inventory model
+import {Router} from "@angular/router";
+import {Product} from "../model/product.model";
+import {ApiResponse} from "../../util/api.response";
+import {NotifyUtil} from "../../util/notify.util"; // Ensure correct import path
 
 @Component({
   selector: 'app-product',
@@ -13,27 +11,24 @@ import {ApiResponse} from "../../util/api.response"; // Import Inventory model
   styleUrl: './product.component.css'
 })
 export class ProductComponent implements OnInit {
-  product: Product = new Product();
   products: Product[] = [];
-  inventories: Inventory[] = [];
+  product: Product = new Product();
+  imageFile?: File;
+  isEditMode: boolean = false;
 
   constructor(
     private productService: ProductService,
-    private inventoryService: InventoryService,
-    private route: ActivatedRoute,
     private router: Router
-  ) {
-  }
+  ) {}
 
   ngOnInit(): void {
     this.loadProducts();
-    this.loadInventories();
   }
 
-  public loadProducts(): void {
+  private loadProducts(): void {
     this.productService.getAllProducts().subscribe({
       next: (response: ApiResponse) => {
-        if (response.success) {
+        if (response && response.success) {
           this.products = response.data['products'];
         } else {
           NotifyUtil.error(response.message);
@@ -45,82 +40,24 @@ export class ProductComponent implements OnInit {
     });
   }
 
-  public loadInventories(): void {
-    this.inventoryService.getAllInventories().subscribe({
-      next: (response: ApiResponse) => {
-        if (response.success) {
-          this.inventories = response.data['inventories'];
-        } else {
-          NotifyUtil.error(response.message);
-        }
-      },
-      error: (error) => {
-        NotifyUtil.error(error);
-      }
-    });
-  }
-
-  public loadProduct(id: number): void {
-    this.productService.getProductById(id).subscribe({
-      next: (response: ApiResponse) => {
-        if (response && response.success) {
-          this.product = response.data['product'];
-        } else {
-          NotifyUtil.error(response);
-        }
-      },
-      error: (error) => {
-        NotifyUtil.error(error);
-      }
-    });
-  }
-
-  // Assuming product: Product is already initialized
-
-  public getByNameAndUnitPrice(): void {
-    if (this.product.name && this.product.unitPrice) {
-      this.productService.getByNameAndUnitPrice(this.product.name, this.product.unitPrice).subscribe({
-        next: (response: ApiResponse) => {
-          if (response && response.success && response.data['product']) {
-            const fetchedProduct = response.data['product'];
-            this.product = {
-              ...fetchedProduct,
-              stock: this.product.stock
-            };
-          } else {
-            this.resetFieldsForNewProduct();
-          }
-        },
-        error: (error) => {
-          NotifyUtil.error(error);
-        }
-      });
+  onImagePicked(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    if (input.files && input.files.length > 0) {
+      this.imageFile = input.files[0];
     }
   }
 
-  public resetFieldsForNewProduct(): void {
-    this.product.batch = '';
-    this.product.stock = 0;
-  }
-
-
-
-
-  public onSubmit(): void {
-    if (!this.product.inventory.id) {
-      NotifyUtil.error('Please select an inventory before saving the product.');
-      return;
-    }
-
-    const productObservable = this.product.id
-      ? this.productService.updateProduct(this.product)
-      : this.productService.saveProduct(this.product);
+  onSubmit(): void {
+    const productObservable = this.isEditMode
+      ? this.productService.updateProduct(this.product, this.imageFile)
+      : this.productService.saveProduct(this.product, this.imageFile);
 
     productObservable.subscribe({
       next: (response: ApiResponse) => {
-        if (response.success) {
-          this.resetProductForm();
+        if (response && response.success) {
           NotifyUtil.success(response);
+          this.resetForm();
+          this.loadProducts();
         } else {
           NotifyUtil.error(response.message);
         }
@@ -131,18 +68,29 @@ export class ProductComponent implements OnInit {
     });
   }
 
-  public resetProductForm(): void {
-    this.product = new Product();
-    this.loadProducts();
+  editProduct(productId: number): void {
+    this.productService.getProductById(productId).subscribe({
+      next: (response: ApiResponse) => {
+        if (response && response.success) {
+          this.product = response.data['product'];
+          this.isEditMode = true;
+        } else {
+          NotifyUtil.error(response.message);
+        }
+      },
+      error: (error) => {
+        NotifyUtil.error(error);
+      }
+    });
   }
 
-  public deleteProduct(id: number): void {
+  deleteProduct(id: number): void {
     if (confirm('Are you sure you want to delete this product?')) {
       this.productService.deleteProductById(id).subscribe({
         next: (response: ApiResponse) => {
-          if (response.success) {
-            this.resetProductForm();
+          if (response && response.success) {
             NotifyUtil.success(response);
+            this.loadProducts();
           } else {
             NotifyUtil.error(response.message);
           }
@@ -154,7 +102,14 @@ export class ProductComponent implements OnInit {
     }
   }
 
-  public editProduct(productId: number): void {
-    this.loadProduct(productId);
+  resetForm(): void {
+    this.product = new Product();
+    this.imageFile = undefined;
+    this.isEditMode = false;
+  }
+
+  addNewProduct(): void {
+    this.resetForm();
+    this.isEditMode = false;
   }
 }

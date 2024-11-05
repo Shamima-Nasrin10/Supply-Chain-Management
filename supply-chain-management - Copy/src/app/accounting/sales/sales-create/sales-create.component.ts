@@ -69,21 +69,21 @@ export class SalesCreateComponent implements OnInit {
 
   removeProduct(index: number): void {
     this.sales.product.splice(index, 1);
-    this.calculateTotalPrice();
+    // this.calculateTotalPrice();
   }
 
-  calculateTotalPrice(): void {
-    let totalPrice = 0;
-    this.sales.product.forEach((product) => {
-      const quantity = product.quantity;
-      const unitPrice = product.unitPrice;
-      const discount = this.sales.discount;
-      if (quantity >= 0 && unitPrice >= 0 && discount >= 0) {
-        totalPrice += quantity * unitPrice * (1 - discount / 100);
-      }
-    });
-    this.sales.totalprice = totalPrice;
-  }
+  // calculateTotalPrice(): void {
+  //   let totalPrice = 0;
+  //   this.sales.product.forEach((product) => {
+  //     const quantity = product.quantity;
+  //     const unitPrice = product.unitPrice;
+  //     const discount = this.sales.discount;
+  //     if (quantity >= 0 && unitPrice >= 0 && discount >= 0) {
+  //       totalPrice += quantity * unitPrice * (1 - discount / 100);
+  //     }
+  //   });
+  //   this.sales.totalprice = totalPrice;
+  // }
 
   saveSales(): void {
     console.log(this.sales)
@@ -101,15 +101,15 @@ export class SalesCreateComponent implements OnInit {
     });
   }
 
-  setProductDetails(productId: number): void {
-    const product = this.products.find((p) => p.id === productId);
-    if (product) {
-      this.sales.product.forEach((p) => {
-        if (p.id === productId) {
-          p.unitPrice = product.unitPrice;
-        }
-      });
-    }
-  }
+  // setProductDetails(productId: number): void {
+  //   const product = this.products.find((p) => p.id === productId);
+  //   if (product) {
+  //     this.sales.product.forEach((p) => {
+  //       if (p.id === productId) {
+  //
+  //       }
+  //     });
+  //   }
+  // }
 
 }
