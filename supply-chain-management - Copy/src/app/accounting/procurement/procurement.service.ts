@@ -28,4 +28,12 @@ export class ProcurementService {
     return this.http.delete<ApiResponse>(`${this.apiUrl}/delete/${id}`);
   }
 
+  updateProcurement(id: number, procurement: ProcurementModel): Observable<ApiResponse> {
+    return this.http.put<ApiResponse>(`${this.apiUrl}/update/${id}`, procurement);
+  }
+
+  getProcurementById(id: number): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(`${this.apiUrl}/${id}`);
+  }
+
 }

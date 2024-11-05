@@ -55,7 +55,7 @@ export class ProcurementListComponent implements OnInit{
     }
   }
 
-  onView(id: number): void {
-    this.router.navigate(['/procurements-list', id]); // Navigate to a procurement detail page if it exists
+  onEdit(id: number): void {
+    this.router.navigate(['/procurement-edit', id]); // Ensure this route is configured
   }
 }

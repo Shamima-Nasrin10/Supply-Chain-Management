@@ -28,7 +28,7 @@
               <td>{{ i + 1 }}</td>
               <td>{{ rawmaterial.name || '-' }}</td>
               <td>{{ rawmaterial.unit || '-' }}</td>
-              <td>{{ rawmaterial.category?.name || '-' }}</td>
+              <td>{{ rawmaterial.category!.name || '-' }}</td>
               <td>
                 <img src="http://localhost:8080/images/rawmaterial/{{ rawmaterial.image }}" alt="Image" height="auto" width="50px">
               </td>

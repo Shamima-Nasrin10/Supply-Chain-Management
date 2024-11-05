@@ -125,4 +125,57 @@ public class ProcurementService {
         return apiResponse;
     }
 
+    @Transactional
+    public ApiResponse updateProcurement(long id, Procurement updatedProcurement) {
+        ApiResponse apiResponse = new ApiResponse(false);
+        try {
+            Procurement existingProcurement = procurementRepository.findById(id).orElse(null);
+
+            if (existingProcurement == null) {
+                apiResponse.setMessage("Procurement not found with ID " + id);
+                return apiResponse;
+            }
+
+            // Update fields in existing procurement based on the new procurement data
+            existingProcurement.setQuantity(updatedProcurement.getQuantity());
+            existingProcurement.setUnitPrice(updatedProcurement.getUnitPrice());
+            existingProcurement.setStatus(updatedProcurement.getStatus());
+            existingProcurement.setProcurementDate(updatedProcurement.getProcurementDate());
+
+            // Recalculate total price if quantity or unit price changed
+            calculateTotalPrice(existingProcurement);
+
+            // Save the updated procurement
+            Procurement savedProcurement = procurementRepository.save(existingProcurement);
+
+            // Update stock if status is approved and quantity has changed
+            if (existingProcurement.getStatus().equals(Procurement.Status.APPROVED)) {
+                updateRawMaterialStock(existingProcurement);
+            }
+
+            apiResponse.setSuccess(true);
+            apiResponse.setMessage("Procurement updated successfully");
+            apiResponse.setData("procurement", savedProcurement);
+        } catch (Exception e) {
+            apiResponse.setMessage(e.getMessage());
+        }
+        return apiResponse;
+    }
+
+    public ApiResponse getProcurementById(long id) {
+        ApiResponse apiResponse = new ApiResponse(false);
+        try {
+            Procurement procurement = procurementRepository.findById(id).orElse(null);
+            if (procurement == null) {
+                apiResponse.setMessage("Procurement not found with ID " + id);
+            } else {
+                apiResponse.setSuccess(true);
+                apiResponse.setData("procurement", procurement);
+            }
+        } catch (Exception e) {
+            apiResponse.setMessage(e.getMessage());
+        }
+        return apiResponse;
+    }
+
 }

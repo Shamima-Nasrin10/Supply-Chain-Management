@@ -1,7 +1,8 @@
 <div class="container mt-4">
-  <h2>Create New Procurement</h2>
-  <form (ngSubmit)="onSubmit()">
+  <h2>{{ isEditMode ? 'Edit Procurement' : 'Create New Procurement' }}</h2>
+  <form (ngSubmit)="onSubmit()" #procurementForm="ngForm">
 
+    <!-- Raw Material Selection -->
     <div class="form-group mb-3">
       <label for="rawMaterial">Raw Material</label>
       <select
@@ -10,14 +11,18 @@
         [(ngModel)]="procurement.rawMaterial"
         name="rawMaterial"
         required
+        #rawMaterial="ngModel"
       >
         <option *ngFor="let material of rawMaterials" [ngValue]="material">
           {{ material.name }}
         </option>
       </select>
+      <div *ngIf="rawMaterial.invalid && (rawMaterial.dirty || rawMaterial.touched)" class="text-danger">
+        Raw Material is required.
+      </div>
     </div>
 
-
+    <!-- Supplier Selection -->
     <div class="form-group mb-3">
       <label for="supplier">Supplier</label>
       <select
@@ -26,14 +31,19 @@
         [(ngModel)]="procurement.rawMaterialSupplier"
         name="rawMaterialSupplier"
         required
+        #rawMaterialSupplier="ngModel"
       >
+        <!-- Ensure this loops through suppliers and displays supplier names -->
         <option *ngFor="let supplier of suppliers" [ngValue]="supplier">
           {{ supplier.companyName }}
         </option>
       </select>
+      <div *ngIf="rawMaterialSupplier.invalid && (rawMaterialSupplier.dirty || rawMaterialSupplier.touched)" class="text-danger">
+        Supplier is required.
+      </div>
     </div>
 
-
+    <!-- Procurement Date -->
     <div class="form-group mb-3">
       <label for="procurementDate">Procurement Date</label>
       <input
@@ -43,10 +53,14 @@
         [(ngModel)]="procurement.procurementDate"
         name="procurementDate"
         required
+        #procurementDate="ngModel"
       />
+      <div *ngIf="procurementDate.invalid && (procurementDate.dirty || procurementDate.touched)" class="text-danger">
+        Procurement Date is required.
+      </div>
     </div>
 
-
+    <!-- Quantity -->
     <div class="form-group mb-3">
       <label for="quantity">Quantity</label>
       <input
@@ -57,10 +71,14 @@
         name="quantity"
         (input)="updateTotalPrice()"
         required
+        #quantity="ngModel"
       />
+      <div *ngIf="quantity.invalid && (quantity.dirty || quantity.touched)" class="text-danger">
+        Quantity is required.
+      </div>
     </div>
 
-
+    <!-- Unit Price -->
     <div class="form-group mb-3">
       <label for="unitPrice">Unit Price</label>
       <input
@@ -71,10 +89,14 @@
         name="unitPrice"
         (input)="updateTotalPrice()"
         required
+        #unitPrice="ngModel"
       />
+      <div *ngIf="unitPrice.invalid && (unitPrice.dirty || unitPrice.touched)" class="text-danger">
+        Unit Price is required.
+      </div>
     </div>
 
-
+    <!-- Total Price (Read-Only) -->
     <div class="form-group mb-3">
       <label for="totalPrice">Total Price</label>
       <input
@@ -87,7 +109,7 @@
       />
     </div>
 
-
+    <!-- Status Selection -->
     <div class="form-group mb-3">
       <label for="status">Status</label>
       <select
@@ -96,15 +118,20 @@
         [(ngModel)]="procurement.status"
         name="status"
         required
+        #status="ngModel"
       >
         <option *ngFor="let status of procurementStatusOptions" [value]="status">
           {{ status }}
         </option>
       </select>
+      <div *ngIf="status.invalid && (status.dirty || status.touched)" class="text-danger">
+        Status is required.
+      </div>
     </div>
 
-
-    <button type="submit" class="btn btn-primary mt-4">Save Procurement</button>
+    <!-- Submit Button -->
+    <button type="submit" class="btn btn-primary mt-4" [disabled]="procurementForm.invalid">
+      {{ isEditMode ? 'Update Procurement' : 'Save Procurement' }}
+    </button>
   </form>
 </div>
-

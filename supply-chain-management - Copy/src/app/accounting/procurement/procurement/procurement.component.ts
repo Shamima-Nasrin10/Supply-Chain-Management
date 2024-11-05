@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {ProcurementModel, ProcurementStatus} from "../procurement.model";
 import {ProcurementService} from "../procurement.service";
-import {Router} from "@angular/router";
+import {ActivatedRoute, Route, Router} from "@angular/router";
 import {ApiResponse} from "../../../util/api.response";
 import {SupplierModel} from "../../../inventory/suppliers/model/supplier.model";
 import {RawMaterial} from "../../../inventory/raw-materials/model/raw-material.model";
@@ -20,10 +20,12 @@ export class ProcurementComponent implements OnInit {
   procurementStatusOptions = Object.values(ProcurementStatus);
   rawMaterials: RawMaterial[] = [];
   suppliers: SupplierModel[] = [];
+  isEditMode = false;
 
   constructor(
     private procurementService: ProcurementService,
     private router: Router,
+    private route: ActivatedRoute,
     private rawMaterialService: RawMaterialService,
     private supplierService: SupplierService,
   ) {}
@@ -31,6 +33,11 @@ export class ProcurementComponent implements OnInit {
   ngOnInit(): void {
     this.loadRawMaterials();
     this.loadSuppliers();
+    const id = this.route.snapshot.params['id'];
+    if (id) {
+      this.isEditMode = true;
+      this.loadProcurement(id);
+    }
   }
 
   private loadRawMaterials(): void {
@@ -52,7 +59,22 @@ export class ProcurementComponent implements OnInit {
     this.supplierService.getAllRawMaterialSuppliers().subscribe({
       next: (apiResponse: ApiResponse) => {
         if (apiResponse && apiResponse.success) {
-          this.suppliers = apiResponse.data['rawMaterialSupplier'];
+          this.suppliers = apiResponse.data['rawMaterialSuppliers'];
+        } else {
+          NotifyUtil.error(apiResponse);
+        }
+      },
+      error: (error) => {
+        NotifyUtil.error(error);
+      }
+    });
+  }
+
+  private loadProcurement(id: number): void { // Ensure loadProcurement method is defined
+    this.procurementService.getProcurementById(id).subscribe({
+      next: (apiResponse: ApiResponse) => {
+        if (apiResponse && apiResponse.success) {
+          this.procurement = apiResponse.data['procurement'];
         } else {
           NotifyUtil.error(apiResponse);
         }
@@ -70,18 +92,34 @@ export class ProcurementComponent implements OnInit {
   onSubmit(): void {
     this.updateTotalPrice();
 
-    this.procurementService.saveProcurement(this.procurement).subscribe({
-      next: (apiResponse: ApiResponse) => {
-        if (apiResponse && apiResponse.success) {
-          alert('Procurement created successfully!');
-          this.router.navigate(['/procurements-list']);
-        } else {
-          NotifyUtil.error(apiResponse);
+    if (this.isEditMode) {
+      this.procurementService.updateProcurement(this.procurement.id, this.procurement).subscribe({
+        next: (apiResponse: ApiResponse) => {
+          if (apiResponse && apiResponse.success) {
+            alert('Procurement updated successfully!');
+            this.router.navigate(['/procurements-list']);
+          } else {
+            NotifyUtil.error(apiResponse);
+          }
+        },
+        error: (error) => {
+          NotifyUtil.error(error);
         }
-      },
-      error: (error) => {
-        NotifyUtil.error(error);
-      }
-    });
+      });
+    } else {
+      this.procurementService.saveProcurement(this.procurement).subscribe({
+        next: (apiResponse: ApiResponse) => {
+          if (apiResponse && apiResponse.success) {
+            alert('Procurement created successfully!');
+            this.router.navigate(['/procurements-list']);
+          } else {
+            NotifyUtil.error(apiResponse);
+          }
+        },
+        error: (error) => {
+          NotifyUtil.error(error);
+        }
+      });
+    }
   }
 }

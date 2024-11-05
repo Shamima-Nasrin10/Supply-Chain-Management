@@ -18,19 +18,19 @@
     <tbody>
     <tr *ngFor="let procurement of procurements; let i = index">
       <td>{{ i + 1 }}</td>
-      <td>{{ procurement.rawMaterial?.name || '-' }}</td>
-      <td>{{ procurement.rawMaterialSupplier?.companyName || '-' }}</td>
-      <td>{{ procurement.procurementDate | date }}</td>
+      <td>{{ procurement.rawMaterial!.name || '-' }}</td>
+      <td>{{ procurement.rawMaterialSupplier!.companyName || '-' }}</td>
+      <td>{{ procurement.procurementDate | date:'yyyy-MM-dd' }}</td>
       <td>{{ procurement.quantity }}</td>
       <td>{{ procurement.unitPrice | currency }}</td>
       <td>{{ procurement.totalPrice | currency }}</td>
       <td>{{ procurement.status }}</td>
       <td>
-        <button class="btn btn-info btn-sm me-2" (click)="onView(procurement.id)">View</button>
+        <!-- Edit button to navigate to the edit page -->
+        <button class="btn btn-primary btn-sm me-2" (click)="onEdit(procurement.id)">Edit</button>
         <button class="btn btn-danger btn-sm" (click)="onDelete(procurement.id)">Delete</button>
       </td>
     </tr>
     </tbody>
   </table>
 </div>
-
