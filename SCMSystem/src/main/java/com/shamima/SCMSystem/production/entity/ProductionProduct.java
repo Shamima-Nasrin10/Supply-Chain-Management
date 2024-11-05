@@ -23,11 +23,7 @@ public class ProductionProduct {
     @ManyToOne
     @JoinColumn(name = "product_id")
     private Product product; //from angular send class only containing product.id
-
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<RawMatUsage> rawMatUsages;
-
-    private Date completionDate;
+        private Date completionDate;
     private Date movedToWarehouseDate;
 
     private Long batchNumber;
@@ -38,6 +34,9 @@ public class ProductionProduct {
     private Warehouse warehouse;
 
     private String qrCodePath;
+
+    @OneToMany(mappedBy = "productionProduct", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<RawMatUsage> rawMatUsages;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "status")

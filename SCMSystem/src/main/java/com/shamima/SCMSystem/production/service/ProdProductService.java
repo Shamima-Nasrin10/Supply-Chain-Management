@@ -82,6 +82,9 @@ public class ProdProductService {
 
                 stock.setQuantity(stock.getQuantity() - rawMatUsage.getQuantity());
                 rmStockRepository.save(stock);
+
+                rawMatUsage.setRawMaterial(rawMaterial);
+                rawMatUsage.setProductionProduct(productionProduct);
             }
 
             productionProduct = prodProductRepository.save(productionProduct);

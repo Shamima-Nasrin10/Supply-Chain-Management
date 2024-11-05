@@ -22,4 +22,10 @@ public class RawMatUsage {
     private RawMaterial rawMaterial;
 
     private int quantity;
+
+    @ManyToOne
+    @JoinColumn(name = "production_product_id")
+    private ProductionProduct productionProduct;
+
+
 }
