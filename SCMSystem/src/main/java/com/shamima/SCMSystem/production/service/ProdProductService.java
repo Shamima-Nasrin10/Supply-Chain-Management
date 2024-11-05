@@ -11,6 +11,7 @@ import com.shamima.SCMSystem.goods.repository.RawMaterialRepository;
 import com.shamima.SCMSystem.production.entity.ProductionProduct;
 import com.shamima.SCMSystem.production.entity.RawMatUsage;
 import com.shamima.SCMSystem.production.repository.ProdProductRepository;
+import com.shamima.SCMSystem.production.repository.RawMatUsageRepository;
 import com.shamima.SCMSystem.products.entity.Warehouse;
 import com.shamima.SCMSystem.products.repository.WarehouseRepository;
 import com.shamima.SCMSystem.util.ApiResponse;
@@ -44,6 +45,8 @@ public class ProdProductService {
 
     @Value("src/main/resources/static/images/qrcodes")
     private String qrCodeDir;
+    @Autowired
+    private RawMatUsageRepository rawMatUsageRepository;
 
 
     public ApiResponse getAllProductionProducts() {
@@ -86,6 +89,7 @@ public class ProdProductService {
                 rawMatUsage.setRawMaterial(rawMaterial);
                 rawMatUsage.setProductionProduct(productionProduct);
             }
+            rawMatUsageRepository.saveAll(rawMatUsages);
 
             productionProduct = prodProductRepository.save(productionProduct);
             String qrCodePath = generateQRCodeForProduct(productionProduct);
