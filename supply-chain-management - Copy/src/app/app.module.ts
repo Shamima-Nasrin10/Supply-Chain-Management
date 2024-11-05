@@ -43,7 +43,9 @@ import {MatCardModule} from "@angular/material/card";
 import { SalesDetailsComponent } from './accounting/sales/sales-details/sales-details.component';
 import { SalesCreateComponent } from './accounting/sales/sales-create/sales-create.component';
 import { SalesUpdateComponent } from './accounting/sales/sales-update/sales-update.component';
-import { SalesViewComponent } from './accounting/sales/sales-view/sales-view.component'
+import { SalesViewComponent } from './accounting/sales/sales-view/sales-view.component';
+import { ProcurementComponent } from './accounting/procurement/procurement/procurement.component';
+import { ProcurementListComponent } from './accounting/procurement/procurement-list/procurement-list.component'
 
 
 @NgModule({
@@ -77,6 +79,8 @@ import { SalesViewComponent } from './accounting/sales/sales-view/sales-view.com
     SalesCreateComponent,
     SalesUpdateComponent,
     SalesViewComponent,
+    ProcurementComponent,
+    ProcurementListComponent,
   ],
   imports: [
     BrowserModule,

@@ -1,4 +1,4 @@
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient} from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { RawMaterial } from './model/raw-material.model';
 import { Observable } from 'rxjs';
@@ -45,11 +45,5 @@ export class RawMaterialService {
   findRawMaterialById(id: number): Observable<ApiResponse> {
     return this.http.get<ApiResponse>(`${this.apiUrl}/${id}`);
   }
-
-  findRawMaterialsBySupplierId(supplierId: number): Observable<ApiResponse> {
-    const params = new HttpParams().set('supplierId', supplierId);
-    return this.http.get<ApiResponse>(`${this.apiUrl}/search`, { params });
-  }
-
 
 }

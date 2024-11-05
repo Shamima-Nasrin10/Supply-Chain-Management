@@ -8,30 +8,12 @@
       <input type="text" class="form-control" id="name" [(ngModel)]="rawMaterial.name" name="name" required>
     </div>
 
-    <!-- Price Field -->
-    <div class="form-group">
-      <label for="price">Price</label>
-      <input type="number" class="form-control" id="price" [(ngModel)]="rawMaterial.price" name="price" required>
-    </div>
-
-    <!-- Quantity Field -->
-    <div class="form-group">
-      <label for="quantity">Quantity</label>
-      <input type="number" class="form-control" id="quantity" [(ngModel)]="rawMaterial.quantity" name="quantity" required>
-    </div>
-
     <!-- Unit Field -->
     <div class="form-group">
       <label for="unit">Unit</label>
       <select class="form-control" id="unit" [(ngModel)]="rawMaterial.unit" name="unit" required>
         <option *ngFor="let unit of units" [value]="unit">{{ unit }}</option>
       </select>
-    </div>
-
-    <!-- Stock Field -->
-    <div class="form-group">
-      <label for="stock">Stock</label>
-      <input type="number" class="form-control" id="stock" [(ngModel)]="rawMaterial.stock" name="stock" required>
     </div>
 
     <!-- Image Upload Field -->
@@ -45,22 +27,6 @@
       <label for="category">Category</label>
       <select class="form-control" id="category" [(ngModel)]="rawMaterial.category.id" name="category" required>
         <option *ngFor="let category of categories" [value]="category.id">{{ category.name }}</option>
-      </select>
-    </div>
-
-    <!-- Supplier Field -->
-    <div class="form-group">
-      <label for="supplier">Supplier</label>
-      <select class="form-control" id="supplier" [(ngModel)]="rawMaterial.supplier.id" name="supplier" required>
-        <option *ngFor="let supplier of suppliers" [value]="supplier.id">{{ supplier.companyName }}</option>
-      </select>
-    </div>
-
-    <!-- Inventory Field -->
-    <div class="form-group">
-      <label for="inventory">Inventory</label>
-      <select class="form-control" id="inventory" [(ngModel)]="rawMaterial.inventory.id" name="inventory" required>
-        <option *ngFor="let inventory of inventories" [value]="inventory.id">{{ inventory.name }}</option>
       </select>
     </div>
 

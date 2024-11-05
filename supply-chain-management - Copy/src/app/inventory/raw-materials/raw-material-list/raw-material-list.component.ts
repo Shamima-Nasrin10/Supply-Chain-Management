@@ -1,12 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { RawMaterial } from '../model/raw-material.model';
 import { RawMaterialService } from '../raw-material.service';
-import { Router } from '@angular/router';
-import { response } from 'express';
-import { error } from 'console';
-import { SupplierModel } from '../../suppliers/model/supplier.model';
-import { SupplierService } from '../../suppliers/supplier.service';
-import {AlertService} from "../../../util/alert.service";
 import { ApiResponse } from '../../../util/api.response';
 import { NotifyUtil } from '../../../util/notify.util';
 
@@ -51,7 +45,7 @@ export class RawMaterialListComponent implements OnInit {
           } else {
             NotifyUtil.error(response);
           }
-          this.loadRawMaterials(); 
+          this.loadRawMaterials();
         },
         error: (error) => {
           NotifyUtil.error(error);

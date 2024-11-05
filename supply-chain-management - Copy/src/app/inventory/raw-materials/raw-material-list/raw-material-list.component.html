@@ -2,7 +2,7 @@
   <div class="col-md-12 mb-2">
     <div class="pull-right">
       <button class="btn btn-success" [routerLink]="['/rawMaterial']">
-        <i class="fa fa-plus"></i>Add New RM
+        <i class="fa fa-plus"></i> Add New RM
       </button>
     </div>
   </div>
@@ -14,42 +14,35 @@
         <div class="table-responsive">
           <table class="display table table-striped table-hover" id="add-row">
             <thead>
-              <tr>
-                <th class="col-md-1">SL</th>
-                <th>Name</th>
-                <th>Quantity</th>
-                <th>Unit</th>
-                <th>Supplier</th>
-                <th>Price</th>
-                <th>Image</th>
-                <th class="text-center col-md-1">Action</th>
-              </tr>
+            <tr>
+              <th class="col-md-1">SL</th>
+              <th>Name</th>
+              <th>Unit</th>
+              <th>Category</th>
+              <th>Image</th>
+              <th class="text-center col-md-1">Action</th>
+            </tr>
             </thead>
             <tbody>
-              <tr *ngFor="let rawmaterial of rawMaterials; let i = index;">
-                <td>{{ i + 1 }}</td>
-                <td>{{ rawmaterial.name || '-' }}</td>
-                <td>{{ rawmaterial.quantity || '-' }}</td>
-                <td>{{ rawmaterial.unit || '-' }}</td>
-                <td>{{ rawmaterial.supplier.companyName || '-' }}</td>
-                <td>{{ rawmaterial.price || '-' }}</td>
-                <td>
-                  <img src="http://localhost:8080/images/rawmaterial/{{ rawmaterial.image }}" alt="Image" height="auto"
-                    width="50px">
-                </td>
-                <td>
-                  <div class="form-button-action">
-                    <button [routerLink]="['/rawMaterial', rawmaterial.id]" class="btn btn-link btn-primary btn-sm me-2"
-                      title="Edit" type="button">
-                      <i class="fa fa-edit"></i>
-                    </button>
-                    <button (click)="deleteRawMaterial(rawmaterial.id)" class="btn btn-link btn-danger btn-sm"
-                      title="Delete" type="button">
-                      <i class="fa fa-times"></i>
-                    </button>
-                  </div>
-                </td>
-              </tr>
+            <tr *ngFor="let rawmaterial of rawMaterials; let i = index;">
+              <td>{{ i + 1 }}</td>
+              <td>{{ rawmaterial.name || '-' }}</td>
+              <td>{{ rawmaterial.unit || '-' }}</td>
+              <td>{{ rawmaterial.category?.name || '-' }}</td>
+              <td>
+                <img src="http://localhost:8080/images/rawmaterial/{{ rawmaterial.image }}" alt="Image" height="auto" width="50px">
+              </td>
+              <td>
+                <div class="form-button-action">
+                  <button [routerLink]="['/rawMaterial', rawmaterial.id]" class="btn btn-link btn-primary btn-sm me-2" title="Edit" type="button">
+                    <i class="fa fa-edit"></i>
+                  </button>
+                  <button (click)="deleteRawMaterial(rawmaterial.id)" class="btn btn-link btn-danger btn-sm" title="Delete" type="button">
+                    <i class="fa fa-times"></i>
+                  </button>
+                </div>
+              </td>
+            </tr>
             </tbody>
           </table>
         </div>

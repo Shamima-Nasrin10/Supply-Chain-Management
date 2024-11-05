@@ -37,9 +37,7 @@ export class RawMaterialCreateComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.loadRawMaterialSuppliers();
     this.loadRawMaterialCategories();
-    this.loadInventories();
 
     this.rawMaterialId = this.route.snapshot.params['id'];
     if (this.rawMaterialId) {
@@ -47,21 +45,21 @@ export class RawMaterialCreateComponent implements OnInit {
     }
   }
 
-  private loadRawMaterialSuppliers() {
-    this.supplierService.getAllRawMaterialSuppliers().subscribe({
-      next: apiResponse => {
-        if (apiResponse && apiResponse.success) {
-          this.suppliers = apiResponse.data['rawMaterialSuppliers'];
-
-        } else {
-          NotifyUtil.error(apiResponse);
-        }
-      },
-      error: apiResponse => {
-        NotifyUtil.error(apiResponse);
-      }
-    });
-  }
+  // private loadRawMaterialSuppliers() {
+  //   this.supplierService.getAllRawMaterialSuppliers().subscribe({
+  //     next: apiResponse => {
+  //       if (apiResponse && apiResponse.success) {
+  //         this.suppliers = apiResponse.data['rawMaterialSuppliers'];
+  //
+  //       } else {
+  //         NotifyUtil.error(apiResponse);
+  //       }
+  //     },
+  //     error: apiResponse => {
+  //       NotifyUtil.error(apiResponse);
+  //     }
+  //   });
+  // }
 
   private loadRawMaterialCategories(): void {
     this.rawMaterialCategoryService.getAllRawMaterialCategories().subscribe({
@@ -79,20 +77,20 @@ export class RawMaterialCreateComponent implements OnInit {
     });
   }
 
-  private loadInventories(): void {
-    this.inventoryService.getAllInventories().subscribe({
-      next: apiResponse => {
-        if (apiResponse && apiResponse.success) {
-          this.inventories = apiResponse.data['inventories'];
-        } else {
-          NotifyUtil.error(apiResponse.message);
-        }
-      },
-      error: apiResponse => {
-        NotifyUtil.error(apiResponse.message);
-      }
-    });
-  }
+  // private loadInventories(): void {
+  //   this.inventoryService.getAllInventories().subscribe({
+  //     next: apiResponse => {
+  //       if (apiResponse && apiResponse.success) {
+  //         this.inventories = apiResponse.data['inventories'];
+  //       } else {
+  //         NotifyUtil.error(apiResponse.message);
+  //       }
+  //     },
+  //     error: apiResponse => {
+  //       NotifyUtil.error(apiResponse.message);
+  //     }
+  //   });
+  // }
 
 
   private loadRawMaterial(id: number) {

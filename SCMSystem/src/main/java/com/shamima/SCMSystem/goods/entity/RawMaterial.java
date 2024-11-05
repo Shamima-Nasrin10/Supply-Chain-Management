@@ -34,7 +34,7 @@ public class RawMaterial {
     private RawMaterialCategory category;
 
     public enum Unit {
-        LETTER,
+        LITRE,
         PIECE,
         KG,
         GRAM

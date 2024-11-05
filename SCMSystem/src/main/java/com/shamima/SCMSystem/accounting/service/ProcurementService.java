@@ -42,6 +42,9 @@ public class ProcurementService {
     public ApiResponse saveProcurements(List<Procurement> procurements) {
         ApiResponse apiResponse = new ApiResponse(false);
         try {
+            for (Procurement procurement : procurements) {
+                calculateTotalPrice(procurement);
+            }
             List<Procurement> savedProcurements = procurementRepository.saveAll(procurements);
 
             for (Procurement procurement : savedProcurements) {
@@ -63,6 +66,7 @@ public class ProcurementService {
     public ApiResponse saveProcurement(Procurement procurement) {
         ApiResponse apiResponse = new ApiResponse(false);
         try {
+            calculateTotalPrice(procurement);
             Procurement savedProcurement = procurementRepository.save(procurement);
 
             if (procurement.getStatus().equals(Procurement.Status.APPROVED)) {
@@ -76,6 +80,9 @@ public class ProcurementService {
             apiResponse.setMessage(e.getMessage());
         }
         return apiResponse;
+    }
+    private void calculateTotalPrice(Procurement procurement) {
+        procurement.setTotalPrice(procurement.getQuantity() * procurement.getUnitPrice());
     }
 
     private void updateRawMaterialStock(Procurement procurement) {
