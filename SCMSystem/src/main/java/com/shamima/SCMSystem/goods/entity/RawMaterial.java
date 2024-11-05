@@ -26,12 +26,14 @@ public class RawMaterial {
     @Column(name = "unit")
     private Unit unit;
 
-
     private String image;
     
     @ManyToOne()
     @JoinColumn(name = "category_id")
     private RawMaterialCategory category;
+
+    @Transient
+    private int quantity;
 
     public enum Unit {
         LITRE,

@@ -1,13 +1,7 @@
 package com.shamima.SCMSystem.goods.service;
 
-import com.shamima.SCMSystem.goods.entity.Inventory;
-import com.shamima.SCMSystem.goods.entity.RawMaterial;
-import com.shamima.SCMSystem.goods.entity.RawMaterialCategory;
-import com.shamima.SCMSystem.goods.entity.RawMaterialSupplier;
-import com.shamima.SCMSystem.goods.repository.InventoryRepository;
-import com.shamima.SCMSystem.goods.repository.RawMaterialCategoryRepository;
-import com.shamima.SCMSystem.goods.repository.RawMaterialRepository;
-import com.shamima.SCMSystem.goods.repository.RawMaterialSupplierRepository;
+import com.shamima.SCMSystem.goods.entity.*;
+import com.shamima.SCMSystem.goods.repository.*;
 import com.shamima.SCMSystem.util.ApiResponse;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +13,9 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 @Service
@@ -31,6 +27,9 @@ public class RawMaterialService {
     @Autowired
     RawMaterialCategoryRepository rawMaterialCategoryRepository;
 
+    @Autowired
+    RMStockRepository rmStockRepository;
+
     @Value("src/main/resources/static/images")
     private String uploadDir;
 
@@ -38,6 +37,14 @@ public class RawMaterialService {
         ApiResponse apiResponse = new ApiResponse(false);
         try {
             List<RawMaterial> rawMaterials = rawMaterialRepository.findAll();
+            List<RawMaterialStock> rawMaterialStocks = rmStockRepository.findAll();
+            for (RawMaterial rawMaterial : rawMaterials) {
+                for (RawMaterialStock rawMaterialStock : rawMaterialStocks) {
+                    if (rawMaterial.getId() == rawMaterialStock.getRawMaterial().getId()) {
+                        rawMaterial.setQuantity(rawMaterialStock.getQuantity());
+                    }
+                }
+            }
             apiResponse.setSuccess(true);
             apiResponse.setData("rawMaterials", rawMaterials);
         } catch (Exception e) {

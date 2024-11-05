@@ -37,7 +37,7 @@ public class ProcurementController {
         return procurementService.deleteProcurementById(id);
     }
     @PutMapping("/update/{id}")
-    public ApiResponse updateProcurement(Long id, Procurement procurement) {
+    public ApiResponse updateProcurement(@PathVariable Long id, @RequestBody Procurement procurement) {
         return procurementService.updateProcurement(id,procurement);
     }
 

@@ -72,7 +72,7 @@ const routes: Routes = [
   {
     path:"procurements-create",component:ProcurementComponent
   },{
-    path:"procurements-edit/:id",component:ProcurementComponent
+    path:"procurement-edit/:id",component:ProcurementComponent
   },
   {
     path:"procurements-list",component:ProcurementListComponent

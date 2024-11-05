@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {ProcurementModel, ProcurementStatus} from "../procurement.model";
 import {ProcurementService} from "../procurement.service";
-import {ActivatedRoute, Route, Router} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {ApiResponse} from "../../../util/api.response";
 import {SupplierModel} from "../../../inventory/suppliers/model/supplier.model";
 import {RawMaterial} from "../../../inventory/raw-materials/model/raw-material.model";

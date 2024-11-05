@@ -6,6 +6,7 @@ export class RawMaterial {
   name!: string;
   unit!: Unit;
   image!: string;
+  quantity?: number; //transient
   category: RawMaterialCategory = new RawMaterialCategory();
 
 }
