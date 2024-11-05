@@ -5,6 +5,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
+
 @Entity
 @Data
 @NoArgsConstructor
@@ -21,5 +23,22 @@ public class RawMaterialStock {
     private RawMaterial rawMaterial;
 
     private int quantity;
+
+    @Column(name = "created_date")
+    private LocalDateTime createdDate;
+
+    @Column(name = "last_updated_date")
+    private LocalDateTime lastUpdatedDate;
+
+    @PrePersist
+    protected void onCreate() {
+        this.createdDate = LocalDateTime.now();
+        this.lastUpdatedDate = LocalDateTime.now();
+    }
+
+    @PreUpdate
+    protected void onUpdate() {
+        this.lastUpdatedDate = LocalDateTime.now();
+    }
 
 }
