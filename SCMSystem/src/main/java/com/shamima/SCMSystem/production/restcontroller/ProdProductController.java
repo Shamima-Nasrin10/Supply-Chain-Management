@@ -19,5 +19,25 @@ public class ProdProductController {
         return prodProductService.saveProdProduct(productionProduct);
     }
 
+
+    // Endpoint to update the status of a ProductionProduct
+    @PutMapping("/status/{id}")
+    public ApiResponse updateProductionStatus(
+            @PathVariable Long id,
+            @RequestParam ProductionProduct.Status status,
+            @RequestParam(required = false) Long warehouseId) {
+        return prodProductService.updateProductionStatus(id, status, warehouseId);
+    }
+
+    // Endpoint to get all ProductionProducts
+    @GetMapping("/all")
+    public ApiResponse getAllProductionProducts() {
+        return prodProductService.getAllProductionProducts();
+    }
+
+
+
+
+
 }
 

@@ -16,8 +16,10 @@ import com.shamima.SCMSystem.products.repository.WarehouseRepository;
 import com.shamima.SCMSystem.util.ApiResponse;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
@@ -39,6 +41,22 @@ public class ProdProductService {
 
     @Autowired
     private WarehouseRepository warehouseRepository;
+
+    @Value("src/main/resources/static/images/qrcodes")
+    private String qrCodeDir;
+
+
+    public ApiResponse getAllProductionProducts() {
+        ApiResponse apiResponse = new ApiResponse(false);
+        try {
+            List<ProductionProduct> productionProducts = prodProductRepository.findAll();
+            apiResponse.setSuccess(true);
+            apiResponse.setData("productionProducts", productionProducts);
+        } catch (Exception e) {
+            apiResponse.setMessage("Error retrieving production products: " + e.getMessage());
+        }
+        return apiResponse;
+    }
 
     @Transactional
     public ApiResponse saveProdProduct(ProductionProduct productionProduct) {
@@ -67,6 +85,9 @@ public class ProdProductService {
             }
 
             productionProduct = prodProductRepository.save(productionProduct);
+            String qrCodePath = generateQRCodeForProduct(productionProduct);
+            productionProduct.setQrCodePath(qrCodePath);
+            prodProductRepository.save(productionProduct);
 
             apiResponse.setSuccess(true);
             apiResponse.setMessage("Production saved successfully");
@@ -96,9 +117,10 @@ public class ProdProductService {
                         .orElseThrow(() -> new RuntimeException("Selected warehouse not found"));
                 productionProduct.setWarehouse(selectedWarehouse);
 
-                // Generate QR code
-                String qrCodePath = generateQRCodeForProduct(productionProduct);
-                // Optionally store qrCodePath in productionProduct
+                if (productionProduct.getQrCodePath() == null) {
+                    String qrCodePath = generateQRCodeForProduct(productionProduct);
+                    productionProduct.setQrCodePath(qrCodePath);
+                }
             }
 
             prodProductRepository.save(productionProduct);
@@ -111,35 +133,23 @@ public class ProdProductService {
         return apiResponse;
     }
 
-    // QR Code generation method
     private String generateQRCodeForProduct(ProductionProduct productionProduct) throws Exception {
-        // Prepare data for QR code
-        String productName = productionProduct.getProduct().getName();
-        Long batchNumber = productionProduct.getBatchNumber();
-        Date completionDate = productionProduct.getCompletionDate(); // or manufacturing date if applicable
+        Path qrCodePath = Paths.get(qrCodeDir);
+        if (!Files.exists(qrCodePath)) {
+            Files.createDirectories(qrCodePath);
+        }
 
-        // Format the completion date
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        String completionDateString = (completionDate != null) ? dateFormat.format(completionDate) : "N/A";
+        String qrCodeData = "Product Name: " + productionProduct.getProduct().getName() + "\n" +
+                "Batch Number: " + productionProduct.getBatchNumber() + "\n" +
+                "Manufacturing Date: " + new SimpleDateFormat("yyyy-MM-dd").format(new Date());
 
-        // Create QR code content
-        String qrCodeData = "Product Name: " + productName + "\n" +
-                "Batch Number: " + batchNumber + "\n" +
-                "Manufacturing Date: " + completionDateString;
+        String fileName = productionProduct.getId() + "_qrcode.png";
+        Path filePath = qrCodePath.resolve(fileName);
 
-        // Define file path for saving the QR code image
-        String filePath = "src/main/resources/static/images" + productionProduct.getId() + "_qrcode.png";
-        int qrCodeWidth = 300;
-        int qrCodeHeight = 300;
+        BitMatrix matrix = new MultiFormatWriter().encode(qrCodeData, BarcodeFormat.QR_CODE, 300, 300);
+        MatrixToImageWriter.writeToPath(matrix, "PNG", filePath);
 
-        // Generate QR code
-        BitMatrix matrix = new MultiFormatWriter().encode(
-                qrCodeData, BarcodeFormat.QR_CODE, qrCodeWidth, qrCodeHeight);
-
-        Path path = Paths.get(filePath);
-        MatrixToImageWriter.writeToPath(matrix, "PNG", path);
-
-        return filePath; // Return the file path for storing in the database if necessary
+        return filePath.toString();
     }
 
 }

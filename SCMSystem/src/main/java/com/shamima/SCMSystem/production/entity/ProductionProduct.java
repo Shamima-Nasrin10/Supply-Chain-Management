@@ -37,6 +37,8 @@ public class ProductionProduct {
     @JoinColumn(name = "warehouse_id")
     private Warehouse warehouse;
 
+    private String qrCodePath;
+
     @Enumerated(EnumType.STRING)
     @Column(name = "status")
     private ProductionProduct.Status status=Status.IN_PROGRESS;
