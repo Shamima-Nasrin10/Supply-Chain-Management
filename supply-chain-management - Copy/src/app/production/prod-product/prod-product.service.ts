@@ -25,4 +25,8 @@ export class ProdProductService {
       params: { status, warehouseId: warehouseId?.toString() || '' }
     });
   }
+
+  getProdProductsByWarehouseId(warehouseId: number): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(`${this.apiUrl}/warehouse/${warehouseId}`);
+  }
 }

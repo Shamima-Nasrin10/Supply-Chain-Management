@@ -35,5 +35,11 @@ public class ProdProductController {
         return prodProductService.getAllProductionProducts();
     }
 
+
+    @GetMapping("/warehouse/{warehouseId}")
+    public ApiResponse getProdProductByWarehouseId(@PathVariable Long warehouseId) {
+        return prodProductService.getProductionProductsByWarehouseId(warehouseId);
+    }
+
 }
 

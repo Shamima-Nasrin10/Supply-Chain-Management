@@ -3,8 +3,11 @@ import { NotifyUtil } from '../../util/notify.util';
 import {ApiResponse} from "../../util/api.response";
 import {WareHouse} from "./warehouse.model";
 import {WarehouseService} from "../warehouse.service";
-import {ActivatedRoute, Router} from "@angular/router";
-import {InventoryService} from "../../inventory/inventory/inventory.service";
+import {MatDialog} from "@angular/material/dialog";
+import {
+  WarehouseProdproductsDialogComponent
+} from "../warehouse-prodproducts-dialog/warehouse-prodproducts-dialog.component";
+
 
 @Component({
   selector: 'app-warehouse',
@@ -18,9 +21,7 @@ export class WarehouseComponent implements OnInit{
 
   constructor(
     private warehouseService: WarehouseService,
-    private inventoryService: InventoryService,
-    private route: ActivatedRoute,
-    private router: Router
+    private matDialog: MatDialog
   ) {}
 
   ngOnInit(): void {
@@ -103,6 +104,12 @@ export class WarehouseComponent implements OnInit{
         }
       });
     }
+  }
+
+  viewProdProducts(warehouseId: number): void {
+    this.matDialog.open(WarehouseProdproductsDialogComponent, {
+      data: { warehouseId: warehouseId }
+    });
   }
 
 }

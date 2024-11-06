@@ -18,7 +18,9 @@ import com.shamima.SCMSystem.util.ApiResponse;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -158,5 +160,23 @@ public class ProdProductService {
 
         return filePath.toString();
     }
+
+    public ApiResponse getProductionProductsByWarehouseId(Long warehouseId) {
+        ApiResponse apiResponse = new ApiResponse(false);
+        try {
+            Warehouse warehouse = warehouseRepository.findById(warehouseId)
+                    .orElseThrow(() -> new RuntimeException("Warehouse not found"));
+
+            List<ProductionProduct> products = prodProductRepository.findProdProductByWarehouseId(warehouseId);
+            apiResponse.setSuccess(true);
+            apiResponse.setMessage("Products fetched successfully");
+            apiResponse.setData("prodProducts", products);
+
+        } catch (Exception e) {
+            apiResponse.setMessage("Error fetching products: " + e.getMessage());
+        }
+        return apiResponse;
+    }
+
 
 }

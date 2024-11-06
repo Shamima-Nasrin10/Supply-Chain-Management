@@ -49,7 +49,8 @@ import { ProcurementListComponent } from './accounting/procurement/procurement-l
 import { RawMatUsageComponent } from './production/RawMatUsage/raw-mat-usage/raw-mat-usage.component';
 import { ProdProductCreateComponent } from './production/prod-product/prod-product-create/prod-product-create.component';
 import { ProdProductListComponent } from './production/prod-product/prod-product-list/prod-product-list.component';
-import { WarehouseSelectDialogComponent } from './production/warehouse-select-dialog/warehouse-select-dialog.component'
+import { WarehouseSelectDialogComponent } from './production/warehouse-select-dialog/warehouse-select-dialog.component';
+import { WarehouseProdproductsDialogComponent } from './warehouse/warehouse-prodproducts-dialog/warehouse-prodproducts-dialog.component'
 
 
 @NgModule({
@@ -89,6 +90,7 @@ import { WarehouseSelectDialogComponent } from './production/warehouse-select-di
     ProdProductCreateComponent,
     ProdProductListComponent,
     WarehouseSelectDialogComponent,
+    WarehouseProdproductsDialogComponent,
   ],
   imports: [
     BrowserModule,
