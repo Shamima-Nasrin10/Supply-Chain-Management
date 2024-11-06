@@ -1,0 +1,6 @@
+<h2>Select Warehouse</h2>
+<div *ngFor="let warehouse of warehouses">
+  <button (click)="selectWarehouse(warehouse)">{{ warehouse.name }}</button>
+</div>
+<button mat-button (click)="dialogRef.close()">Cancel</button>
+

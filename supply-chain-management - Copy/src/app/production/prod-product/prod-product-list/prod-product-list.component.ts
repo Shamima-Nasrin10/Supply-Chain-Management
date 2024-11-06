@@ -3,6 +3,9 @@ import {ProdProductService} from "../prod-product.service";
 import {ProdProduct, ProductionStatus} from "../prodproduct.model";
 import {ApiResponse} from "../../../util/api.response";
 import {NotifyUtil} from "../../../util/notify.util";
+import {MatDialog} from "@angular/material/dialog";
+import {WarehouseSelectDialogComponent} from "../../warehouse-select-dialog/warehouse-select-dialog.component";
+import {WareHouse} from "../../../warehouse/warehouse/warehouse.model";
 
 @Component({
   selector: 'app-prod-product-list',
@@ -12,7 +15,10 @@ import {NotifyUtil} from "../../../util/notify.util";
 export class ProdProductListComponent implements OnInit{
   prodProducts: ProdProduct[] = [];
 
-  constructor(private prodProductService: ProdProductService) {}
+  constructor(
+    private prodProductService: ProdProductService,
+    private matDialog: MatDialog
+  ) {}
 
   ngOnInit(): void {
     this.loadProdProducts();
@@ -34,19 +40,43 @@ export class ProdProductListComponent implements OnInit{
   }
 
   updateStatus(id: number, newStatus: ProductionStatus): void {
-    this.prodProductService.updateProductionStatus(id, newStatus).subscribe({
-      next: (response: ApiResponse) => {
-        if (response && response.success) {
-          NotifyUtil.success(response);
-          this.loadProdProducts();
-        } else {
-          NotifyUtil.error(response.message);
+    if (newStatus === ProductionStatus.MOVED_TO_WAREHOUSE) {
+      const dialogRef = this.matDialog.open(WarehouseSelectDialogComponent, {
+        data: { prodProductId: id }
+      });
+
+      dialogRef.afterClosed().subscribe((selectedWarehouse: WareHouse) => {
+        if (selectedWarehouse) {
+          this.prodProductService.updateProductionStatus(id, newStatus, selectedWarehouse.id).subscribe({
+            next: (response: ApiResponse) => {
+              if (response && response.success) {
+                NotifyUtil.success(response);
+                this.loadProdProducts();
+              } else {
+                NotifyUtil.error(response.message);
+              }
+            },
+            error: (error) => {
+              NotifyUtil.error(error);
+            }
+          });
         }
-      },
-      error: (error) => {
-        NotifyUtil.error(error);
-      }
-    });
+      });
+    } else {
+      this.prodProductService.updateProductionStatus(id, newStatus).subscribe({
+        next: (response: ApiResponse) => {
+          if (response && response.success) {
+            NotifyUtil.success(response);
+            this.loadProdProducts();
+          } else {
+            NotifyUtil.error(response.message);
+          }
+        },
+        error: (error) => {
+          NotifyUtil.error(error);
+        }
+      });
+    }
   }
 
 
