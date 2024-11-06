@@ -15,7 +15,7 @@ public class ProdProductController {
     private ProdProductService prodProductService;
 
     @PostMapping("/save")
-    public ApiResponse save(ProductionProduct productionProduct) {
+    public ApiResponse save(@RequestBody ProductionProduct productionProduct) {
         return prodProductService.saveProdProduct(productionProduct);
     }
 
@@ -34,10 +34,6 @@ public class ProdProductController {
     public ApiResponse getAllProductionProducts() {
         return prodProductService.getAllProductionProducts();
     }
-
-
-
-
 
 }
 

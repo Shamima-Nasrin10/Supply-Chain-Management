@@ -1,13 +1,13 @@
 package com.shamima.SCMSystem.production.entity;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.shamima.SCMSystem.goods.entity.RawMaterial;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @Entity
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "rawmat_usage")
@@ -23,6 +23,7 @@ public class RawMatUsage {
 
     private int quantity;
 
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @ManyToOne
     @JoinColumn(name = "production_product_id")
     private ProductionProduct productionProduct;

@@ -18,7 +18,7 @@ public class ApiResponse {
     private Map<String, Object> data;
     private boolean success = false;
 
-    public ApiResponse(boolean successful) {
+    public ApiResponse(boolean success) {
         this.success = success;
     }
 

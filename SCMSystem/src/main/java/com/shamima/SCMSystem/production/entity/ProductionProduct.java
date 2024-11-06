@@ -3,15 +3,14 @@ package com.shamima.SCMSystem.production.entity;
 import com.shamima.SCMSystem.products.entity.Product;
 import com.shamima.SCMSystem.products.entity.Warehouse;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.Date;
 import java.util.List;
 
 @Entity
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "production_product")
