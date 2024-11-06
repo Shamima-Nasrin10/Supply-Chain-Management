@@ -12,7 +12,7 @@ export class ProdProduct {
   warehouse!: WareHouse;
   qrCodePath?: string;
   rawMatUsages!: RawMatUsage[];
-  status!: ProductionStatus.IN_PROGRESS;
+  status: ProductionStatus = ProductionStatus.IN_PROGRESS;
 }
 
 export enum ProductionStatus {

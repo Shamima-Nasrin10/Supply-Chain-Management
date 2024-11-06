@@ -17,6 +17,7 @@ import {SalesDetailsComponent} from "./accounting/sales/sales-details/sales-deta
 import {ProcurementComponent} from "./accounting/procurement/procurement/procurement.component";
 import {ProcurementListComponent} from "./accounting/procurement/procurement-list/procurement-list.component";
 import {ProdProductCreateComponent} from "./production/prod-product/prod-product-create/prod-product-create.component";
+import {ProdProductListComponent} from "./production/prod-product/prod-product-list/prod-product-list.component";
 
 const routes: Routes = [
   // {
@@ -84,6 +85,8 @@ const routes: Routes = [
   },
   {
     path:'prod-product-create', component: ProdProductCreateComponent
+  },{
+    path:'prod-product-list', component: ProdProductListComponent
   },
   {
     path:'sales-create', component: SalesCreateComponent
