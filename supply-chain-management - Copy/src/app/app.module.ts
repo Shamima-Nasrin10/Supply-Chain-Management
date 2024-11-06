@@ -45,7 +45,10 @@ import { SalesCreateComponent } from './accounting/sales/sales-create/sales-crea
 import { SalesUpdateComponent } from './accounting/sales/sales-update/sales-update.component';
 import { SalesViewComponent } from './accounting/sales/sales-view/sales-view.component';
 import { ProcurementComponent } from './accounting/procurement/procurement/procurement.component';
-import { ProcurementListComponent } from './accounting/procurement/procurement-list/procurement-list.component'
+import { ProcurementListComponent } from './accounting/procurement/procurement-list/procurement-list.component';
+import { RawMatUsageComponent } from './production/RawMatUsage/raw-mat-usage/raw-mat-usage.component';
+import { ProdProductCreateComponent } from './production/prod-product/prod-product-create/prod-product-create.component';
+import { ProdProductListComponent } from './production/prod-product/prod-product-list/prod-product-list.component'
 
 
 @NgModule({
@@ -81,6 +84,9 @@ import { ProcurementListComponent } from './accounting/procurement/procurement-l
     SalesViewComponent,
     ProcurementComponent,
     ProcurementListComponent,
+    RawMatUsageComponent,
+    ProdProductCreateComponent,
+    ProdProductListComponent,
   ],
   imports: [
     BrowserModule,
