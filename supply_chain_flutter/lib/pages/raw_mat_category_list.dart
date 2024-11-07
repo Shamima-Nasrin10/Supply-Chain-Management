@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:supply_chain_flutter/model/rawmatcategory.dart';
 import 'package:supply_chain_flutter/service/rawmatcategory.dart';
 import 'package:supply_chain_flutter/util/apiresponse.dart';
-
 import '../util/notify_util.dart';
 
 class RawMaterialCategoryListPage extends StatefulWidget {
@@ -90,25 +89,62 @@ class _RawMaterialCategoryListPageState extends State<RawMaterialCategoryListPag
     return Scaffold(
       appBar: AppBar(
         title: Text('Raw Material Categories'),
+        centerTitle: true,
       ),
       body: _categories.isEmpty
-          ? Center(child: Text('No categories available'))
+          ? Center(
+        child: Text(
+          'No categories available',
+          style: TextStyle(fontSize: 18, color: Colors.grey),
+        ),
+      )
           : ListView.builder(
+        padding: const EdgeInsets.all(10),
         itemCount: _categories.length,
         itemBuilder: (context, index) {
           final category = _categories[index];
-          return ListTile(
-            title: Text(category.name ?? 'Unnamed Category'),
-            trailing: IconButton(
-              icon: Icon(Icons.delete),
-              onPressed: () => _deleteCategory(category.id!),
+          return Card(
+            elevation: 4,
+            margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 4),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(10),
+            ),
+            child: ListTile(
+              leading: CircleAvatar(
+                backgroundColor: Colors.blue.shade200,
+                child: Icon(Icons.category, color: Colors.white),
+              ),
+              title: Text(
+                category.name ?? 'Unnamed Category',
+                style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
+              ),
+              trailing: PopupMenuButton(
+                onSelected: (value) {
+                  if (value == 'delete') {
+                    _deleteCategory(category.id!);
+                  }
+                },
+                itemBuilder: (context) => [
+                  PopupMenuItem(
+                    value: 'delete',
+                    child: Row(
+                      children: [
+                        Icon(Icons.delete, color: Colors.red),
+                        SizedBox(width: 8),
+                        Text('Delete'),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
             ),
           );
         },
       ),
-      floatingActionButton: FloatingActionButton(
+      floatingActionButton: FloatingActionButton.extended(
         onPressed: _showCreateCategoryDialog,
-        child: Icon(Icons.add),
+        label: Text('Add Category'),
+        icon: Icon(Icons.add),
         tooltip: 'Create Category',
       ),
     );
