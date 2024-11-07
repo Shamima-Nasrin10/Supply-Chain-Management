@@ -4,6 +4,7 @@ import com.shamima.SCMSystem.goods.entity.RawMaterial;
 import com.shamima.SCMSystem.goods.service.RawMaterialService;
 import com.shamima.SCMSystem.util.ApiResponse;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -14,7 +15,7 @@ public class RawMaterialController {
     @Autowired
     private RawMaterialService rawMaterialService;
 
-    @PostMapping("/save")
+    @PostMapping(value = "/save", consumes = { MediaType.MULTIPART_FORM_DATA_VALUE, MediaType.APPLICATION_OCTET_STREAM_VALUE })
     public ApiResponse save(@RequestPart RawMaterial rawMaterial,
                             @RequestPart(required = false) MultipartFile imageFile) {
         return rawMaterialService.saveRawMaterial(rawMaterial, imageFile);

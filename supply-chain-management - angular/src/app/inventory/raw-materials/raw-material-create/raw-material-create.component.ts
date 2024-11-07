@@ -1,14 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { RawMaterial, Unit } from '../model/raw-material.model';
-import { SupplierModel } from '../../suppliers/model/supplier.model';
-import { SupplierService } from '../../suppliers/supplier.service';
 import { RawMaterialService } from '../raw-material.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NotifyUtil } from '../../../util/notify.util';
 import { RawMaterialCategory } from '../../raw-material-category/model/raw-material-category.model';
 import { RawMaterialCategoryService } from '../../raw-material-category/raw-material-category.service';
-import {Inventory} from "../../inventory/model/inventory.model";
-import {InventoryService} from "../../inventory/inventory.service";
+
 
 @Component({
   selector: 'app-raw-material-create',
