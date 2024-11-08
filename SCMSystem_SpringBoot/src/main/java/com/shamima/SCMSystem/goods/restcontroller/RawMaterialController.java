@@ -15,7 +15,7 @@ public class RawMaterialController {
     @Autowired
     private RawMaterialService rawMaterialService;
 
-    @PostMapping(value = "/save", consumes = { MediaType.MULTIPART_FORM_DATA_VALUE, MediaType.APPLICATION_OCTET_STREAM_VALUE })
+    @PostMapping( "/save")
     public ApiResponse save(@RequestPart RawMaterial rawMaterial,
                             @RequestPart(required = false) MultipartFile imageFile) {
         return rawMaterialService.saveRawMaterial(rawMaterial, imageFile);

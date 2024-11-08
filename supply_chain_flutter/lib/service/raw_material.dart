@@ -28,10 +28,10 @@ class RawMaterialService {
     final uri = Uri.parse('$apiUrl/save');
     final request = http.MultipartRequest('POST', uri);
 
-    // Add the raw material as a JSON part
+    // Serialize RawMaterial to JSON string and add it as a field
     request.fields['rawMaterial'] = jsonEncode(rawMaterial.toJson());
 
-    // Add the image file if provided
+    // Add image file if available
     if (imageFile != null) {
       request.files.add(
         http.MultipartFile(
@@ -39,25 +39,29 @@ class RawMaterialService {
           imageFile.readAsBytes().asStream(),
           imageFile.lengthSync(),
           filename: basename(imageFile.path),
-          contentType: MediaType('image', 'jpeg'), // Update type if needed
+          contentType: MediaType('image', 'jpeg'), // Adjust content type if needed
         ),
       );
     }
 
-    // Send the request
-    final response = await request.send();
-
-    // Check the response status and handle it
-    if (response.statusCode == 200) {
+    try {
+      // Send request and handle the response
+      final response = await request.send();
       final responseBody = await http.Response.fromStream(response);
-      return ApiResponse.fromJson(jsonDecode(responseBody.body));
-    } else {
-      return ApiResponse(
-        success: false,
-        message: "Failed to save raw material: ${response.reasonPhrase}",
-      );
+
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        return ApiResponse.fromJson(jsonDecode(responseBody.body));
+      } else {
+        return ApiResponse(
+          success: false,
+          message: "Failed to save raw material: ${responseBody.reasonPhrase}",
+        );
+      }
+    } catch (e) {
+      return ApiResponse(success: false, message: "Error: $e");
     }
   }
+
 
   // Update an existing raw material with an optional image file
   Future<ApiResponse> updateRawMaterial(RawMaterial rawMaterial, {File? imageFile}) async {
