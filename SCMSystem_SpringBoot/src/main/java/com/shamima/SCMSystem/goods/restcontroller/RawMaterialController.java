@@ -50,19 +50,5 @@ public class RawMaterialController {
         return rawMaterialService.deleteRawMaterialById(id);
     }
 
-    @GetMapping("/categories")
-    public ApiResponse getCategories() {
-        ApiResponse apiResponse = new ApiResponse();
-        try {
-            List<RawMaterialCategory> categories = rawMaterialCategoryRepository.findAll();
-            apiResponse.setSuccess(true);
-            apiResponse.setData("categories", categories);
-        } catch (Exception e) {
-            apiResponse.setSuccess(false);
-            apiResponse.setMessage("Failed to fetch categories: " + e.getMessage());
-        }
-        return apiResponse;
-    }
-
 }
 

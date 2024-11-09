@@ -1,11 +1,17 @@
 import 'dart:convert';
 import 'dart:io';
+import 'dart:typed_data'; // For Uint8List
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:http_parser/http_parser.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:http/http.dart' as http;
+import 'package:image_picker/image_picker.dart';
+import 'package:image_picker_web/image_picker_web.dart';
 import 'package:supply_chain_flutter/model/rawmatcategory.dart';
+import 'package:supply_chain_flutter/service/rawmatcategory.dart';
 import 'package:supply_chain_flutter/util/notify_util.dart';
+
+import '../model/raw_material.dart';
 
 class RawMatCreatePage extends StatefulWidget {
   const RawMatCreatePage({Key? key}) : super(key: key);
@@ -18,8 +24,10 @@ class _RawMatCreatePageState extends State<RawMatCreatePage> {
   final TextEditingController nameTEC = TextEditingController();
   final TextEditingController quantityTEC = TextEditingController(text: '0');
   RawMatCategory? selectedCategory;
-  File? selectedImage;
-  List<RawMatCategory> categories = [];
+  XFile? selectedImage;
+  Uint8List? webImage; // For storing the image bytes on web
+  RawMaterial _rawMaterial = RawMaterial(name: '', unit: Unit.PIECE, quantity: 0, category: null);
+  List<RawMatCategory> _categories = [];
   final ImagePicker _picker = ImagePicker();
 
   @override
@@ -29,37 +37,55 @@ class _RawMatCreatePageState extends State<RawMatCreatePage> {
   }
 
   Future<void> _loadCategories() async {
-    try {
-      final response = await http.get(Uri.parse('http://localhost:8080/api/rawmaterial/categories'));
-      if (response.statusCode == 200) {
-        setState(() {
-          categories = (json.decode(response.body) as List)
-              .map((category) => RawMatCategory.fromJson(category))
-              .toList();
-        });
-      } else {
-        NotifyUtil.error(context, 'Failed to load categories');
-      }
-    } catch (e) {
-      NotifyUtil.error(context, 'Error loading categories: $e');
+    final response =
+    await RawMaterialCategoryService().getAllRawMaterialCategories();
+    if (response.success) {
+      setState(() {
+        _categories = (response.data?['categories'] as List)
+            .map((json) => RawMatCategory.fromJson(json))
+            .toList();
+      });
+    } else {
+      NotifyUtil.error(
+          context, response.message ?? 'Failed to load categories');
     }
   }
 
   Future<void> pickImage() async {
-    final XFile? pickedImage = await _picker.pickImage(source: ImageSource.gallery);
-    if (pickedImage != null) {
-      setState(() {
-        selectedImage = File(pickedImage.path);
-      });
+    if (kIsWeb) {
+      // For Web: Use image_picker_web to pick image and store as bytes
+      var pickedImage = await ImagePickerWeb.getImageAsBytes();
+      if (pickedImage != null) {
+        setState(() {
+          webImage = pickedImage; // Store the picked image as Uint8List
+        });
+      }
+    } else {
+      // For Mobile: Use image_picker to pick image
+      final XFile? pickedImage =
+      await _picker.pickImage(source: ImageSource.gallery);
+      if (pickedImage != null) {
+        setState(() {
+          selectedImage = pickedImage;
+        });
+      }
     }
   }
 
   Future<void> submitRawMaterial() async {
-    final rawMaterial = {
-      'name': nameTEC.text,
-      'quantity': int.tryParse(quantityTEC.text) ?? 0,
-      'category': selectedCategory != null ? selectedCategory!.id : null,
-    };
+    if (nameTEC.text.isEmpty) {
+      NotifyUtil.error(context, 'Please enter name.');
+      return;
+    }
+    _rawMaterial.name = nameTEC.text;
+    if (_rawMaterial.unit == null) {
+      NotifyUtil.error(context, 'Please select unit.');
+      return;
+    }
+    if (_rawMaterial.category == null) {
+      NotifyUtil.error(context, 'Please select a category before saving.');
+      return;
+    }
 
     var uri = Uri.parse('http://localhost:8080/api/rawmaterial/save');
     var request = http.MultipartRequest('POST', uri);
@@ -67,88 +93,50 @@ class _RawMatCreatePageState extends State<RawMatCreatePage> {
     request.files.add(
       http.MultipartFile.fromString(
         'rawMaterial',
-        jsonEncode(rawMaterial),
+        jsonEncode(_rawMaterial),
         contentType: MediaType('application', 'json'),
       ),
     );
 
-    if (selectedImage != null) {
-      request.files.add(
-        await http.MultipartFile.fromPath(
-          'imageFile',
-          selectedImage!.path,
-        ),
-      );
+    if (kIsWeb && webImage != null) {
+      request.files.add(http.MultipartFile.fromBytes(
+        'imageFile',
+        webImage!,
+        filename: 'upload.jpg',
+        contentType: MediaType('image', 'jpeg'),
+      ));
+    } else if (selectedImage != null) {
+      request.files.add(await http.MultipartFile.fromPath(
+        'imageFile',
+        selectedImage!.path,
+      ));
     }
 
+    await _sendRequest(request);
+  }
+
+
+  Future<void> _sendRequest(http.MultipartRequest request) async {
     try {
       var response = await request.send();
       if (response.statusCode == 200) {
         NotifyUtil.success(context, 'Raw Material saved successfully');
       } else {
-        NotifyUtil.error(context, 'Failed to save. Status code: ${response.statusCode}');
+        NotifyUtil.error(
+            context, 'Failed to save. Status code: ${response.statusCode}');
       }
     } catch (e) {
       NotifyUtil.error(context, 'Error occurred while submitting: $e');
     }
   }
 
-  void _showAddCategoryDialog() {
-    final TextEditingController categoryNameController = TextEditingController();
-
-    showDialog(
-      context: context,
-      builder: (context) {
-        return AlertDialog(
-          title: const Text('Add New Category'),
-          content: TextField(
-            controller: categoryNameController,
-            decoration: const InputDecoration(
-              labelText: "Category Name",
-              border: OutlineInputBorder(),
-            ),
-          ),
-          actions: [
-            TextButton(
-              onPressed: () => Navigator.pop(context),
-              child: const Text('Cancel'),
-            ),
-            TextButton(
-              onPressed: () {
-                final categoryName = categoryNameController.text.trim();
-                if (categoryName.isNotEmpty) {
-                  addNewCategory(categoryName);
-                  Navigator.pop(context);
-                } else {
-                  NotifyUtil.error(context, 'Category name cannot be empty');
-                }
-              },
-              child: const Text('Add'),
-            ),
-          ],
-        );
-      },
-    );
-  }
-
-  Future<void> addNewCategory(String name) async {
-    var uri = Uri.parse('http://localhost:8080/api/rawmaterial/category/save');
-    var response = await http.post(
-      uri,
-      headers: {'Content-Type': 'application/json'},
-      body: jsonEncode({'name': name}),
-    );
-
-    if (response.statusCode == 200) {
-      final newCategory = RawMatCategory.fromJson(json.decode(response.body));
-      setState(() {
-        categories.add(newCategory);
-        selectedCategory = newCategory;
-      });
-      NotifyUtil.success(context, 'Category added successfully');
-    } else {
-      NotifyUtil.error(context, 'Failed to add category');
-    }
+  List<DropdownMenuItem<Unit>> _buildUnitDropdownItems() {
+    return Unit.values.map((unit) {
+      return DropdownMenuItem<Unit>(
+        value: unit,
+        child: Text(unit.toString().split('.').last), // Get the enum name
+      );
+    }).toList();
   }
 
   @override
@@ -179,45 +167,37 @@ class _RawMatCreatePageState extends State<RawMatCreatePage> {
               ),
             ),
             const SizedBox(height: 10),
-            TextField(
-              controller: quantityTEC,
-              keyboardType: TextInputType.number,
-              decoration: const InputDecoration(
-                labelText: "Quantity",
-                border: OutlineInputBorder(),
-                icon: Icon(Icons.format_list_numbered),
-              ),
+            DropdownButtonFormField<int>(
+              value: _rawMaterial.category?.id,
+              items: _categories
+                  .map((category) => DropdownMenuItem(
+                value: category.id,
+                child: Text(category.name ?? ''),
+              ))
+                  .toList(),
+              onChanged: (value) {
+                setState(() {
+                  _rawMaterial.category = _categories
+                      .firstWhere((category) => category.id == value);
+                });
+              },
+              decoration: InputDecoration(labelText: 'Category'),
+              validator: (value) =>
+              value == null ? 'Please select a category' : null,
             ),
             const SizedBox(height: 10),
-            Row(
-              children: [
-                Expanded(
-                  child: DropdownButtonFormField<RawMatCategory>(
-                    value: selectedCategory,
-                    hint: const Text("Select Category"),
-                    items: categories.map((RawMatCategory category) {
-                      return DropdownMenuItem<RawMatCategory>(
-                        value: category,
-                        child: Text(category.name ?? ''),
-                      );
-                    }).toList(),
-                    onChanged: (RawMatCategory? newValue) {
-                      setState(() {
-                        selectedCategory = newValue;
-                      });
-                    },
-                    decoration: const InputDecoration(
-                      labelText: "Category",
-                      border: OutlineInputBorder(),
-                      icon: Icon(Icons.category),
-                    ),
-                  ),
-                ),
-                IconButton(
-                  icon: Icon(Icons.add),
-                  onPressed: _showAddCategoryDialog,
-                ),
-              ],
+            // Dropdown for Unit enum
+            DropdownButtonFormField<Unit>(
+              value: _rawMaterial.unit,
+              items: _buildUnitDropdownItems(),
+              onChanged: (Unit? newValue) {
+                setState(() {
+                  _rawMaterial.unit = newValue!;
+                });
+              },
+              decoration: InputDecoration(labelText: 'Unit'),
+              validator: (value) =>
+              value == null ? 'Please select a unit' : null,
             ),
             const SizedBox(height: 10),
             ElevatedButton.icon(
@@ -225,10 +205,26 @@ class _RawMatCreatePageState extends State<RawMatCreatePage> {
               label: const Text('Pick Image'),
               onPressed: pickImage,
             ),
-            if (selectedImage != null)
+            if (kIsWeb && webImage != null)
               Padding(
                 padding: const EdgeInsets.all(8.0),
-                child: Image.file(selectedImage!, height: 100, width: 100, fit: BoxFit.cover),
+                child: Image.memory(
+                  webImage!,
+                  height: 100,
+                  width: 100,
+                  fit: BoxFit.cover,
+                ),
+              )
+            else if (!kIsWeb && selectedImage != null)
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Image.file(
+                  // Use XFile for mobile without using `File`
+                  File(selectedImage!.path),
+                  height: 100,
+                  width: 100,
+                  fit: BoxFit.cover,
+                ),
               ),
             const SizedBox(height: 20),
             ElevatedButton(

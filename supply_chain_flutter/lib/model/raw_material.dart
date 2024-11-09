@@ -7,15 +7,15 @@ class RawMaterial {
    Unit unit;
    String? image;
    RawMatCategory? category;
-   int quantity;
+   int? quantity;
 
   RawMaterial({
     this.id,
     required this.name,
     required this.unit,
     this.image,
-    this.category,
-    this.quantity = 0
+    required this.category,
+    this.quantity
   });
 
   // Method to convert from JSON to RawMaterial
