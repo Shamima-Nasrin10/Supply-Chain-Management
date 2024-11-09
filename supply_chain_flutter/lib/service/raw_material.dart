@@ -1,129 +1,96 @@
 import 'dart:convert';
 import 'dart:io';
 import 'package:http/http.dart' as http;
-import 'package:http_parser/http_parser.dart';
 import 'package:path/path.dart';
 import '../model/raw_material.dart';
+import '../model/rawmatcategory.dart';
 import '../util/apiresponse.dart';
 
 class RawMaterialService {
-  final String apiUrl = 'http://localhost:8080/api/rawmaterial';
+  final String baseUrl = 'http://localhost:8080/api/rawmaterial';
 
-  // Get all raw materials
-  Future<ApiResponse> getAllRawMaterials() async {
-    final response = await http.get(Uri.parse('$apiUrl/list'));
-
-    if (response.statusCode == 200) {
-      return ApiResponse.fromJson(jsonDecode(response.body));
-    } else {
-      return ApiResponse(
-        success: false,
-        message: "Failed to fetch raw materials: ${response.reasonPhrase}",
-      );
-    }
-  }
-
-  // Save a new raw material with an optional image file
-  Future<ApiResponse> saveRawMaterial(RawMaterial rawMaterial, {File? imageFile}) async {
-    final uri = Uri.parse('$apiUrl/save');
-    final request = http.MultipartRequest('POST', uri);
-
-    // Serialize RawMaterial to JSON string and add it as a field
-    request.fields['rawMaterial'] = jsonEncode(rawMaterial.toJson());
-
-    // Add image file if available
-    if (imageFile != null) {
-      request.files.add(
-        http.MultipartFile(
-          'imageFile',
-          imageFile.readAsBytes().asStream(),
-          imageFile.lengthSync(),
-          filename: basename(imageFile.path),
-          contentType: MediaType('image', 'jpeg'), // Adjust content type if needed
-        ),
-      );
-    }
-
+  // Method to get all raw materials
+  Future<ApiResponse> getRawMaterials() async {
     try {
-      // Send request and handle the response
-      final response = await request.send();
-      final responseBody = await http.Response.fromStream(response);
-
+      final response = await http.get(Uri.parse('$baseUrl/list'));
       if (response.statusCode == 200 || response.statusCode == 201) {
-        return ApiResponse.fromJson(jsonDecode(responseBody.body));
+        return ApiResponse.fromJson(json.decode(response.body));
       } else {
-        return ApiResponse(
-          success: false,
-          message: "Failed to save raw material: ${responseBody.reasonPhrase}",
-        );
+        return ApiResponse(success: false, message: 'Failed to load raw materials');
       }
     } catch (e) {
-      return ApiResponse(success: false, message: "Error: $e");
+      return ApiResponse(success: false, message: e.toString());
     }
   }
 
+  // Method to save a raw material with optional image
+  Future<ApiResponse> saveRawMaterial(RawMaterial rawMaterial, {File? imageFile}) async {
+    var uri = Uri.parse('$baseUrl/save');
+    var request = http.MultipartRequest('POST', uri);
 
-  // Update an existing raw material with an optional image file
-  Future<ApiResponse> updateRawMaterial(RawMaterial rawMaterial, {File? imageFile}) async {
-    final uri = Uri.parse('$apiUrl/update');
-    final request = http.MultipartRequest('PUT', uri);
+    // Add rawMaterial JSON data
+    request.fields['rawMaterial'] = json.encode(rawMaterial.toJson());
 
-    // Add the raw material as a JSON part
-    request.fields['rawMaterial'] = jsonEncode(rawMaterial.toJson());
-
-    // Add the image file if provided
+    // Add image file if provided
     if (imageFile != null) {
-      request.files.add(
-        http.MultipartFile(
-          'imageFile',
-          imageFile.readAsBytes().asStream(),
-          imageFile.lengthSync(),
-          filename: basename(imageFile.path),
-          contentType: MediaType('image', 'jpeg'), // Update type if needed
-        ),
-      );
+      var stream = http.ByteStream(imageFile.openRead());
+      var length = await imageFile.length();
+      var multipartFile = http.MultipartFile('imageFile', stream, length,
+          filename: basename(imageFile.path));
+      request.files.add(multipartFile);
     }
 
-    // Send the request
-    final response = await request.send();
+    // Send request and handle response
+    var streamedResponse = await request.send();
+    var response = await http.Response.fromStream(streamedResponse);
 
-    // Check the response status and handle it
-    if (response.statusCode == 200) {
-      final responseBody = await http.Response.fromStream(response);
-      return ApiResponse.fromJson(jsonDecode(responseBody.body));
+    if (response.statusCode == 200 || response.statusCode == 201) {
+      return ApiResponse.fromJson(json.decode(response.body));
     } else {
-      return ApiResponse(
-        success: false,
-        message: "Failed to update raw material: ${response.reasonPhrase}",
-      );
+      return ApiResponse(success: false, message: 'Failed to save raw material');
     }
   }
 
-  // Delete a raw material by ID
+  // Method to delete a raw material by ID
   Future<ApiResponse> deleteRawMaterialById(int id) async {
-    final response = await http.delete(Uri.parse('$apiUrl/delete/$id'));
-
-    if (response.statusCode == 200) {
-      return ApiResponse.fromJson(jsonDecode(response.body));
-    } else {
-      return ApiResponse(
-        success: false,
-        message: "Failed to delete raw material: ${response.reasonPhrase}",
-      );
+    try {
+      final response = await http.delete(Uri.parse('$baseUrl/delete/$id'));
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        return ApiResponse.fromJson(json.decode(response.body));
+      } else {
+        return ApiResponse(success: false, message: 'Failed to delete raw material');
+      }
+    } catch (e) {
+      return ApiResponse(success: false, message: e.toString());
     }
   }
 
-  // Find a raw material by ID
-  Future<ApiResponse> findRawMaterialById(int id) async {
-    final response = await http.get(Uri.parse('$apiUrl/$id'));
+  // Method to update a raw material with optional image
+  Future<ApiResponse> updateRawMaterial(RawMaterial rawMaterial, {File? imageFile}) async {
+    var uri = Uri.parse('$baseUrl/update');
+    var request = http.MultipartRequest('PUT', uri);
 
-    if (response.statusCode == 200) {
-      return ApiResponse.fromJson(jsonDecode(response.body));
+    // Add rawMaterial JSON data
+    request.fields['rawMaterial'] = json.encode(rawMaterial.toJson());
+
+    // Add image file if provided
+    if (imageFile != null) {
+      var stream = http.ByteStream(imageFile.openRead());
+      var length = await imageFile.length();
+      var multipartFile = http.MultipartFile('imageFile', stream, length,
+          filename: basename(imageFile.path));
+      request.files.add(multipartFile);
+    }
+
+    // Send request and handle response
+    var streamedResponse = await request.send();
+    var response = await http.Response.fromStream(streamedResponse);
+
+    if (response.statusCode == 200 || response.statusCode == 201) {
+      return ApiResponse.fromJson(json.decode(response.body));
     } else {
-      return ApiResponse(
-        success: false,
-        message: "Failed to find raw material: ${response.reasonPhrase}",
-      );
+      return ApiResponse(success: false, message: 'Failed to update raw material');
     }
   }
+
 }
