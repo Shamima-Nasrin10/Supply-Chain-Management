@@ -3,16 +3,15 @@ import 'dart:io';
 import 'package:http/http.dart' as http;
 import 'package:path/path.dart';
 import '../model/raw_material.dart';
-import '../model/rawmatcategory.dart';
 import '../util/apiresponse.dart';
 
 class RawMaterialService {
-  final String baseUrl = 'http://localhost:8080/api/rawmaterial';
+  final String apiUrl = 'http://localhost:8080/api/rawmaterial';
 
   // Method to get all raw materials
   Future<ApiResponse> getRawMaterials() async {
     try {
-      final response = await http.get(Uri.parse('$baseUrl/list'));
+      final response = await http.get(Uri.parse('$apiUrl/list'));
       if (response.statusCode == 200 || response.statusCode == 201) {
         return ApiResponse.fromJson(json.decode(response.body));
       } else {
@@ -25,7 +24,7 @@ class RawMaterialService {
 
   // Method to save a raw material with optional image
   Future<ApiResponse> saveRawMaterial(RawMaterial rawMaterial, {File? imageFile}) async {
-    var uri = Uri.parse('$baseUrl/save');
+    var uri = Uri.parse('$apiUrl/save');
     var request = http.MultipartRequest('POST', uri);
 
     // Add rawMaterial JSON data
@@ -54,7 +53,7 @@ class RawMaterialService {
   // Method to delete a raw material by ID
   Future<ApiResponse> deleteRawMaterialById(int id) async {
     try {
-      final response = await http.delete(Uri.parse('$baseUrl/delete/$id'));
+      final response = await http.delete(Uri.parse('$apiUrl/delete/$id'));
       if (response.statusCode == 200 || response.statusCode == 201) {
         return ApiResponse.fromJson(json.decode(response.body));
       } else {
@@ -67,7 +66,7 @@ class RawMaterialService {
 
   // Method to update a raw material with optional image
   Future<ApiResponse> updateRawMaterial(RawMaterial rawMaterial, {File? imageFile}) async {
-    var uri = Uri.parse('$baseUrl/update');
+    var uri = Uri.parse('$apiUrl/update');
     var request = http.MultipartRequest('PUT', uri);
 
     // Add rawMaterial JSON data

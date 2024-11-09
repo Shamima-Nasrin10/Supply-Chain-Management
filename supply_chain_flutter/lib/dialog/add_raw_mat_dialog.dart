@@ -13,14 +13,16 @@ import 'package:supply_chain_flutter/util/notify_util.dart';
 
 import '../model/raw_material.dart';
 
-class RawMatCreatePage extends StatefulWidget {
-  const RawMatCreatePage({Key? key}) : super(key: key);
+class AddRawMaterialDialog extends StatefulWidget {
+  final VoidCallback onSave;
+
+  AddRawMaterialDialog({required this.onSave});
 
   @override
-  _RawMatCreatePageState createState() => _RawMatCreatePageState();
+  _AddRawMaterialDialogState createState() => _AddRawMaterialDialogState();
 }
 
-class _RawMatCreatePageState extends State<RawMatCreatePage> {
+class _AddRawMaterialDialogState extends State<AddRawMaterialDialog> {
   final TextEditingController nameTEC = TextEditingController();
   final TextEditingController quantityTEC = TextEditingController(text: '0');
   RawMatCategory? selectedCategory;
@@ -33,7 +35,7 @@ class _RawMatCreatePageState extends State<RawMatCreatePage> {
   @override
   void initState() {
     super.initState();
-    _loadCategories();
+    _loadCategories(); // Load categories when dialog opens
   }
 
   Future<void> _loadCategories() async {
@@ -141,52 +143,25 @@ class _RawMatCreatePageState extends State<RawMatCreatePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text("Add Raw Material"),
-      ),
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.all(30),
+    return AlertDialog(
+      title: Text('Add New Raw Material'),
+      content: SingleChildScrollView(
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisSize: MainAxisSize.min,
           children: [
-            Center(
-              child: Text(
-                "Raw Material",
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-              ),
-            ),
-            const SizedBox(height: 10),
+            // Name Field
             TextField(
               controller: nameTEC,
-              decoration: const InputDecoration(
-                labelText: "Name",
-                border: OutlineInputBorder(),
-                icon: Icon(Icons.label),
-              ),
+              decoration: InputDecoration(labelText: 'Name'),
             ),
-            const SizedBox(height: 10),
-            DropdownButtonFormField<int>(
-              value: _rawMaterial.category?.id,
-              items: _categories
-                  .map((category) => DropdownMenuItem(
-                value: category.id,
-                child: Text(category.name ?? ''),
-              ))
-                  .toList(),
-              onChanged: (value) {
-                setState(() {
-                  _rawMaterial.category = _categories
-                      .firstWhere((category) => category.id == value);
-                });
-              },
-              decoration: InputDecoration(labelText: 'Category'),
-              validator: (value) =>
-              value == null ? 'Please select a category' : null,
+            // Quantity Field
+            TextField(
+              controller: quantityTEC,
+              decoration: InputDecoration(labelText: 'Quantity'),
+              keyboardType: TextInputType.number,
             ),
-            const SizedBox(height: 10),
-            // Dropdown for Unit enum
+            SizedBox(height: 10),
+            // Unit Dropdown
             DropdownButtonFormField<Unit>(
               value: _rawMaterial.unit,
               items: _buildUnitDropdownItems(),
@@ -199,10 +174,27 @@ class _RawMatCreatePageState extends State<RawMatCreatePage> {
               validator: (value) =>
               value == null ? 'Please select a unit' : null,
             ),
-            const SizedBox(height: 10),
+            SizedBox(height: 10),
+            // Category Dropdown
+            DropdownButtonFormField<RawMatCategory>(
+              value: selectedCategory,
+              items: _categories.map((category) {
+                return DropdownMenuItem<RawMatCategory>(
+                  value: category,
+                  child: Text(category.name ?? '-'),
+                );
+              }).toList(),
+              onChanged: (RawMatCategory? newCategory) {
+                setState(() {
+                  selectedCategory = newCategory;
+                });
+              },
+              decoration: InputDecoration(labelText: 'Category'),
+            ),
+            SizedBox(height: 10),
             ElevatedButton.icon(
-              icon: const Icon(Icons.image),
-              label: const Text('Pick Image'),
+              icon: Icon(Icons.image),
+              label: Text('Pick Image'),
               onPressed: pickImage,
             ),
             if (kIsWeb && webImage != null)
@@ -219,27 +211,25 @@ class _RawMatCreatePageState extends State<RawMatCreatePage> {
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Image.file(
-                  // Use XFile for mobile without using `File`
                   File(selectedImage!.path),
                   height: 100,
                   width: 100,
                   fit: BoxFit.cover,
                 ),
               ),
-            const SizedBox(height: 20),
-            ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.blue,
-              ),
-              onPressed: submitRawMaterial,
-              child: const Text(
-                "Save Raw Material",
-                style: TextStyle(color: Colors.white),
-              ),
-            ),
           ],
         ),
       ),
+      actions: [
+        TextButton(
+          onPressed: () => Navigator.of(context).pop(),
+          child: Text('Cancel'),
+        ),
+        ElevatedButton(
+          onPressed: submitRawMaterial,
+          child: Text('Save'),
+        ),
+      ],
     );
   }
 }
