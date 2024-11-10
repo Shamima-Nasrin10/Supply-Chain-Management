@@ -25,14 +25,8 @@ public class Procurement {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @ManyToMany
-    @JoinTable(
-            name = "procurement_raw_material",
-            joinColumns = @JoinColumn(name = "procurement_id"),
-            inverseJoinColumns = @JoinColumn(name = "raw_material_id")
-    )
-    private List<RawMaterial> rawMaterials = new ArrayList<>();
-
+    @ManyToOne
+    private RawMaterial rawMaterial;
 
     @ManyToOne
     @JoinColumn(name = "supplier_id")

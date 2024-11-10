@@ -5,6 +5,7 @@ import com.shamima.SCMSystem.accounting.repository.ProcurementRepository;
 import com.shamima.SCMSystem.goods.entity.RawMaterial;
 import com.shamima.SCMSystem.goods.entity.RawMaterialStock;
 import com.shamima.SCMSystem.goods.repository.RMStockRepository;
+import com.shamima.SCMSystem.goods.repository.RawMaterialRepository;
 import com.shamima.SCMSystem.util.ApiResponse;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +22,9 @@ public class ProcurementService {
 
     @Autowired
     private RMStockRepository rmStockRepository;
+
+    @Autowired
+    private RawMaterialRepository rawMaterialRepository;
 
     public ApiResponse getAllProcurement() {
         ApiResponse apiResponse = new ApiResponse(false);
@@ -39,7 +43,7 @@ public class ProcurementService {
         ApiResponse apiResponse = new ApiResponse(false);
         try {
             for (Procurement procurement : procurements) {
-                calculateTotalPrice(procurement);
+                procurement.setTotalPrice(procurement.getTotalPrice() * procurement.getQuantity());
             }
             List<Procurement> savedProcurements = procurementRepository.saveAll(procurements);
 
@@ -62,7 +66,7 @@ public class ProcurementService {
     public ApiResponse saveProcurement(Procurement procurement) {
         ApiResponse apiResponse = new ApiResponse(false);
         try {
-            calculateTotalPrice(procurement);
+            procurement.setTotalPrice(procurement.getTotalPrice() * procurement.getQuantity());
             Procurement savedProcurement = procurementRepository.save(procurement);
 
             if (procurement.getStatus().equals(Procurement.Status.APPROVED)) {
@@ -78,29 +82,20 @@ public class ProcurementService {
         return apiResponse;
     }
 
-    private void calculateTotalPrice(Procurement procurement) {
-        double totalPrice = 0.0;
-        for (RawMaterial rawMaterial : procurement.getRawMaterials()) {
-            totalPrice += procurement.getUnitPrice() * procurement.getQuantity();
-        }
-        procurement.setTotalPrice(totalPrice);
-    }
-
     private void updateRawMaterialStock(Procurement procurement) {
-        for (RawMaterial rawMaterial : procurement.getRawMaterials()) {
-            RawMaterialStock stock = rmStockRepository.findByRawMaterial(rawMaterial);
+        RawMaterial rawMaterial = procurement.getRawMaterial();
+        RawMaterialStock stock = rmStockRepository.findByRawMaterial(rawMaterial);
 
-            if (stock != null) {
-                stock.setQuantity(stock.getQuantity() + procurement.getQuantity());
-            } else {
-                stock = new RawMaterialStock();
-                stock.setRawMaterial(rawMaterial);
-                stock.setQuantity(procurement.getQuantity());
-                stock.setCreatedDate(LocalDateTime.now());
-                stock.setLastUpdatedDate(LocalDateTime.now());
-            }
-            rmStockRepository.save(stock);
+        if (stock != null) {
+            stock.setQuantity(stock.getQuantity() + procurement.getQuantity());
+        } else {
+            stock = new RawMaterialStock();
+            stock.setRawMaterial(rawMaterial);
+            stock.setQuantity(procurement.getQuantity());
+            stock.setCreatedDate(LocalDateTime.now());
+            stock.setLastUpdatedDate(LocalDateTime.now());
         }
+        rmStockRepository.save(stock);
     }
 
     @Transactional
@@ -138,13 +133,13 @@ public class ProcurementService {
                 return apiResponse;
             }
 
-            existingProcurement.setRawMaterials(updatedProcurement.getRawMaterials());
+            existingProcurement.setRawMaterial(updatedProcurement.getRawMaterial());
             existingProcurement.setQuantity(updatedProcurement.getQuantity());
             existingProcurement.setUnitPrice(updatedProcurement.getUnitPrice());
             existingProcurement.setStatus(updatedProcurement.getStatus());
             existingProcurement.setProcurementDate(updatedProcurement.getProcurementDate());
 
-            calculateTotalPrice(existingProcurement);
+            existingProcurement.setTotalPrice(updatedProcurement.getQuantity() * updatedProcurement.getUnitPrice());
 
             Procurement savedProcurement = procurementRepository.save(existingProcurement);
 
