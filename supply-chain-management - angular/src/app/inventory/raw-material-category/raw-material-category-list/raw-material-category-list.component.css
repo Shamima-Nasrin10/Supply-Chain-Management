@@ -1,0 +1,108 @@
+/* Container and Row Spacing */
+.container {
+  max-width: 1000px;
+  margin: auto;
+}
+
+.row.mb-3 .col-12.text-end button {
+  font-weight: bold;
+  padding: 8px 16px;
+}
+
+.btn-success {
+  font-size: 0.9rem;
+  transition: background-color 0.3s, box-shadow 0.3s;
+}
+
+.btn-success:hover {
+  background-color: #28a745;
+  box-shadow: 0px 4px 8px rgba(0, 128, 0, 0.2);
+}
+
+/* Card Styling */
+.card {
+  background-color: #fff;
+  border-radius: 10px;
+  border-color: #f8936f;
+  overflow: hidden;
+  transition: transform 0.3s, box-shadow 0.3s;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  min-width: 80px; /* Smaller width */
+  min-height: 100px; /* Smaller height */
+  padding: 10px; /* Added padding for a compact feel */
+}
+
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* Icon Styling */
+.icon-box {
+  background-color: #f0f8ff;
+  border-radius: 50%;
+  padding: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 40px; /* Smaller icon */
+  height: 40px; /* Smaller icon */
+  margin-bottom: 8px;
+}
+
+.icon-box i {
+  color: #007bff;
+  font-size: 1.2rem;
+}
+
+/* Card Title and Text */
+.card-title {
+  font-size: 1rem; /* Smaller font */
+  font-weight: 600;
+  color: #333;
+}
+
+.text-muted {
+  font-size: 0.8rem; /* Smaller font size */
+  color: #6c757d;
+}
+
+/* Footer Buttons */
+.card-footer {
+  background-color: #f8f9fa;
+  border-top: 1px solid #e9ecef;
+  padding: 6px;
+}
+
+.btn-outline-primary,
+.btn-outline-danger {
+  font-size: 0.8rem; /* Smaller button font size */
+  padding: 4px 8px; /* Reduced padding */
+  transition: color 0.3s, border-color 0.3s, box-shadow 0.3s;
+}
+
+.btn-outline-primary:hover {
+  color: #fff;
+  background-color: #007bff;
+  border-color: #007bff;
+  box-shadow: 0px 4px 8px rgba(0, 123, 255, 0.3);
+}
+
+.btn-outline-danger:hover {
+  color: #fff;
+  background-color: #dc3545;
+  border-color: #dc3545;
+  box-shadow: 0px 4px 8px rgba(220, 53, 69, 0.3);
+}
+
+/* Responsive Styling */
+@media (max-width: 767.98px) {
+  .card {
+    min-width: 100%;
+    margin-bottom: 15px;
+  }
+
+  .container {
+    padding: 0 10px;
+  }
+}
