@@ -5,7 +5,6 @@ import com.shamima.SCMSystem.accounting.repository.ProcurementRepository;
 import com.shamima.SCMSystem.goods.entity.RawMaterial;
 import com.shamima.SCMSystem.goods.entity.RawMaterialStock;
 import com.shamima.SCMSystem.goods.repository.RMStockRepository;
-import com.shamima.SCMSystem.goods.repository.RawMaterialRepository;
 import com.shamima.SCMSystem.util.ApiResponse;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,9 +15,6 @@ import java.util.List;
 
 @Service
 public class ProcurementService {
-
-    @Autowired
-    private RawMaterialRepository rawMaterialRepository;
 
     @Autowired
     private ProcurementRepository procurementRepository;
@@ -81,24 +77,30 @@ public class ProcurementService {
         }
         return apiResponse;
     }
+
     private void calculateTotalPrice(Procurement procurement) {
-        procurement.setTotalPrice(procurement.getQuantity() * procurement.getUnitPrice());
+        double totalPrice = 0.0;
+        for (RawMaterial rawMaterial : procurement.getRawMaterials()) {
+            totalPrice += procurement.getUnitPrice() * procurement.getQuantity();
+        }
+        procurement.setTotalPrice(totalPrice);
     }
 
     private void updateRawMaterialStock(Procurement procurement) {
-        RawMaterial rawMaterial = procurement.getRawMaterial();
-        RawMaterialStock stock = rmStockRepository.findByRawMaterial(rawMaterial);
+        for (RawMaterial rawMaterial : procurement.getRawMaterials()) {
+            RawMaterialStock stock = rmStockRepository.findByRawMaterial(rawMaterial);
 
-        if (stock != null) {
-            stock.setQuantity(stock.getQuantity() + procurement.getQuantity());
-        } else {
-            stock = new RawMaterialStock();
-            stock.setRawMaterial(rawMaterial);
-            stock.setQuantity(procurement.getQuantity());
-            stock.setCreatedDate(LocalDateTime.now());
-            stock.setLastUpdatedDate(LocalDateTime.now());
+            if (stock != null) {
+                stock.setQuantity(stock.getQuantity() + procurement.getQuantity());
+            } else {
+                stock = new RawMaterialStock();
+                stock.setRawMaterial(rawMaterial);
+                stock.setQuantity(procurement.getQuantity());
+                stock.setCreatedDate(LocalDateTime.now());
+                stock.setLastUpdatedDate(LocalDateTime.now());
+            }
+            rmStockRepository.save(stock);
         }
-        rmStockRepository.save(stock);
     }
 
     @Transactional
@@ -136,19 +138,16 @@ public class ProcurementService {
                 return apiResponse;
             }
 
-            // Update fields in existing procurement based on the new procurement data
+            existingProcurement.setRawMaterials(updatedProcurement.getRawMaterials());
             existingProcurement.setQuantity(updatedProcurement.getQuantity());
             existingProcurement.setUnitPrice(updatedProcurement.getUnitPrice());
             existingProcurement.setStatus(updatedProcurement.getStatus());
             existingProcurement.setProcurementDate(updatedProcurement.getProcurementDate());
 
-            // Recalculate total price if quantity or unit price changed
             calculateTotalPrice(existingProcurement);
 
-            // Save the updated procurement
             Procurement savedProcurement = procurementRepository.save(existingProcurement);
 
-            // Update stock if status is approved and quantity has changed
             if (existingProcurement.getStatus().equals(Procurement.Status.APPROVED)) {
                 updateRawMaterialStock(existingProcurement);
             }
