@@ -22,7 +22,7 @@ public class ProductionProduct {
     @ManyToOne
     @JoinColumn(name = "product_id")
     private Product product; //from angular send class only containing product.id
-        private Date completionDate;
+    private Date completionDate;
     private Date movedToWarehouseDate;
 
     private Long batchNumber;
@@ -39,7 +39,7 @@ public class ProductionProduct {
 
     @Enumerated(EnumType.STRING)
     @Column(name = "status")
-    private ProductionProduct.Status status=Status.IN_PROGRESS;
+    private ProductionProduct.Status status = Status.IN_PROGRESS;
 
     public enum Status {
         IN_PROGRESS,

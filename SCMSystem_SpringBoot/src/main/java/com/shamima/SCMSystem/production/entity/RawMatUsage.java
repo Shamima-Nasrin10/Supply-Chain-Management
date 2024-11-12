@@ -28,5 +28,4 @@ public class RawMatUsage {
     @JoinColumn(name = "production_product_id")
     private ProductionProduct productionProduct;
 
-
 }

@@ -30,7 +30,7 @@ public class ProdProductController {
     }
 
     // Endpoint to get all ProductionProducts
-    @GetMapping("/all")
+    @GetMapping("/list")
     public ApiResponse getAllProductionProducts() {
         return prodProductService.getAllProductionProducts();
     }
