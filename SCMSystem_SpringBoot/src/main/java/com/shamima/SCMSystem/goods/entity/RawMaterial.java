@@ -41,5 +41,8 @@ public class RawMaterial {
         KG,
         GRAM
     }
-    
+
+    public RawMaterial(Long id) {
+        this.id = id;
+    }
 }

@@ -27,4 +27,7 @@ public class Product {
 
     private String image;
 
+    public Product(Long id) {
+        this.id = id;
+    }
 }
