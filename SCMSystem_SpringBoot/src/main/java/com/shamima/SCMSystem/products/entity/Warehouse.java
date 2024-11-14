@@ -23,4 +23,7 @@ public class Warehouse {
     @Column(nullable = false)
     private String location;
 
+    public Warehouse(long id) {
+        this.id = id;
+    }
 }
