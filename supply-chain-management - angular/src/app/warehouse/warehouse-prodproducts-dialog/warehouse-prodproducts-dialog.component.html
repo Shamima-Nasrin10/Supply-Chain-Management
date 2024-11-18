@@ -14,7 +14,10 @@
       <td>{{ i + 1 }}</td>
       <td>{{ product.product.name }}</td>
       <td>{{ product.batchNumber }}</td>
-      <td>{{ product.completionDate | date: 'yyyy-MM-dd HH:mm' : '+0600'}}</td>
+      <td>
+        <span class="date">{{ product.completionDate | date: 'yyyy-MM-dd' : '+0600' }}</span>
+        <span class="time">{{ product.completionDate | date: 'HH:mm' : '+0600' }}</span>
+      </td>
     </tr>
     </tbody>
   </table>

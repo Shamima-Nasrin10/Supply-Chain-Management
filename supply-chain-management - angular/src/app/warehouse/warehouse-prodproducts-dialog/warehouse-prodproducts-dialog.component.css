@@ -74,3 +74,13 @@ button[mat-button]:hover {
   border-radius: 8px;
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Subtle shadow for better visibility */
 }
+.date {
+  color: #1d4096; /* Dark blue for the date */
+  font-weight: bold;
+  margin-right: 5px;
+}
+
+.time {
+  color: #9f470f; /* Dark orange for the time */
+  font-style: italic;
+}
