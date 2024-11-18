@@ -42,7 +42,10 @@ export class ProdProductListComponent implements OnInit{
   updateStatus(id: number, newStatus: ProductionStatus): void {
     if (newStatus === ProductionStatus.MOVED_TO_WAREHOUSE) {
       const dialogRef = this.matDialog.open(WarehouseSelectDialogComponent, {
-        data: { prodProductId: id }
+        data: { prodProductId: id },
+        width: '400px', // Set the width of the dialog
+        height: 'auto', // Optional: Adjust height if needed
+        panelClass: 'custom-dialog-container', // Optional for custom styles
       });
 
       dialogRef.afterClosed().subscribe((selectedWarehouse: WareHouse) => {
@@ -78,6 +81,7 @@ export class ProdProductListComponent implements OnInit{
       });
     }
   }
+
 
 
   // deleteProdProduct(id: number): void {

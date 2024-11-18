@@ -1,0 +1,56 @@
+/* Center the dialog content */
+h2 {
+  font-size: 24px;
+  font-family: 'Merriweather', serif;
+  text-align: center;
+  margin-bottom: 20px;
+  color: #1d4096; /* Dark gray */
+}
+
+/* Style the warehouse buttons */
+div button {
+  display: block; /* Ensures buttons stack vertically */
+  width: 100%; /* Full-width buttons for better usability */
+  margin: 10px 0; /* Add spacing between buttons */
+  padding: 10px 15px;
+  font-size: 16px;
+  background-color: #205994; /* Primary blue */
+  color: white;
+  font-weight: bold;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+div button:hover {
+  background-color: #0056b3; /* Darker blue for hover */
+}
+
+/* Style the Cancel button */
+button[mat-button] {
+  display: block;
+  margin: 20px auto; /* Center the Cancel button */
+  padding: 10px 20px;
+  font-size: 16px;
+  color: #9f470f; /* Neutral gray for cancel */
+  background: antiquewhite;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: color 0.3s ease, border-color 0.3s ease;
+}
+
+button[mat-button]:hover {
+  color: #e7e2e2; /* Dark gray on hover */
+  border-color: #aaa;
+  background-color: #9f470f;
+}
+
+/* Add padding to the dialog content */
+:host {
+  display: block;
+  padding: 20px;
+  max-width: 400px;
+  margin: 0 auto;
+}

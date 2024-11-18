@@ -9,7 +9,7 @@ export class ProdProduct {
   movedToWarehouseDate: Date | null = null;
   batchNumber!: number;
   quantity!: number;
-  warehouse!: WareHouse;
+  warehouse?: WareHouse;
   qrCodePath?: string;
   rawMatUsages!: RawMatUsage[];
   status: ProductionStatus = ProductionStatus.IN_PROGRESS;

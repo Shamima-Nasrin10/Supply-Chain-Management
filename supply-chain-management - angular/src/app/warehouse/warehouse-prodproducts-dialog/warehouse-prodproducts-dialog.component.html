@@ -1,21 +1,22 @@
-<h2>Products in Warehouse</h2>
-<table class="table table-bordered">
-  <thead>
-  <tr>
-    <th>#</th>
-    <th>Product Name</th>
-    <th>Batch Number</th>
-    <th>Manufacturing Date</th>
-  </tr>
-  </thead>
-  <tbody>
-  <tr *ngFor="let product of prodProducts; let i = index">
-    <td>{{ i + 1 }}</td>
-    <td>{{ product.product }}</td>
-    <td>{{ product.batchNumber }}</td>
-    <td>{{ product.completionDate }}</td>
-  </tr>
-  </tbody>
-</table>
-<button mat-button (click)="closeDialog()">Close</button>
-
+<div class="dialog-container">
+  <h2>Products in Warehouse</h2>
+  <table class="table table-bordered">
+    <thead>
+    <tr>
+      <th>#</th>
+      <th>Product Name</th>
+      <th>Batch Number</th>
+      <th>Manufacturing Date</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let product of prodProducts; let i = index">
+      <td>{{ i + 1 }}</td>
+      <td>{{ product.product }}</td>
+      <td>{{ product.batchNumber }}</td>
+      <td>{{ product.completionDate }}</td>
+    </tr>
+    </tbody>
+  </table>
+  <button mat-button (click)="closeDialog()">Close</button>
+</div>

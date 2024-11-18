@@ -6,6 +6,12 @@ html, body {
   justify-content: center;
   align-items: center;
   font-family: Roboto, "Helvetica Neue", sans-serif;
+  overflow: visible;
+}
+
+header, .sidebar {
+  position: relative; /* Avoid clipping with higher z-index dialogs */
+  z-index: 1000; /* Lower than the dialog's z-index */
 }
 
 /* Style for Angular Material dialog container */
@@ -20,15 +26,12 @@ html, body {
 
 /* Ensure custom modal container is properly centered */
 .custom-dialog-container {
-  max-width: 90%; /* Prevent the modal from going off-screen */
-  max-height: 90%; /* Make it scrollable if content overflows */
-  width: 400px; /* Adjust the width */
-  padding: 16px;
-  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2); /* Add some shadow */
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  position: fixed !important;
+  top: 50% !important;
+  left: 50% !important;
+  transform: translate(-50%, -50%) !important;
+  margin: 0 !important;
+
 }
 
 /* Make sure that the container inside the modal is centered */
@@ -37,3 +40,16 @@ html, body {
   justify-content: center;
   align-items: center;
 }
+
+.centered-dialog {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh; /* Full viewport height */
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  margin: 0 !important;
+}
+
+

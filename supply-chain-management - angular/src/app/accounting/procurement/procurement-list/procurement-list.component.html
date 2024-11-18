@@ -19,7 +19,7 @@
     <tr *ngFor="let procurement of procurements; let i = index">
       <td>{{ i + 1 }}</td>
       <td>{{ procurement.rawMaterial!.name || '-' }}</td>
-      <td>{{ procurement.rawMaterialSupplier!.companyName || '-' }}</td>
+      <td>{{ procurement.rawMaterialSupplier != null ? procurement.rawMaterialSupplier.companyName : 'N/A' }}</td>
       <td>{{ procurement.procurementDate | date:'yyyy-MM-dd' }}</td>
       <td>{{ procurement.quantity }}</td>
       <td>{{ procurement.unitPrice | currency }}</td>

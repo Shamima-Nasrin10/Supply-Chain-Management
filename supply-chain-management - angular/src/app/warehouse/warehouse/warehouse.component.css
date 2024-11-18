@@ -74,6 +74,39 @@ body {
   transition: background-color 0.3s ease;
 }
 
+.btn-info {
+  background-color: #205994; /* Bright yellow for Edit */
+  border-color: #205994;
+  color: #e9f8f5; /* Dark text for contrast */
+}
+
+.btn-info:hover {
+  background-color: #205994; /* Darker yellow for hover */
+  border-color: #205994;
+}
+
+.btn-info:active {
+  background-color: #346aa6; /* Even darker yellow for active state */
+  border-color: #346aa6;
+}
+
+/* Delete Button */
+.btn-danger {
+  background-color: #b03d49; /* Red for Delete */
+  border-color: #b03d49;
+  color: #fff; /* White text for contrast */
+}
+
+.btn-danger:hover {
+  background-color: #c82333; /* Darker red for hover */
+  border-color: #bd2130;
+}
+
+.btn-danger:active {
+  background-color: #bd2130; /* Even darker red for active state */
+  border-color: #b21f2d;
+}
+
 .btn-primary {
   background-color: var(--primary-color);
   border-color: var(--primary-color);
@@ -85,14 +118,21 @@ body {
 }
 
 .btn-secondary {
-  background-color: var(--secondary-color);
-  border-color: var(--secondary-color);
+  background-color: #17a2b8; /* A distinct color for the View button */
+  border-color: #17a2b8;
   color: #fff;
 }
 
 .btn-secondary:hover {
-  background-color: var(--secondary-hover-color);
+  background-color: #138496; /* Darker shade for hover effect */
+  border-color: #138496;
 }
+
+.btn-secondary:active {
+  background-color: #117a8b; /* Even darker shade for active state */
+  border-color: #117a8b;
+}
+
 
 /* Table Styles */
 .table {

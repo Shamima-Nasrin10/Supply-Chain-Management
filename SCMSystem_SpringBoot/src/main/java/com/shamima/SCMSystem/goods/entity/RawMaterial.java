@@ -1,11 +1,15 @@
 package com.shamima.SCMSystem.goods.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.shamima.SCMSystem.accounting.entity.Procurement;
+import com.shamima.SCMSystem.production.entity.RawMatUsage;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import java.util.List;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -34,6 +38,18 @@ public class RawMaterial {
 
     @Transient
     private int quantity;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "rawMaterial", cascade = CascadeType.REMOVE, orphanRemoval = true)
+    List<Procurement> procurements;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "rawMaterial", cascade = CascadeType.REMOVE, orphanRemoval = true)
+    List<RawMaterialStock> stocks;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "rawMaterial", cascade = CascadeType.REMOVE, orphanRemoval = true)
+    List<RawMatUsage> usages;
 
     public enum Unit {
         LITRE,

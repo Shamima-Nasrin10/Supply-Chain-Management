@@ -108,7 +108,12 @@ export class WarehouseComponent implements OnInit{
 
   viewProdProducts(warehouseId: number): void {
     this.matDialog.open(WarehouseProdproductsDialogComponent, {
-      data: { warehouseId: warehouseId }
+      data: { warehouseId: warehouseId },
+      width: 'auto',
+      height: 'auto',
+      panelClass: 'centered-dialog',
+      hasBackdrop: true,
+      disableClose: false,
     });
   }
 

@@ -1,9 +1,12 @@
 package com.shamima.SCMSystem.goods.service;
 
 
+import com.shamima.SCMSystem.accounting.entity.Procurement;
+import com.shamima.SCMSystem.accounting.repository.ProcurementRepository;
 import com.shamima.SCMSystem.goods.entity.RawMaterialSupplier;
 import com.shamima.SCMSystem.goods.repository.RawMaterialSupplierRepository;
 import com.shamima.SCMSystem.util.ApiResponse;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,6 +17,8 @@ public class RawMaterialSupplierService {
 
     @Autowired
     private RawMaterialSupplierRepository rawMaterialSupplierRepository;
+    @Autowired
+    private ProcurementRepository procurementRepository;
 
     public ApiResponse getAllRawMaterialSuppliers() {
         ApiResponse apiResponse = new ApiResponse(false);
@@ -59,6 +64,7 @@ public class RawMaterialSupplierService {
         }
     }
 
+    @Transactional
     public ApiResponse deleteRawMaterialSupplier(Long id) {
         ApiResponse apiResponse = new ApiResponse(false);
         try {
@@ -66,6 +72,13 @@ public class RawMaterialSupplierService {
             if (supplier == null) {
                 apiResponse.setMessage("Supplier not found");
                 return apiResponse;
+            }
+            List<Procurement> procurements = procurementRepository.findAllByRawMaterialSupplier(supplier).orElse(null);
+            if (procurements != null && !procurements.isEmpty()) {
+                for (Procurement procurement : procurements) {
+                    procurement.setRawMaterialSupplier(null);
+                    procurementRepository.save(procurement);
+                }
             }
             rawMaterialSupplierRepository.deleteById(id);
             apiResponse.setSuccess(true);
