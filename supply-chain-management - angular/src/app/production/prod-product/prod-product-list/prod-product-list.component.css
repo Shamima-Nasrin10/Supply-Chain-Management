@@ -1,0 +1,127 @@
+/* Container styling */
+.container {
+  max-width: 1200px;
+  margin: 15px auto;
+  padding: 15px;
+  background-color: #f8f9fa; /* Light gray background */
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+  font-family: Arial, sans-serif;
+}
+
+/* Heading styling */
+h2 {
+  text-align: center;
+  color: #1d4096; /* Dark blue */
+  font-size: 28px;
+  margin-bottom: 20px;
+}
+
+/* Table styling */
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+.table th,
+.table td {
+  padding: 10px 10px;
+  text-align: left;
+  border: 1px solid #dee2e6; /* Light border color */
+}
+
+.table th {
+  background-color: #205994; /* Primary blue for header */
+  color: #fff; /* White text for contrast */
+  font-weight: bold;
+}
+
+.table-striped tbody tr:nth-child(odd) {
+  background-color: #f2f2f2; /* Light gray for striped rows */
+}
+
+.table-striped tbody tr:nth-child(even) {
+  background-color: #ffffff; /* White for alternating rows */
+}
+
+.table tbody tr:hover {
+  background-color: #e8f4fc; /* Light blue on hover */
+}
+
+/* Date and Time styling */
+.date {
+  color: #1d4096; /* Dark blue for the date */
+  font-weight: bold;
+  margin-right: 5px;
+}
+
+.time {
+  color: #9f470f; /* Dark orange for the time */
+  font-style: italic;
+}
+
+/* Button styling */
+.btn {
+  border-radius: 4px;
+  padding: 6px 6px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+/* Success button (Mark as Completed) */
+.btn-success {
+  background-color: #28a745; /* Green */
+  color: #fff;
+  border: none;
+}
+
+.btn-success:hover {
+  background-color: #218838; /* Darker green on hover */
+}
+
+/* Info button (Move to Warehouse) */
+.btn-info {
+  background-color: #17a2b8; /* Teal */
+  color: #fff;
+  border: none;
+}
+
+.btn-info:hover {
+  background-color: #138496; /* Darker teal on hover */
+}
+/* Base styling for the Status Locked message */
+.text-mute {
+  font-size: 14px; /* Slightly smaller font for subtlety */
+  font-weight: bold; /* Bold text for emphasis */
+  color: #f2f6f5; /* Muted gray color */
+  background-color: #9f470f; /* Light gray background */
+  border: 1px solid #dee2e6; /* Subtle border for visibility */
+  padding: 4px 4px; /* Padding for spacing around the text */
+  border-radius: 4px; /* Rounded corners for a clean look */
+  display: inline-block; /* Ensures proper alignment */
+  text-align: center; /* Centers text inside the span */
+  margin-top: 5px; /* Adds spacing above the message */
+}
+
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .container {
+    padding: 10px;
+  }
+
+  .table th, .table td {
+    font-size: 14px; /* Smaller font for mobile */
+  }
+
+  h2 {
+    font-size: 24px; /* Smaller heading size */
+  }
+
+  .btn {
+    width: 100%; /* Full-width buttons for mobile */
+    margin-bottom: 10px;
+  }
+}

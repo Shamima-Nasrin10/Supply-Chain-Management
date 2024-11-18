@@ -12,9 +12,9 @@
     <tbody>
     <tr *ngFor="let product of prodProducts; let i = index">
       <td>{{ i + 1 }}</td>
-      <td>{{ product.product }}</td>
+      <td>{{ product.product.name }}</td>
       <td>{{ product.batchNumber }}</td>
-      <td>{{ product.completionDate }}</td>
+      <td>{{ product.completionDate | date: 'yyyy-MM-dd HH:mm' : '+0600'}}</td>
     </tr>
     </tbody>
   </table>

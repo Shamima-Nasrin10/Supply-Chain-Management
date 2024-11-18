@@ -19,11 +19,36 @@
       <td>{{ product.batchNumber }}</td>
       <td>{{ product.quantity }}</td>
       <td>{{ product.status }}</td>
-      <td>{{ product.completionDate | date: 'yyyy-MM-dd' }}</td>
-      <td>{{ product.movedToWarehouseDate | date: 'yyyy-MM-dd' }}</td>
       <td>
-        <button (click)="updateStatus(product.id, ProductionStatus.COMPLETED)" class="btn btn-success btn-sm" *ngIf="product.status !== ProductionStatus.COMPLETED">Mark as Completed</button>
-        <button (click)="updateStatus(product.id, ProductionStatus.MOVED_TO_WAREHOUSE)" class="btn btn-info btn-sm" *ngIf="product.status === ProductionStatus.COMPLETED">Move to Warehouse</button>
+        <span class="date">{{ product.completionDate | date: 'yyyy-MM-dd' : '+0600' }}</span>
+        <span class="time">{{ product.completionDate | date: 'HH:mm' : '+0600' }}</span>
+      </td>
+      <td>
+        <span class="date">{{ product.movedToWarehouseDate | date: 'yyyy-MM-dd' : '+0600' }}</span>
+        <span class="time">{{ product.movedToWarehouseDate | date: 'HH:mm' : '+0600' }}</span>
+      </td>
+
+      <td>
+        <!-- Button to mark as completed -->
+        <button
+          (click)="updateStatus(product.id, ProductionStatus.COMPLETED)"
+          class="btn btn-success btn-sm"
+          *ngIf="product.status === ProductionStatus.IN_PROGRESS">
+          Mark as Completed
+        </button>
+
+        <!-- Button to move to warehouse -->
+        <button
+          (click)="updateStatus(product.id, ProductionStatus.MOVED_TO_WAREHOUSE)"
+          class="btn btn-info btn-sm"
+          *ngIf="product.status === ProductionStatus.COMPLETED">
+          Move to Warehouse
+        </button>
+
+        <!-- Status locked message -->
+        <span *ngIf="product.status === ProductionStatus.MOVED_TO_WAREHOUSE" class="text-mute">
+    Finished
+  </span>
       </td>
     </tr>
     </tbody>
