@@ -1,25 +1,30 @@
 package com.shamima.SCMSystem.products.service;
 
-import com.shamima.SCMSystem.products.entity.Distributor;
-import com.shamima.SCMSystem.products.repository.DistributorRepository;
+
+import com.shamima.SCMSystem.products.entity.ProductRetailer;
+import com.shamima.SCMSystem.products.repository.ProductRetailerRepository;
+import com.shamima.SCMSystem.products.repository.WarehouseRepository;
 import com.shamima.SCMSystem.util.ApiResponse;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-public class DistributorService {
+public class ProductRetailerService {
 
     @Autowired
-    private DistributorRepository retailerRepository;
+    private ProductRetailerRepository productRetailerRepository;
+    @Autowired
+    private WarehouseRepository warehouseRepository;
 
-    public ApiResponse getAllRetailers() {
+    public ApiResponse getAllProductRetailers() {
         ApiResponse apiResponse = new ApiResponse(false);
         try {
-            List<Distributor> retailers = retailerRepository.findAll();
+            List<ProductRetailer> productRetailers = productRetailerRepository.findAll();
             apiResponse.setSuccess(true);
-            apiResponse.setData("retailers", retailers);
+            apiResponse.setData("productRetailers", productRetailers);
             return apiResponse;
         } catch (Exception e) {
             apiResponse.setMessage(e.getMessage());
@@ -27,10 +32,10 @@ public class DistributorService {
         }
     }
 
-    public ApiResponse saveRetailer(Distributor retailer) {
+    public ApiResponse saveProductRetailers(ProductRetailer pRetailer) {
         ApiResponse apiResponse = new ApiResponse(false);
         try {
-            retailerRepository.save(retailer);
+            productRetailerRepository.save(pRetailer);
             apiResponse.setSuccess(true);
             apiResponse.setMessage("Retailer saved successfully");
             return apiResponse;
@@ -40,15 +45,15 @@ public class DistributorService {
         }
     }
 
-    public ApiResponse updateRetailer(Distributor retailer) {
+    public ApiResponse updateProductRetailer(ProductRetailer pRetailer) {
         ApiResponse apiResponse = new ApiResponse(false);
         try {
-            Distributor existingRetailer = retailerRepository.findById(retailer.getId()).orElse(null);
+            ProductRetailer existingRetailer = productRetailerRepository.findById(pRetailer.getId()).orElse(null);
             if (existingRetailer == null) {
                 apiResponse.setMessage("Retailer not found");
                 return apiResponse;
             }
-            retailerRepository.save(retailer);
+            productRetailerRepository.save(pRetailer);
             apiResponse.setSuccess(true);
             apiResponse.setMessage("Retailer updated successfully");
             return apiResponse;
@@ -58,15 +63,23 @@ public class DistributorService {
         }
     }
 
-    public ApiResponse deleteRetailer(Long id) {
+    @Transactional
+    public ApiResponse deleteProductRetailer(Long id) {
         ApiResponse apiResponse = new ApiResponse(false);
         try {
-            Distributor retailer = retailerRepository.findById(id).orElse(null);
-            if (retailer == null) {
+            ProductRetailer pRetailer = productRetailerRepository.findById(id).orElse(null);
+            if (pRetailer == null) {
                 apiResponse.setMessage("Retailer not found");
                 return apiResponse;
             }
-            retailerRepository.deleteById(id);
+//            List<Warehouse> procurements = warehouseRepository.fin(pRetailer).orElse(null);
+//            if (procurements != null && !procurements.isEmpty()) {
+//                for (Procurement procurement : procurements) {
+//                    procurement.setRawMaterialSupplier(null);
+//                    procurementRepository.save(procurement);
+//                }
+//            }
+            productRetailerRepository.deleteById(id);
             apiResponse.setSuccess(true);
             apiResponse.setMessage("Retailer deleted successfully");
             return apiResponse;
@@ -76,20 +89,21 @@ public class DistributorService {
         }
     }
 
-    public ApiResponse getRetailerById(Long id) {
+    public ApiResponse getProductRetailerById(Long id) {
         ApiResponse apiResponse = new ApiResponse(false);
         try {
-            Distributor retailer = retailerRepository.findById(id).orElse(null);
-            if (retailer == null) {
+            ProductRetailer pRetailer = productRetailerRepository.findById(id).orElse(null);
+            if (pRetailer == null) {
                 apiResponse.setMessage("Retailer not found");
                 return apiResponse;
             }
             apiResponse.setSuccess(true);
-            apiResponse.setData("retailer", retailer);
+            apiResponse.setData("productRetailer", pRetailer);
             return apiResponse;
         } catch (Exception e) {
             apiResponse.setMessage(e.getMessage());
             return apiResponse;
         }
     }
+
 }

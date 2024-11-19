@@ -7,7 +7,7 @@
       <th>Product Name</th>
       <th>Batch Number</th>
       <th>Manufacturing Date</th>
-      <th>QR Code</th>
+      <th>Stock</th>
     </tr>
     </thead>
     <tbody>
@@ -19,13 +19,7 @@
         <span class="date">{{ product.completionDate | date: 'yyyy-MM-dd' : '+0600' }}</span>
         <span class="time">{{ product.completionDate | date: 'HH:mm' : '+0600' }}</span>
       </td>
-      <td>
-        <img
-          *ngIf="product.qrCodePath"
-          [src]="'/static/images/qrcodes/' + product.qrCodePath"
-          alt="QR Code"
-          class="qr-code">
-      </td>
+      <td>{{ product.quantity }}</td>
     </tr>
     </tbody>
   </table>

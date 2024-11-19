@@ -66,7 +66,7 @@ public class ProcurementService {
     public ApiResponse saveProcurement(Procurement procurement) {
         ApiResponse apiResponse = new ApiResponse(false);
         try {
-            procurement.setTotalPrice(procurement.getTotalPrice() * procurement.getQuantity());
+            procurement.setTotalPrice(procurement.getUnitPrice() * procurement.getQuantity());
             Procurement savedProcurement = procurementRepository.save(procurement);
 
             if (procurement.getStatus().equals(Procurement.Status.APPROVED)) {

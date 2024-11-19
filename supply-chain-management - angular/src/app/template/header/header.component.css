@@ -5,28 +5,28 @@
     display: flex;
     align-items: center;
   }
-  
+
   .btn.logout img {
     margin-right: 10px;
   }
-  
+
   /* Specific styles for the login button */
   .login-btn {
     background-color: #007bff; /* Bootstrap primary color */
     border-color: #007bff;
   }
-  
+
   .login-btn:hover {
     background-color: #0056b3;
     border-color: #004085;
   }
-  
+
   /* Specific styles for the registration button */
   .reg-btn {
     background-color: #6c757d; /* Bootstrap secondary color */
     border-color: #6c757d;
   }
-  
+
   .reg-btn:hover {
     background-color: #5a6268;
     border-color: #545b62;
@@ -63,4 +63,32 @@
   margin: 1rem !important; /* Add margin around the button */
 }
 
-  
+.logo {
+  max-width: 100%; /* Ensures the logo doesn't exceed the container width */
+  height: auto; /* Maintains aspect ratio */
+  display: block; /* Ensures proper positioning */
+  margin: 0 auto; /* Centers the logo if applicable */
+  overflow: hidden; /* Prevents any overflow content */
+}
+
+.logo img {
+  max-width: 150px; /* Sets a reasonable maximum width for the logo */
+  height: auto; /* Maintains aspect ratio of the logo */
+  object-fit: contain; /* Ensures the logo fits within the boundaries */
+  display: block;
+}
+
+/* Responsive adjustments for smaller screens */
+@media (max-width: 768px) {
+  .logo img {
+    max-width: 120px; /* Adjust logo size for smaller screens */
+  }
+}
+
+@media (max-width: 480px) {
+  .logo img {
+    max-width: 100px; /* Further adjust for very small screens */
+  }
+}
+
+
