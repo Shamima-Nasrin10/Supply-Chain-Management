@@ -5,11 +5,12 @@ import com.shamima.SCMSystem.accounting.repository.SalesRepository;
 import com.shamima.SCMSystem.production.entity.ProductionProduct;
 import com.shamima.SCMSystem.production.repository.ProdProductRepository;
 import com.shamima.SCMSystem.products.entity.Warehouse;
-import com.shamima.SCMSystem.products.repository.WarehouseRepository;
 import com.shamima.SCMSystem.util.ApiResponse;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class SalesService {
@@ -20,50 +21,142 @@ public class SalesService {
     @Autowired
     private ProdProductRepository prodProductRepository;
 
-    @Autowired
-    private WarehouseRepository warehouseRepository;
+    public ApiResponse getAllSales() {
+        ApiResponse apiResponse = new ApiResponse(false);
+        try {
+            List<Sales> salesList = salesRepository.findAll();
+            apiResponse.setSuccess(true);
+            apiResponse.setData("sales", salesList);
+        } catch (Exception e) {
+            apiResponse.setMessage(e.getMessage());
+        }
+        return apiResponse;
+    }
 
     @Transactional
-    public ApiResponse approveSales(long salesId) {
+    public ApiResponse saveAllSales(List<Sales> salesList) {
         ApiResponse apiResponse = new ApiResponse(false);
-
         try {
-            // Fetch the sales record
-            Sales sales = salesRepository.findById(salesId)
-                    .orElseThrow(() -> new RuntimeException("Sales record not found"));
+            List<Sales> savedSales = salesRepository.saveAll(salesList);
 
-            // Ensure the status is not already approved
-            if (sales.getStatus() == Sales.Status.APPROVED) {
-                apiResponse.setMessage("Sales already approved.");
-                return apiResponse;
+            for (Sales sales : savedSales) {
+                if (sales.getStatus() == Sales.Status.APPROVED) {
+                    updateProdProductStock(sales);
+                }
             }
-
-            // Check if the product exists in the warehouse
-            ProductionProduct productionProduct = sales.getProductionProduct();
-            Warehouse warehouse = productionProduct.getWarehouse();
-
-            if (warehouse == null || productionProduct.getQuantity() < sales.getQuantity()) {
-                apiResponse.setMessage("Insufficient stock in the warehouse.");
-                return apiResponse;
-            }
-
-            // Deduct quantity in the warehouse
-            productionProduct.setQuantity(productionProduct.getQuantity() - sales.getQuantity());
-            prodProductRepository.save(productionProduct);
-
-            // Update sales status to APPROVED
-            sales.setStatus(Sales.Status.APPROVED);
-            salesRepository.save(sales);
 
             apiResponse.setSuccess(true);
-            apiResponse.setMessage("Sales approved and warehouse quantity updated successfully.");
-            apiResponse.setData("sales", sales);
-
+            apiResponse.setMessage("Sales saved successfully");
+            apiResponse.setData("sales", savedSales);
         } catch (Exception e) {
-            apiResponse.setMessage("Error approving sales: " + e.getMessage());
+            apiResponse.setMessage(e.getMessage());
         }
+        return apiResponse;
+    }
 
+    @Transactional
+    public ApiResponse saveSale(Sales sales) {
+        ApiResponse apiResponse = new ApiResponse(false);
+        try {
+            Sales savedSale = salesRepository.save(sales);
+
+            if (sales.getStatus() == Sales.Status.APPROVED) {
+                updateProdProductStock(sales);
+            }
+
+            apiResponse.setSuccess(true);
+            apiResponse.setMessage("Sale saved successfully");
+            apiResponse.setData("sale", savedSale);
+        } catch (Exception e) {
+            apiResponse.setMessage(e.getMessage());
+        }
+        return apiResponse;
+    }
+
+    private void updateProdProductStock(Sales sales) {
+        ProductionProduct productionProduct = sales.getProductionProduct();
+        Warehouse warehouse = productionProduct.getWarehouse();
+
+        if (productionProduct != null || productionProduct.getQuantity() >= sales.getQuantity()) {
+            if (productionProduct.getQuantity() >= sales.getQuantity()) {
+                productionProduct.setQuantity(productionProduct.getQuantity() - sales.getQuantity());
+                prodProductRepository.save(productionProduct);
+            } else {
+                throw new RuntimeException("Insufficient stock for product: " + productionProduct.getProduct().getName());
+            }
+        }
+    }
+
+    @Transactional
+    public ApiResponse deleteSaleById(long id) {
+        ApiResponse apiResponse = new ApiResponse(false);
+        try {
+            if (salesRepository.existsById(id)) {
+                Sales sales = salesRepository.findById(id).orElse(null);
+                if (sales == null) {
+                    apiResponse.setMessage("Sale not found");
+                    return apiResponse;
+                }
+
+                salesRepository.deleteById(id);
+
+                apiResponse.setSuccess(true);
+                apiResponse.setMessage("Sale deleted successfully");
+            } else {
+                apiResponse.setMessage("Sale not found with ID " + id);
+            }
+        } catch (Exception e) {
+            apiResponse.setMessage(e.getMessage());
+        }
+        return apiResponse;
+    }
+
+    @Transactional
+    public ApiResponse updateSale(long id, Sales updatedSale) {
+        ApiResponse apiResponse = new ApiResponse(false);
+        try {
+            Sales existingSale = salesRepository.findById(id).orElse(null);
+
+            if (existingSale == null) {
+                apiResponse.setMessage("Sale not found with ID " + id);
+                return apiResponse;
+            }
+
+            existingSale.setProductionProduct(updatedSale.getProductionProduct());
+            existingSale.setQuantity(updatedSale.getQuantity());
+            existingSale.setUnitPrice(updatedSale.getUnitPrice());
+            existingSale.setTotalPrice(updatedSale.getQuantity() * updatedSale.getUnitPrice());
+            existingSale.setStatus(updatedSale.getStatus());
+            existingSale.setSalesDate(updatedSale.getSalesDate());
+
+            Sales savedSale = salesRepository.save(existingSale);
+
+            if (existingSale.getStatus() == Sales.Status.APPROVED) {
+                updateProdProductStock(existingSale);
+            }
+
+            apiResponse.setSuccess(true);
+            apiResponse.setMessage("Sale updated successfully");
+            apiResponse.setData("sale", savedSale);
+        } catch (Exception e) {
+            apiResponse.setMessage(e.getMessage());
+        }
+        return apiResponse;
+    }
+
+    public ApiResponse getSaleById(long id) {
+        ApiResponse apiResponse = new ApiResponse(false);
+        try {
+            Sales sales = salesRepository.findById(id).orElse(null);
+            if (sales == null) {
+                apiResponse.setMessage("Sale not found with ID " + id);
+            } else {
+                apiResponse.setSuccess(true);
+                apiResponse.setData("sale", sales);
+            }
+        } catch (Exception e) {
+            apiResponse.setMessage(e.getMessage());
+        }
         return apiResponse;
     }
 }
-
