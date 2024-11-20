@@ -33,16 +33,13 @@ import {
 import {WarehouseComponent} from './warehouse/warehouse/warehouse.component';
 import {InventoryCreateComponent} from './inventory/inventory/inventory-create/inventory-create.component';
 import {ProductComponent} from './product/product/product.component';
-import {RetailerComponent, RetailerDialogComponent} from './product/retailer/retailer/retailer.component';
 import {provideAnimationsAsync} from '@angular/platform-browser/animations/async';
 import {MatDialogModule} from "@angular/material/dialog";
 import {MatButtonModule} from "@angular/material/button";
 import {MatFormFieldModule} from "@angular/material/form-field";
 import {MatInputModule} from "@angular/material/input";
 import {MatCardModule} from "@angular/material/card";
-import { SalesDetailsComponent } from './accounting/sales/sales-details/sales-details.component';
 import { SalesCreateComponent } from './accounting/sales/sales-create/sales-create.component';
-import { SalesUpdateComponent } from './accounting/sales/sales-update/sales-update.component';
 import { SalesViewComponent } from './accounting/sales/sales-view/sales-view.component';
 import { ProcurementComponent } from './accounting/procurement/procurement/procurement.component';
 import { ProcurementListComponent } from './accounting/procurement/procurement-list/procurement-list.component';
@@ -50,7 +47,9 @@ import { RawMatUsageComponent } from './production/RawMatUsage/raw-mat-usage/raw
 import { ProdProductCreateComponent } from './production/prod-product/prod-product-create/prod-product-create.component';
 import { ProdProductListComponent } from './production/prod-product/prod-product-list/prod-product-list.component';
 import { WarehouseSelectDialogComponent } from './production/warehouse-select-dialog/warehouse-select-dialog.component';
-import { WarehouseProdproductsDialogComponent } from './warehouse/warehouse-prodproducts-dialog/warehouse-prodproducts-dialog.component'
+import { WarehouseProdproductsDialogComponent } from './warehouse/warehouse-prodproducts-dialog/warehouse-prodproducts-dialog.component';
+import { RetailerCreateDialogComponent } from './product/retailer/retailer-create-dialog/retailer-create-dialog.component';
+import { RetailerListComponent } from './product/retailer/retailer-list/retailer-list.component'
 
 
 @NgModule({
@@ -78,11 +77,7 @@ import { WarehouseProdproductsDialogComponent } from './warehouse/warehouse-prod
     WarehouseComponent,
     InventoryCreateComponent,
     ProductComponent,
-    RetailerComponent,
-    RetailerDialogComponent,
-    SalesDetailsComponent,
     SalesCreateComponent,
-    SalesUpdateComponent,
     SalesViewComponent,
     ProcurementComponent,
     ProcurementListComponent,
@@ -91,6 +86,8 @@ import { WarehouseProdproductsDialogComponent } from './warehouse/warehouse-prod
     ProdProductListComponent,
     WarehouseSelectDialogComponent,
     WarehouseProdproductsDialogComponent,
+    RetailerCreateDialogComponent,
+    RetailerListComponent,
   ],
   imports: [
     BrowserModule,

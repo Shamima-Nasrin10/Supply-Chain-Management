@@ -1,11 +1,10 @@
 export class Retailer{
 
-  id!: number;
-  firstName!: string;
-  lastName!: string;
+  id?: number;
+  companyName?: string;
+  contactPerson!: string;
   email!: string;
-  phone!: string;
-  addressLine!: string;
-  postalCode!: string;
+  cellNo!: string;
+  address!: string;
 
 }

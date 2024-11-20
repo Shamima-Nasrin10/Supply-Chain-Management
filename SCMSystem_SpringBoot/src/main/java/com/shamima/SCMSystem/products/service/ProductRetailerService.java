@@ -1,6 +1,8 @@
 package com.shamima.SCMSystem.products.service;
 
 
+import com.shamima.SCMSystem.accounting.entity.Sales;
+import com.shamima.SCMSystem.accounting.repository.SalesRepository;
 import com.shamima.SCMSystem.products.entity.ProductRetailer;
 import com.shamima.SCMSystem.products.repository.ProductRetailerRepository;
 import com.shamima.SCMSystem.products.repository.WarehouseRepository;
@@ -16,8 +18,9 @@ public class ProductRetailerService {
 
     @Autowired
     private ProductRetailerRepository productRetailerRepository;
+
     @Autowired
-    private WarehouseRepository warehouseRepository;
+    private SalesRepository salesRepository;
 
     public ApiResponse getAllProductRetailers() {
         ApiResponse apiResponse = new ApiResponse(false);
@@ -72,13 +75,13 @@ public class ProductRetailerService {
                 apiResponse.setMessage("Retailer not found");
                 return apiResponse;
             }
-//            List<Warehouse> procurements = warehouseRepository.fin(pRetailer).orElse(null);
-//            if (procurements != null && !procurements.isEmpty()) {
-//                for (Procurement procurement : procurements) {
-//                    procurement.setRawMaterialSupplier(null);
-//                    procurementRepository.save(procurement);
-//                }
-//            }
+            List<Sales> salesList = salesRepository.findAllByProductRetailer(pRetailer).orElse(null);
+            if (salesList != null && !salesList.isEmpty()) {
+                for (Sales sales : salesList) {
+                    sales.setProductRetailer(null);
+                    salesRepository.save(sales);
+                }
+            }
             productRetailerRepository.deleteById(id);
             apiResponse.setSuccess(true);
             apiResponse.setMessage("Retailer deleted successfully");

@@ -1,0 +1,44 @@
+<div class="container">
+  <!-- Row for Header -->
+  <div class="row">
+    <div class="col">
+      <h1 class="retailer-title">Retailer List</h1>
+    </div>
+    <div class="col text-right">
+      <button class="add-retailer-btn" (click)="addRetailer()">+ Add Retailer</button>
+    </div>
+  </div>
+
+  <!-- Row for Retailer Table -->
+  <div class="row">
+    <div class="col">
+      <table class="retailer-table">
+        <thead>
+        <tr>
+          <th>ID</th>
+          <th>Company Name</th>
+          <th>Contact Person</th>
+          <th>Email</th>
+          <th>Cell No</th>
+          <th>Address</th>
+          <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let retailer of retailers">
+          <td>{{ retailer.id }}</td>
+          <td>{{ retailer.companyName }}</td>
+          <td>{{ retailer.contactPerson }}</td>
+          <td>{{ retailer.email }}</td>
+          <td>{{ retailer.cellNo }}</td>
+          <td>{{ retailer.address }}</td>
+          <td>
+            <button class="action-btn edit" (click)="editRetailer(retailer)"><i class="fas fa-edit"></i></button>
+            <button class="action-btn delete" (click)="deleteRetailer(retailer.id!)"><i class="fas fa-trash"></i></button>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

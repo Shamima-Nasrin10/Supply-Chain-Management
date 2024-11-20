@@ -1,0 +1,106 @@
+/* Container styles */
+.container {
+  max-width: 1200px;
+  margin: 20px auto;
+  padding: 10px;
+  background-color: #f9f9f9;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Row styles */
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+  align-items: center; /* Vertically aligns content in the row */
+}
+
+/* Column styles */
+.col {
+  flex: 1;
+  padding: 0 10px;
+}
+
+/* Align right for Add Retailer Button */
+.text-right {
+  text-align: right;
+}
+
+/* Retailer Title */
+.retailer-title {
+  font-size: 1.8rem;
+  font-family: 'Arial', sans-serif;
+  color: #333;
+  margin: 0;
+}
+
+/* Add Retailer Button */
+.add-retailer-btn {
+  background-color: #039b89;
+  color: #fff;
+  padding: 10px 15px;
+  font-size: 1rem;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.add-retailer-btn:hover {
+  background-color: #027e70;
+}
+
+/* Retailer Table Styles */
+.retailer-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.retailer-table th,
+.retailer-table td {
+  padding: 12px 15px;
+  border: 1px solid #ddd;
+  text-align: left;
+}
+
+.retailer-table thead {
+  background-color: #b03d49;
+  color: #fff;
+}
+
+.retailer-table tbody tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+.retailer-table tbody tr:hover {
+  background-color: #e9ecef;
+}
+
+/* Action Buttons */
+.action-btn {
+  padding: 8px 12px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  margin: 0 5px;
+}
+
+.action-btn.edit {
+  background-color: #217508;
+  color: #fff;
+}
+
+.action-btn.edit:hover {
+  background-color: #196c07;
+}
+
+.action-btn.delete {
+  background-color: #dc3545;
+  color: #fff;
+}
+
+.action-btn.delete:hover {
+  background-color: #c82333;
+}
