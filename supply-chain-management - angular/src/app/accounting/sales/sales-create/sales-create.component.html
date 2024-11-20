@@ -1,60 +1,136 @@
-<div class="container">
-  <div class="card mt-4">
-    <div class="card-header">
-      <h4>Create Sales</h4>
-    </div>
-    <div class="card-body">
-      <div class="form-group mb-3">
-        <label for="retailer">Retailer</label>
-        <select id="retailer" class="form-control" [(ngModel)]="sales.retailer">
-          <option *ngFor="let retailer of retailers" [ngValue]="retailer">{{ retailer.companyName }}</option>
-        </select>
-      </div>
-      <div class="form-group mb-3">
-        <label for="salesdate">Sales Date</label>
-        <input type="date" id="salesdate" class="form-control" [(ngModel)]="sales.salesdate">
-      </div>
-      <div class="form-group mb-3">
-        <label for="discount">Discount</label>
-        <input type="number" id="discount" class="form-control" [(ngModel)]="sales.discount">
-      </div>
-      <div class="form-group mb-3">
-        <label for="totalprice">Total Price</label>
-        <input type="number" id="totalprice" class="form-control" [(ngModel)]="sales.totalprice" readonly>
-      </div>
-      <button type="button" class="btn btn-primary" (click)="addProduct()">Add Product</button>
-      <table class="table table-bordered">
-        <thead>
-        <tr>
-          <th>#</th>
-          <th>Product Name</th>
-          <th>Quantity</th>
-          <th>Unit Price</th>
-          <th>Actions</th>
-        </tr>
-        </thead>
-<!--        <tbody>-->
-<!--        <tr *ngFor="let product of sales.product; let i = index">-->
-<!--          <td>{{ i + 1 }}</td>-->
-<!--          <td>-->
-<!--            <select [(ngModel)]="product.id" (ngModelChange)="setProductDetails(product.id)">-->
-<!--              <option *ngFor="let p of products" [ngValue]="p.id">{{ p.name }}</option>-->
-<!--            </select>-->
-<!--          </td>-->
-<!--          <td>-->
-<!--            <input type="number" [(ngModel)]="product.quantity" placeholder="Quantity" (ngModelChange)="calculateTotalPrice()">-->
-<!--          </td>-->
-<!--          <td>-->
-<!--            <input type="number" [(ngModel)]="product.unitPrice" placeholder="Unit Price" [disabled]="true">-->
-<!--          </td>-->
-<!--          <td>-->
-<!--            <button type="button" class="btn btn-danger btn-sm" (click)="removeProduct(i)">Remove</button>-->
-<!--          </td>-->
-<!--        </tr>-->
+<div class="container mt-4">
+  <h2>{{ isEditMode ? 'Edit Sales' : 'Create New Sales' }}</h2>
+  <form (ngSubmit)="onSubmit()" #salesForm="ngForm">
 
-<!--        </tbody>-->
-      </table>
-      <button type="button" class="btn btn-primary" (click)="saveSales()">Save Sales</button>
+    <!-- Product Selection -->
+    <div class="form-group mb-3">
+      <label for="product">Product</label>
+      <select
+        class="form-control"
+        id="product"
+        [(ngModel)]="sales.prodProduct"
+        name="prodProduct"
+        required
+        #prodProduct="ngModel"
+      >
+        <option *ngFor="let product of prodProducts" [ngValue]="product">
+          {{ product.product.name }}
+        </option>
+      </select>
+      <div *ngIf="prodProduct.invalid && (prodProduct.dirty || prodProduct.touched)" class="text-danger">
+        Product is required.
+      </div>
     </div>
-  </div>
+
+    <!-- Retailer Selection -->
+    <div class="form-group mb-3">
+      <label for="retailer">Retailer</label>
+      <select
+        class="form-control"
+        id="retailer"
+        [(ngModel)]="sales.productRetailer"
+        name="productRetailer"
+        required
+        #productRetailer="ngModel"
+      >
+        <option *ngFor="let retailer of retailers" [ngValue]="retailer">
+          {{ retailer.companyName }}
+        </option>
+      </select>
+      <div *ngIf="productRetailer.invalid && (productRetailer.dirty || productRetailer.touched)" class="text-danger">
+        Retailer is required.
+      </div>
+    </div>
+
+    <!-- Sales Date -->
+    <div class="form-group mb-3">
+      <label for="salesDate">Sales Date</label>
+      <input
+        type="date"
+        class="form-control"
+        id="salesDate"
+        [(ngModel)]="sales.procurementDate"
+        name="procurementDate"
+        required
+        #procurementDate="ngModel"
+      />
+      <div *ngIf="procurementDate.invalid && (procurementDate.dirty || procurementDate.touched)" class="text-danger">
+        Sales Date is required.
+      </div>
+    </div>
+
+    <!-- Quantity -->
+    <div class="form-group mb-3">
+      <label for="quantity">Quantity</label>
+      <input
+        type="number"
+        class="form-control"
+        id="quantity"
+        [(ngModel)]="sales.quantity"
+        name="quantity"
+        (input)="updateTotalPrice()"
+        required
+        #quantity="ngModel"
+      />
+      <div *ngIf="quantity.invalid && (quantity.dirty || quantity.touched)" class="text-danger">
+        Quantity is required.
+      </div>
+    </div>
+
+    <!-- Unit Price -->
+    <div class="form-group mb-3">
+      <label for="unitPrice">Unit Price</label>
+      <input
+        type="number"
+        class="form-control"
+        id="unitPrice"
+        [(ngModel)]="sales.unitPrice"
+        name="unitPrice"
+        (input)="updateTotalPrice()"
+        required
+        #unitPrice="ngModel"
+      />
+      <div *ngIf="unitPrice.invalid && (unitPrice.dirty || unitPrice.touched)" class="text-danger">
+        Unit Price is required.
+      </div>
+    </div>
+
+    <!-- Total Price (Read-Only) -->
+    <div class="form-group mb-3">
+      <label for="totalPrice">Total Price</label>
+      <input
+        type="number"
+        class="form-control"
+        id="totalPrice"
+        [(ngModel)]="sales.totalPrice"
+        name="totalPrice"
+        readonly
+      />
+    </div>
+
+    <!-- Status Selection -->
+    <div class="form-group mb-3">
+      <label for="status">Status</label>
+      <select
+        class="form-control"
+        id="status"
+        [(ngModel)]="sales.status"
+        name="status"
+        required
+        #status="ngModel"
+      >
+        <option *ngFor="let status of salesStatusOptions" [value]="status">
+          {{ status }}
+        </option>
+      </select>
+      <div *ngIf="status.invalid && (status.dirty || status.touched)" class="text-danger">
+        Status is required.
+      </div>
+    </div>
+
+    <!-- Submit Button -->
+    <button type="submit" class="btn btn-primary mt-4" [disabled]="salesForm.invalid">
+      {{ isEditMode ? 'Update Sales' : 'Save Sales' }}
+    </button>
+  </form>
 </div>

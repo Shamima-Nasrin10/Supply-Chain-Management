@@ -1,12 +1,13 @@
 import {Component, OnInit} from '@angular/core';
 import {NotifyUtil} from "../../../util/notify.util";
-import {Sales} from "../model/sales.model";
+import {SalesModel, SalesStatus} from "../model/sales.model";
 import {SalesService} from "../sales.service";
 import {ApiResponse} from "../../../util/api.response";
-import {Product} from "../../../product/model/product.model";
 import {Retailer} from "../../../product/retailer/model/retailer.model";
 import {RetailerService} from "../../../product/retailer/retailer.service";
-import {ProductService} from "../../../product/product.service";
+import {ActivatedRoute, Router} from "@angular/router";
+import {ProdProduct} from "../../../production/prod-product/prodproduct.model";
+import {ProdProductService} from "../../../production/prod-product/prod-product.service";
 
 @Component({
   selector: 'app-sales-create',
@@ -15,29 +16,37 @@ import {ProductService} from "../../../product/product.service";
 })
 export class SalesCreateComponent implements OnInit {
 
-  sales: Sales = new Sales();
-  products: Product[] = [];
+  sales: SalesModel = new SalesModel();
+  salesStatusOptions = Object.values(SalesStatus);
+  prodProducts: ProdProduct[] = [];
   retailers: Retailer[] = [];
+  isEditMode = false;
 
-  constructor(private salesService: SalesService,
-              private retailerService: RetailerService,
-              private productService: ProductService
-  ) {
-  }
+  constructor(
+    private salesService: SalesService,
+    private router: Router,
+    private route: ActivatedRoute,
+    private prodProductService: ProdProductService,
+    private retailerService: RetailerService,
+  ) {}
 
   ngOnInit(): void {
-    this.sales.product = [];
-    this.loadProducts();
+    this.loadProdProducts();
     this.loadRetailers();
+    const id = this.route.snapshot.params['id'];
+    if (id) {
+      this.isEditMode = true;
+      this.loadSales(id);
+    }
   }
-  loadProducts(): void {
-    this.productService.getAllProducts().subscribe({
-      next: (response: ApiResponse) => {
-        if (response.success) {
-          this.products = response.data['products'];
-          NotifyUtil.success(response);
+
+  private loadProdProducts(): void {
+    this.prodProductService.getAllProductionProducts().subscribe({
+      next: (apiResponse: ApiResponse) => {
+        if (apiResponse && apiResponse.success) {
+          this.prodProducts = apiResponse.data['productionProducts'];
         } else {
-          NotifyUtil.error(response.message);
+          NotifyUtil.error(apiResponse);
         }
       },
       error: (error) => {
@@ -46,14 +55,13 @@ export class SalesCreateComponent implements OnInit {
     });
   }
 
-  // Fetch retailers from backend
-  loadRetailers(): void {
+  private loadRetailers(): void {
     this.retailerService.getAllRetailers().subscribe({
-      next: (response: ApiResponse) => {
-        if (response.success) {
-          this.retailers = response.data['retailers'];
+      next: (apiResponse: ApiResponse) => {
+        if (apiResponse && apiResponse.success) {
+          this.retailers = apiResponse.data['productRetailers'];
         } else {
-          NotifyUtil.error(response.message);
+          NotifyUtil.error(apiResponse);
         }
       },
       error: (error) => {
@@ -62,37 +70,13 @@ export class SalesCreateComponent implements OnInit {
     });
   }
 
-  addProduct(): void {
-    const product: Product = new Product();
-    this.sales.product.push(product);
-  }
-
-  removeProduct(index: number): void {
-    this.sales.product.splice(index, 1);
-    // this.calculateTotalPrice();
-  }
-
-  // calculateTotalPrice(): void {
-  //   let totalPrice = 0;
-  //   this.sales.product.forEach((product) => {
-  //     const quantity = product.quantity;
-  //     const unitPrice = product.unitPrice;
-  //     const discount = this.sales.discount;
-  //     if (quantity >= 0 && unitPrice >= 0 && discount >= 0) {
-  //       totalPrice += quantity * unitPrice * (1 - discount / 100);
-  //     }
-  //   });
-  //   this.sales.totalprice = totalPrice;
-  // }
-
-  saveSales(): void {
-    console.log(this.sales)
-    this.salesService.saveSales(this.sales).subscribe({
-      next: (response: ApiResponse) => {
-        if (response.success) {
-          NotifyUtil.success(response);
+  private loadSales(id: number): void {
+    this.salesService.getSalesById(id).subscribe({
+      next: (apiResponse: ApiResponse) => {
+        if (apiResponse && apiResponse.success) {
+          this.sales = apiResponse.data['sale'];
         } else {
-          NotifyUtil.error(response.message);
+          NotifyUtil.error(apiResponse);
         }
       },
       error: (error) => {
@@ -101,15 +85,41 @@ export class SalesCreateComponent implements OnInit {
     });
   }
 
-  // setProductDetails(productId: number): void {
-  //   const product = this.products.find((p) => p.id === productId);
-  //   if (product) {
-  //     this.sales.product.forEach((p) => {
-  //       if (p.id === productId) {
-  //
-  //       }
-  //     });
-  //   }
-  // }
+  updateTotalPrice(): void {
+    this.sales.totalPrice = this.sales.quantity * this.sales.unitPrice;
+  }
 
+  onSubmit(): void {
+    this.updateTotalPrice();
+
+    if (this.isEditMode) {
+      this.salesService.updateSales(this.sales.id, this.sales).subscribe({
+        next: (apiResponse: ApiResponse) => {
+          if (apiResponse && apiResponse.success) {
+            alert('Sales updated successfully!');
+            this.router.navigate(['/sales-list']);
+          } else {
+            NotifyUtil.error(apiResponse);
+          }
+        },
+        error: (error) => {
+          NotifyUtil.error(error);
+        }
+      });
+    } else {
+      this.salesService.saveSales(this.sales).subscribe({
+        next: (apiResponse: ApiResponse) => {
+          if (apiResponse && apiResponse.success) {
+            alert('Sale created successfully!');
+            this.router.navigate(['/sales-list']);
+          } else {
+            NotifyUtil.error(apiResponse);
+          }
+        },
+        error: (error) => {
+          NotifyUtil.error(error);
+        }
+      });
+    }
+  }
 }

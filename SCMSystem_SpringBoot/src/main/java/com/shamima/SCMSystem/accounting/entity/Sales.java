@@ -24,7 +24,7 @@ public class Sales {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private ProductionProduct productionProduct;
 
     @ManyToOne

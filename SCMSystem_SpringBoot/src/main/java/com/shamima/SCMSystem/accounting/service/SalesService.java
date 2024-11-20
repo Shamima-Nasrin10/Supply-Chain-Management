@@ -37,6 +37,9 @@ public class SalesService {
     public ApiResponse saveAllSales(List<Sales> salesList) {
         ApiResponse apiResponse = new ApiResponse(false);
         try {
+            for (Sales sales : salesList) {
+                sales.setTotalPrice(sales.getUnitPrice() * sales.getQuantity());
+            }
             List<Sales> savedSales = salesRepository.saveAll(salesList);
 
             for (Sales sales : savedSales) {
@@ -58,6 +61,7 @@ public class SalesService {
     public ApiResponse saveSale(Sales sales) {
         ApiResponse apiResponse = new ApiResponse(false);
         try {
+            sales.setTotalPrice(sales.getUnitPrice() * sales.getQuantity());
             Sales savedSale = salesRepository.save(sales);
 
             if (sales.getStatus() == Sales.Status.APPROVED) {
@@ -77,7 +81,7 @@ public class SalesService {
         ProductionProduct productionProduct = sales.getProductionProduct();
         Warehouse warehouse = productionProduct.getWarehouse();
 
-        if (productionProduct != null || productionProduct.getQuantity() >= sales.getQuantity()) {
+        if (productionProduct != null) {
             if (productionProduct.getQuantity() >= sales.getQuantity()) {
                 productionProduct.setQuantity(productionProduct.getQuantity() - sales.getQuantity());
                 prodProductRepository.save(productionProduct);

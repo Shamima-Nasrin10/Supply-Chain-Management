@@ -33,5 +33,7 @@ public class ProductRetailer {
 
     @Column(name = "address")
     private String address;
+
+
     
 }

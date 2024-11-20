@@ -1,1 +1,37 @@
-<p>sales-view works!</p>
+<div class="container p-20">
+  <h2>Sales List</h2>
+  <button class="btn btn-primary mb-3" [routerLink]="['/sales-create']">Add New Sale</button>
+  <table class="table table-striped">
+    <thead>
+    <tr>
+      <th>#</th>
+      <th>Product</th>
+      <th>Retailer</th>
+      <th>Date</th>
+      <th>Quantity</th>
+      <th>Unit Price</th>
+      <th>Total Price</th>
+      <th>Status</th>
+      <th>Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let sale of salesList; let i = index">
+      <td>{{ i + 1 }}</td>
+      <td>{{ sale.prodProduct?.product?.name || '-' }}</td>
+      <td>{{ sale.productRetailer != null ? sale.productRetailer.companyName : 'N/A' }}</td>
+      <td>{{ sale.procurementDate | date:'yyyy-MM-dd' }}</td>
+      <td>{{ sale.quantity }}</td>
+      <td>{{ sale.unitPrice | currency }}</td>
+      <td>{{ sale.totalPrice | currency }}</td>
+      <td>{{ sale.status }}</td>
+      <td>
+        <!-- Edit button to navigate to the edit page -->
+        <button class="btn btn-primary btn-sm me-2" (click)="onEdit(sale.id)">Edit</button>
+        <button class="btn btn-danger btn-sm" (click)="onDelete(sale.id)">Delete</button>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</div>
+
