@@ -34,9 +34,10 @@ public class salesController {
     public ApiResponse deleteSaleById(@PathVariable long id) {
         return salesService.deleteSaleById(id);
     }
+
     @PutMapping("/update/{id}")
     public ApiResponse updateSale(@PathVariable Long id, @RequestBody Sales sales) {
-        return salesService.updateSale(id,sales);
+        return salesService.updateSale(id, sales);
     }
 
     @GetMapping("/{id}")

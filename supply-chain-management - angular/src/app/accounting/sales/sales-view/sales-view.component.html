@@ -18,9 +18,9 @@
     <tbody>
     <tr *ngFor="let sale of salesList; let i = index">
       <td>{{ i + 1 }}</td>
-      <td>{{ sale.prodProduct?.product?.name || '-' }}</td>
+      <td>{{ sale.productionProduct!.product.name || '-' }}</td>
       <td>{{ sale.productRetailer != null ? sale.productRetailer.companyName : 'N/A' }}</td>
-      <td>{{ sale.procurementDate | date:'yyyy-MM-dd' }}</td>
+      <td>{{ sale.salesDate | date:'yyyy-MM-dd' }}</td>
       <td>{{ sale.quantity }}</td>
       <td>{{ sale.unitPrice | currency }}</td>
       <td>{{ sale.totalPrice | currency }}</td>

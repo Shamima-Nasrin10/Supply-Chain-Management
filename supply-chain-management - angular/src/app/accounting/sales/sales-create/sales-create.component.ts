@@ -18,7 +18,7 @@ export class SalesCreateComponent implements OnInit {
 
   sales: SalesModel = new SalesModel();
   salesStatusOptions = Object.values(SalesStatus);
-  prodProducts: ProdProduct[] = [];
+  productionProducts: ProdProduct[] = [];
   retailers: Retailer[] = [];
   isEditMode = false;
 
@@ -44,7 +44,7 @@ export class SalesCreateComponent implements OnInit {
     this.prodProductService.getAllProductionProducts().subscribe({
       next: (apiResponse: ApiResponse) => {
         if (apiResponse && apiResponse.success) {
-          this.prodProducts = apiResponse.data['productionProducts'];
+          this.productionProducts = apiResponse.data['productionProducts'];
         } else {
           NotifyUtil.error(apiResponse);
         }

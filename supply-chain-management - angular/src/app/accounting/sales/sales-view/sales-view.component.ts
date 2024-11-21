@@ -1,6 +1,4 @@
 import {Component, OnInit} from '@angular/core';
-import {ProcurementModel} from "../../procurement/procurement.model";
-import {ProcurementService} from "../../procurement/procurement.service";
 import {Router} from "@angular/router";
 import {ApiResponse} from "../../../util/api.response";
 import {NotifyUtil} from "../../../util/notify.util";

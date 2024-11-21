@@ -4,30 +4,30 @@
 
     <!-- Product Selection -->
     <div class="form-group mb-3">
-      <label for="product">Product</label>
+      <label for="productionProduct">Production Product</label>
       <select
         class="form-control"
-        id="product"
-        [(ngModel)]="sales.prodProduct"
-        name="prodProduct"
+        id="productionProduct"
+        [(ngModel)]="sales.productionProduct"
+        name="productionProduct"
         required
-        #prodProduct="ngModel"
+        #productionProduct="ngModel"
       >
-        <option *ngFor="let product of prodProducts" [ngValue]="product">
+        <option *ngFor="let product of productionProducts" [ngValue]="product">
           {{ product.product.name }}
         </option>
       </select>
-      <div *ngIf="prodProduct.invalid && (prodProduct.dirty || prodProduct.touched)" class="text-danger">
-        Product is required.
+      <div *ngIf="productionProduct.invalid && (productionProduct.dirty || productionProduct.touched)" class="text-danger">
+        Production Product is required.
       </div>
     </div>
 
     <!-- Retailer Selection -->
     <div class="form-group mb-3">
-      <label for="retailer">Retailer</label>
+      <label for="productRetailer">Product Retailer</label>
       <select
         class="form-control"
-        id="retailer"
+        id="productRetailer"
         [(ngModel)]="sales.productRetailer"
         name="productRetailer"
         required
@@ -38,7 +38,7 @@
         </option>
       </select>
       <div *ngIf="productRetailer.invalid && (productRetailer.dirty || productRetailer.touched)" class="text-danger">
-        Retailer is required.
+        Product Retailer is required.
       </div>
     </div>
 
@@ -49,12 +49,12 @@
         type="date"
         class="form-control"
         id="salesDate"
-        [(ngModel)]="sales.procurementDate"
-        name="procurementDate"
+        [(ngModel)]="sales.salesDate"
+        name="salesDate"
         required
-        #procurementDate="ngModel"
+        #salesDate="ngModel"
       />
-      <div *ngIf="procurementDate.invalid && (procurementDate.dirty || procurementDate.touched)" class="text-danger">
+      <div *ngIf="salesDate.invalid && (salesDate.dirty || salesDate.touched)" class="text-danger">
         Sales Date is required.
       </div>
     </div>

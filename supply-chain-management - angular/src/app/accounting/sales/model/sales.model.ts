@@ -3,9 +3,9 @@ import {Retailer} from "../../../product/retailer/model/retailer.model";
 
 export class SalesModel{
   id!: number;
-  prodProduct!: ProdProduct;
+  productionProduct!: ProdProduct;
   productRetailer!: Retailer;
-  procurementDate!: Date;
+  salesDate!: Date;
   unitPrice!: number;
   quantity!: number;
   totalPrice!: number;

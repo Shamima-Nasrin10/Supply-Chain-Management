@@ -34,6 +34,7 @@ public class ProductRetailer {
     @Column(name = "address")
     private String address;
 
-
-    
+    public ProductRetailer(Long id) {
+        this.id = id;
+    }
 }
