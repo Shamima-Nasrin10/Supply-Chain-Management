@@ -49,7 +49,10 @@ import { ProdProductListComponent } from './production/prod-product/prod-product
 import { WarehouseSelectDialogComponent } from './production/warehouse-select-dialog/warehouse-select-dialog.component';
 import { WarehouseProdproductsDialogComponent } from './warehouse/warehouse-prodproducts-dialog/warehouse-prodproducts-dialog.component';
 import { RetailerCreateDialogComponent } from './product/retailer/retailer-create-dialog/retailer-create-dialog.component';
-import { RetailerListComponent } from './product/retailer/retailer-list/retailer-list.component'
+import { RetailerListComponent } from './product/retailer/retailer-list/retailer-list.component';
+import { DashboardComponent } from './template/dashboard/dashboard.component'
+import Chart from "chart.js";
+import {NgChartsModule} from "ng2-charts";
 
 
 @NgModule({
@@ -88,6 +91,7 @@ import { RetailerListComponent } from './product/retailer/retailer-list/retailer
     WarehouseProdproductsDialogComponent,
     RetailerCreateDialogComponent,
     RetailerListComponent,
+    DashboardComponent,
   ],
   imports: [
     BrowserModule,
@@ -100,7 +104,8 @@ import { RetailerListComponent } from './product/retailer/retailer-list/retailer
     MatButtonModule,
     MatFormFieldModule,
     MatInputModule,
-    MatCardModule
+    MatCardModule,
+    NgChartsModule
   ],
   providers: [
     provideClientHydration(),

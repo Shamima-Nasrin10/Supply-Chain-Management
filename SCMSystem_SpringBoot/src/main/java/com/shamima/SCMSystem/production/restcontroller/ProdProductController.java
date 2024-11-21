@@ -50,5 +50,10 @@ public class ProdProductController {
         return salesService.getAllMovedToWarehouseProducts();
     }
 
+    @GetMapping("/warehouse-stock")
+    public ApiResponse getProductStockGroupedByWarehouse() {
+        return prodProductService.getStockGroupedByWarehouseAndProduct();
+    }
+
 }
 

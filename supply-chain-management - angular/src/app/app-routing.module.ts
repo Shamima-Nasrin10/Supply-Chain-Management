@@ -18,6 +18,7 @@ import {ProdProductCreateComponent} from "./production/prod-product/prod-product
 import {ProdProductListComponent} from "./production/prod-product/prod-product-list/prod-product-list.component";
 import {RetailerListComponent} from "./product/retailer/retailer-list/retailer-list.component";
 import {SalesViewComponent} from "./accounting/sales/sales-view/sales-view.component";
+import {DashboardComponent} from "./template/dashboard/dashboard.component";
 
 const routes: Routes = [
   // {
@@ -97,6 +98,9 @@ const routes: Routes = [
   },
   {
     path:'retailer-list', component: RetailerListComponent
+  },
+  {
+    path:'dashboard', component: DashboardComponent
   },
   {
     path: "notification", component: NotificationComponent

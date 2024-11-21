@@ -28,6 +28,7 @@ import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @Service
@@ -174,6 +175,18 @@ public class ProdProductService {
 
         } catch (Exception e) {
             apiResponse.setMessage("Error fetching products: " + e.getMessage());
+        }
+        return apiResponse;
+    }
+
+    public ApiResponse getStockGroupedByWarehouseAndProduct() {
+        ApiResponse apiResponse = new ApiResponse(false);
+        try {
+            List<Map<String, Object>> stockData = prodProductRepository.getStockGroupedByWarehouseAndProduct();
+            apiResponse.setSuccess(true);
+            apiResponse.setData("stockData", stockData);
+        } catch (Exception e) {
+            apiResponse.setMessage("Error fetching stock data: " + e.getMessage());
         }
         return apiResponse;
     }
