@@ -1,6 +1,7 @@
 
 package com.shamima.SCMSystem.production.restcontroller;
 
+import com.shamima.SCMSystem.accounting.service.SalesService;
 import com.shamima.SCMSystem.production.entity.ProductionProduct;
 import com.shamima.SCMSystem.production.service.ProdProductService;
 import com.shamima.SCMSystem.util.ApiResponse;
@@ -13,6 +14,9 @@ public class ProdProductController {
 
     @Autowired
     private ProdProductService prodProductService;
+
+    @Autowired
+    private SalesService salesService;
 
     @PostMapping("/save")
     public ApiResponse save(@RequestBody ProductionProduct productionProduct) {
@@ -39,6 +43,11 @@ public class ProdProductController {
     @GetMapping("/warehouse/{warehouseId}")
     public ApiResponse getProdProductByWarehouseId(@PathVariable Long warehouseId) {
         return prodProductService.getProductionProductsByWarehouseId(warehouseId);
+    }
+
+    @GetMapping("/moved-to-warehouse")
+    public ApiResponse getMovedToWarehouseProducts() {
+        return salesService.getAllMovedToWarehouseProducts();
     }
 
 }

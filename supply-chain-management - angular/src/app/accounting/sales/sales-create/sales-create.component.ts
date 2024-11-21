@@ -41,7 +41,7 @@ export class SalesCreateComponent implements OnInit {
   }
 
   private loadProdProducts(): void {
-    this.prodProductService.getAllProductionProducts().subscribe({
+    this.prodProductService.getAllMovedToWarehouseProducts().subscribe({
       next: (apiResponse: ApiResponse) => {
         if (apiResponse && apiResponse.success) {
           this.productionProducts = apiResponse.data['productionProducts'];

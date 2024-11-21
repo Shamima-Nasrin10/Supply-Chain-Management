@@ -33,6 +33,18 @@ public class SalesService {
         return apiResponse;
     }
 
+    public ApiResponse getAllMovedToWarehouseProducts() {
+        ApiResponse apiResponse = new ApiResponse(false);
+        try {
+            List<ProductionProduct> productionProducts = prodProductRepository.findAllMovedToWarehouseProducts();
+            apiResponse.setSuccess(true);
+            apiResponse.setData("productionProducts", productionProducts);
+        } catch (Exception e) {
+            apiResponse.setMessage(e.getMessage());
+        }
+        return apiResponse;
+    }
+
     @Transactional
     public ApiResponse saveAllSales(List<Sales> salesList) {
         ApiResponse apiResponse = new ApiResponse(false);
