@@ -1,75 +1,52 @@
+/* Center the dialog on the screen */
 .dialog-container {
-  padding: 10px;
-  max-width: 500px;
-  margin: 10vh auto; /* Added top margin for better visibility and centering */
-  background-color: #fff;
-  border-radius: 10px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Increased shadow for better focus */
-  position: relative; /* Ensures proper positioning */
-  z-index: 950; /* Higher value to stay above other elements */
+  max-width: 600px; /* Limit dialog width */
+  margin: auto;
+  background-color: #fff; /* White background */
+  border-radius: 8px; /* Rounded corners */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Subtle shadow for floating effect */
+  padding: 20px;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%); /* Center the dialog */
+  z-index: 1050; /* Ensure it floats above other elements */
 }
 
+/* Title styling */
 .dialog-title {
-  text-align: center;
   font-size: 1.5rem;
-  margin-bottom: 10px; /* Increased spacing for better layout */
-  color: #333;
-}
-
-.form-group {
-  margin-bottom: 5px; /* Increased spacing between form fields */
-}
-
-.form-group label {
-  display: block;
-  margin-bottom: 5px;
   font-weight: bold;
+  margin-bottom: 20px;
 }
 
-.form-control {
-  width: 100%;
-  padding: 10px; /* Increased padding for better usability */
-  border: 1px solid #ccc;
-  border-radius: 5px;
-}
-
-textarea.form-control {
-  resize: none;
-}
-
+/* Dialog actions (buttons) */
 .dialog-actions {
-  display: flex;
-  justify-content: flex-end;
-  margin-top: 10px; /* Added more spacing from the form */
+  margin-top: 20px;
 }
 
-.btn {
-  padding: 8px 15px; /* Adjusted padding for a better look */
-  margin-left: 10px;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-}
-
-.btn.cancel {
-  background-color: #dc3545;
-  color: #fff;
-}
-
-.btn.cancel:hover {
-  background-color: #c82333;
-}
-
+/* Save button styling */
 .btn.save {
-  background-color: #0869be;
+  background-color: #007bff;
   color: #fff;
+  font-weight: bold;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 4px;
 }
 
 .btn.save:hover {
-  background-color: #1d4096;
+  background-color: #0056b3;
 }
 
-/* Optional: Ensure the dialog content does not overflow */
-body {
-  overflow: hidden; /* Prevents background scrolling when dialog is open */
+.btn.cancel {
+  background-color: #6c757d;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 4px;
+}
+
+.btn.cancel:hover {
+  background-color: #5a6268;
 }

@@ -64,7 +64,7 @@ export class RetailerListComponent {
 
   editRetailer(retailer: Retailer): void {
     const dialogRef = this.dialog.open(RetailerCreateDialogComponent, {
-      width: '500px',
+      width: '600px',
       data: { retailer }
     });
 
@@ -77,7 +77,7 @@ export class RetailerListComponent {
 
   addRetailer(): void {
     const dialogRef = this.dialog.open(RetailerCreateDialogComponent, {
-      width: '500px'
+      width: '600px'
     });
 
     dialogRef.afterClosed().subscribe((result) => {

@@ -1,45 +1,91 @@
-import {Component, OnInit} from '@angular/core';
-import {ApiResponse} from "../../util/api.response";
-import {DashboardService} from "../dashboard.service";
-import {ChartData, ChartOptions} from "chart.js";
+import { Component, OnInit } from '@angular/core';
+import { ApiResponse } from "../../util/api.response";
+import { DashboardService } from "../dashboard.service";
+import { ChartOptions } from 'chart.js';
 
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
-  styleUrl: './dashboard.component.css'
+  styleUrls: ['./dashboard.component.css']
 })
-export class DashboardComponent implements OnInit{
+export class DashboardComponent implements OnInit {
   supplierCount: number = 0;
   retailerCount: number = 0;
-  productStock: any[] = [];
+  productStockData: any[] = [];
 
-  supplierRetailerPieChartData: ChartData<'pie'> = {
-    labels: ['Suppliers', 'Retailers'],
-    datasets: [
-      {
-        data: [],
-        backgroundColor: ['#36A2EB', '#FF6384']
-      }
-    ]
-  };
 
-  productStockBarChartData: ChartData<'bar'> = {
-    labels: [],
-    datasets: []
-  };
+  barChartLabels: string[] = ['Suppliers', 'Retailers'];
 
-  chartOptions: ChartOptions = {
+  barChartData = [
+    {
+      data: [this.supplierCount, this.retailerCount],
+      backgroundColor: [
+        'rgb(176,61,73)', // Color for Suppliers
+        'rgb(3,155,137)'  // Color for Retailers
+      ],
+      label: 'Counts'
+    }
+  ];
+
+  barChartOptions: ChartOptions<'bar'> = {
     responsive: true,
+    maintainAspectRatio: false,
+    scales: {
+      y: {
+        beginAtZero: true,
+        title: {
+          display: true,
+          text: 'Count',
+        },
+        ticks: {
+          stepSize: 5,
+          font: {
+            size: 18,
+          },
+        },
+      },
+      x: {
+        title: {
+          display: true,
+          text: 'Categories',
+        },
+      },
+    },
     plugins: {
       legend: {
-        position: 'top'
+        display: true,
+        position: 'top',
       },
       title: {
         display: true,
-        text: ''
+        text: 'Supplier and Retailer Counts',
+        font: {
+          size: 18,
+        },
+      },
+    },
+  };
+
+
+  pieChartLabels: string[] = [];
+  pieChartData: number[] = [];
+  pieChartOptions: ChartOptions = {
+    responsive: true,
+    plugins: {
+      legend: {
+        display: true,
+        position: 'top',
+      },
+      title: {
+        display: true,
+        text: 'Product Stock Distribution',
+        font: {
+          size: 18
+        }
       }
     }
   };
+
 
   constructor(private dashboardService: DashboardService) {}
 
@@ -51,13 +97,22 @@ export class DashboardComponent implements OnInit{
     this.dashboardService.getDashboardStats().subscribe({
       next: (response: ApiResponse) => {
         if (response.success) {
-          // Update supplier and retailer count
           this.supplierCount = response.data['supplierCount'];
           this.retailerCount = response.data['retailerCount'];
-          this.supplierRetailerPieChartData.datasets[0].data = [this.supplierCount, this.retailerCount];
+          this.productStockData = response.data['productStock'];
 
-          // Update product stock bar chart data
-          this.prepareProductStockBarChart(response.data['productStock']);
+          // Update chart data
+          this.barChartData = [
+            {
+              data: [this.supplierCount, this.retailerCount],
+              backgroundColor: [
+                'rgb(176,61,73)',
+                'rgb(3,155,137)'
+              ],
+              label: 'Counts'
+            }
+          ];
+          this.updatePieChartData();
         } else {
           console.error(response.message);
         }
@@ -68,46 +123,10 @@ export class DashboardComponent implements OnInit{
     });
   }
 
-  private prepareProductStockBarChart(stockData: any[]): void {
-    const warehouseNames: string[] = [];
-    const productStockMap: { [key: string]: number[] } = {};
 
-    // Process stock data
-    stockData.forEach((item: any) => {
-      const warehouseIndex = warehouseNames.indexOf(item.warehouseName);
-
-      // Add warehouse name if not already present
-      if (warehouseIndex === -1) {
-        warehouseNames.push(item.warehouseName);
-      }
-
-      const productName = item.productName;
-      const totalStock = item.totalStock;
-
-      if (!productStockMap[productName]) {
-        // Initialize product data array to match warehouse length
-        productStockMap[productName] = Array(warehouseNames.length).fill(0);
-      }
-
-      // Update stock for the corresponding warehouse
-      productStockMap[productName][warehouseNames.indexOf(item.warehouseName)] = totalStock;
-    });
-
-    // Convert processed data into chart format
-    this.productStockBarChartData.labels = warehouseNames;
-    this.productStockBarChartData.datasets = Object.keys(productStockMap).map((product) => ({
-      label: product,
-      data: productStockMap[product],
-      backgroundColor: this.getRandomColor(),
-    }));
+  private updatePieChartData(): void {
+    this.pieChartLabels = this.productStockData.map(item => item.productName);
+    this.pieChartData = this.productStockData.map(item => item.totalStock);
   }
 
-  private getRandomColor(): string {
-    const letters = '0123456789ABCDEF';
-    let color = '#';
-    for (let i = 0; i < 6; i++) {
-      color += letters[Math.floor(Math.random() * 16)];
-    }
-    return color;
-  }
 }

@@ -1,71 +1,88 @@
 <div class="dialog-container">
-  <h2 class="dialog-title">{{ isEditMode ? 'Update Retailer' : 'Create Retailer' }}</h2>
+  <h2 class="dialog-title text-center">{{ isEditMode ? 'Update Retailer' : 'Create Retailer' }}</h2>
 
   <form (ngSubmit)="saveOrUpdateRetailer()" #retailerForm="ngForm">
-    <div class="form-group">
-      <label for="companyName">Company Name</label>
-      <input
-        type="text"
-        id="companyName"
-        name="companyName"
-        class="form-control"
-        [(ngModel)]="retailer.companyName"
-        required
-      />
+    <!-- Row 1: Company Name and Contact Person -->
+    <div class="row">
+      <div class="col-md-6">
+        <div class="form-group">
+          <label for="companyName">Company Name</label>
+          <input
+            type="text"
+            id="companyName"
+            name="companyName"
+            class="form-control"
+            [(ngModel)]="retailer.companyName"
+            required
+          />
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="form-group">
+          <label for="contactPerson">Contact Person</label>
+          <input
+            type="text"
+            id="contactPerson"
+            name="contactPerson"
+            class="form-control"
+            [(ngModel)]="retailer.contactPerson"
+            required
+          />
+        </div>
+      </div>
     </div>
 
-    <div class="form-group">
-      <label for="contactPerson">Contact Person</label>
-      <input
-        type="text"
-        id="contactPerson"
-        name="contactPerson"
-        class="form-control"
-        [(ngModel)]="retailer.contactPerson"
-        required
-      />
+    <!-- Row 2: Email and Cell No -->
+    <div class="row">
+      <div class="col-md-6">
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input
+            type="email"
+            id="email"
+            name="email"
+            class="form-control"
+            [(ngModel)]="retailer.email"
+            required
+          />
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="form-group">
+          <label for="cellNo">Cell No</label>
+          <input
+            type="text"
+            id="cellNo"
+            name="cellNo"
+            class="form-control"
+            [(ngModel)]="retailer.cellNo"
+            required
+          />
+        </div>
+      </div>
     </div>
 
-    <div class="form-group">
-      <label for="email">Email</label>
-      <input
-        type="email"
-        id="email"
-        name="email"
-        class="form-control"
-        [(ngModel)]="retailer.email"
-        required
-      />
+    <!-- Row 3: Address -->
+    <div class="row">
+      <div class="col-md-12">
+        <div class="form-group">
+          <label for="address">Address</label>
+          <textarea
+            id="address"
+            name="address"
+            class="form-control"
+            rows="3"
+            [(ngModel)]="retailer.address"
+            required
+          ></textarea>
+        </div>
+      </div>
     </div>
 
-    <div class="form-group">
-      <label for="cellNo">Cell No</label>
-      <input
-        type="text"
-        id="cellNo"
-        name="cellNo"
-        class="form-control"
-        [(ngModel)]="retailer.cellNo"
-        required
-      />
-    </div>
-
-    <div class="form-group">
-      <label for="address">Address</label>
-      <textarea
-        id="address"
-        name="address"
-        class="form-control"
-        rows="3"
-        [(ngModel)]="retailer.address"
-        required
-      ></textarea>
-    </div>
-
-    <div class="dialog-actions">
-      <button type="button" class="btn cancel" (click)="closeDialog()">Cancel</button>
+    <!-- Dialog Actions -->
+    <div class="dialog-actions text-end">
+      <button type="button" class="btn cancel me-2" (click)="closeDialog()">Cancel</button>
       <button type="submit" class="btn save">{{ isEditMode ? 'Update' : 'Save' }}</button>
     </div>
   </form>
 </div>
-

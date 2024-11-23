@@ -4,6 +4,19 @@
   margin: auto;
 }
 
+.row {
+  margin-bottom: 1.5rem;
+}
+
+
+.row h2 {
+  font-weight: bold;
+  color: #205994;
+  text-align: left;
+  border-bottom: 2px solid #007bff;
+  padding-bottom: 0.5rem;
+  margin: 0;
+}
 .row.mb-3 .col-12.text-end button {
   font-weight: bold;
   padding: 8px 16px;
