@@ -121,7 +121,7 @@ A robust web application designed to optimize the procurement of raw materials, 
 ![Warehouse Tracking](screenshots/10.0_product_list_production.PNG)
 
 ### Finished product is transferred in warehouse when status is "MOVED_TO_WAREHOUSE"
-![Warehouse Tracking](screenshots/10.1_product_list_production.PNG)
+![Warehouse Tracking](screenshots/10.1_finishedProduct_moved_to_warehouse.png)
 
 ### Warehouse List
 ![Warehouse Tracking](screenshots/11_warehouse_create_list.png)
