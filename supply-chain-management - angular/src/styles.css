@@ -10,18 +10,18 @@ html, body {
 }
 
 header, .sidebar {
-  position: relative; /* Avoid clipping with higher z-index dialogs */
-  z-index: 1000; /* Lower than the dialog's z-index */
+  position: relative;
+  z-index: 1000;
 }
 
-/* Style for Angular Material dialog container */
+
 .mat-dialog-container {
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 1050 !important; /* Ensure it's above other elements */
-  padding: 0 !important; /* Remove any padding */
-  background-color: white; /* Ensure proper background color */
+  z-index: 1050 !important;
+  padding: 0 !important;
+  background-color: white;
 }
 
 /* Ensure custom modal container is properly centered */

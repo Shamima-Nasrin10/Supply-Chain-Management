@@ -1,8 +1,7 @@
 <div class="dialog-container">
-  <h2 class="dialog-title text-center">{{ isEditMode ? 'Update Retailer' : 'Create Retailer' }}</h2>
+  <h2 class="dialog-title text-center">{{ isEditMode ? 'Update Retailer' : 'Add Retailer' }}</h2>
 
   <form (ngSubmit)="saveOrUpdateRetailer()" #retailerForm="ngForm">
-    <!-- Row 1: Company Name and Contact Person -->
     <div class="row">
       <div class="col-md-6">
         <div class="form-group">

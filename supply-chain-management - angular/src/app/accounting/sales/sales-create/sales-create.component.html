@@ -2,135 +2,156 @@
   <h2>{{ isEditMode ? 'Edit Sales' : 'Create New Sales' }}</h2>
   <form (ngSubmit)="onSubmit()" #salesForm="ngForm">
 
-    <!-- Product Selection -->
-    <div class="form-group mb-3">
-      <label for="productionProduct">Production Product</label>
-      <select
-        class="form-control"
-        id="productionProduct"
-        [(ngModel)]="sales.productionProduct"
-        name="productionProduct"
-        required
-        #productionProduct="ngModel"
-      >
-        <option *ngFor="let product of productionProducts" [ngValue]="product">
-          {{ product.product.name }}
-        </option>
-      </select>
-      <div *ngIf="productionProduct.invalid && (productionProduct.dirty || productionProduct.touched)" class="text-danger">
-        Production Product is required.
+    <div class="row">
+
+      <div class="col-md-6">
+        <div class="form-group mb-3">
+          <label for="productionProduct">Production Product</label>
+          <select
+            class="form-control"
+            id="productionProduct"
+            [(ngModel)]="sales.productionProduct"
+            name="productionProduct"
+            required
+            #productionProduct="ngModel"
+          >
+            <option *ngFor="let product of productionProducts" [ngValue]="product">
+              {{ product.product.name }}
+            </option>
+          </select>
+          <div *ngIf="productionProduct.invalid && (productionProduct.dirty || productionProduct.touched)" class="text-danger">
+            Production Product is required.
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-6">
+        <div class="form-group mb-3">
+          <label for="productRetailer">Product Retailer</label>
+          <select
+            class="form-control"
+            id="productRetailer"
+            [(ngModel)]="sales.productRetailer"
+            name="productRetailer"
+            required
+            #productRetailer="ngModel"
+          >
+            <option *ngFor="let retailer of retailers" [ngValue]="retailer">
+              {{ retailer.companyName }}
+            </option>
+          </select>
+          <div *ngIf="productRetailer.invalid && (productRetailer.dirty || productRetailer.touched)" class="text-danger">
+            Product Retailer is required.
+          </div>
+        </div>
       </div>
     </div>
 
-    <!-- Retailer Selection -->
-    <div class="form-group mb-3">
-      <label for="productRetailer">Product Retailer</label>
-      <select
-        class="form-control"
-        id="productRetailer"
-        [(ngModel)]="sales.productRetailer"
-        name="productRetailer"
-        required
-        #productRetailer="ngModel"
-      >
-        <option *ngFor="let retailer of retailers" [ngValue]="retailer">
-          {{ retailer.companyName }}
-        </option>
-      </select>
-      <div *ngIf="productRetailer.invalid && (productRetailer.dirty || productRetailer.touched)" class="text-danger">
-        Product Retailer is required.
+    <div class="row">
+      <div class="col-md-6">
+        <div class="form-group mb-3">
+          <label for="salesDate">Sales Date</label>
+          <input
+            type="date"
+            class="form-control"
+            id="salesDate"
+            [(ngModel)]="sales.salesDate"
+            name="salesDate"
+            required
+            #salesDate="ngModel"
+          />
+          <div *ngIf="salesDate.invalid && (salesDate.dirty || salesDate.touched)" class="text-danger">
+            Sales Date is required.
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-6">
+        <div class="form-group mb-3">
+          <label for="quantity">Quantity</label>
+          <input
+            type="number"
+            class="form-control"
+            id="quantity"
+            [(ngModel)]="sales.quantity"
+            name="quantity"
+            (input)="updateTotalPrice()"
+            required
+            #quantity="ngModel"
+          />
+          <div *ngIf="quantity.invalid && (quantity.dirty || quantity.touched)" class="text-danger">
+            Quantity is required.
+          </div>
+        </div>
       </div>
     </div>
 
-    <!-- Sales Date -->
-    <div class="form-group mb-3">
-      <label for="salesDate">Sales Date</label>
-      <input
-        type="date"
-        class="form-control"
-        id="salesDate"
-        [(ngModel)]="sales.salesDate"
-        name="salesDate"
-        required
-        #salesDate="ngModel"
-      />
-      <div *ngIf="salesDate.invalid && (salesDate.dirty || salesDate.touched)" class="text-danger">
-        Sales Date is required.
+    <div class="row">
+      <div class="col-md-6">
+        <div class="form-group mb-3">
+          <label for="unitPrice">Unit Price</label>
+          <input
+            type="number"
+            class="form-control"
+            id="unitPrice"
+            [(ngModel)]="sales.unitPrice"
+            name="unitPrice"
+            (input)="updateTotalPrice()"
+            required
+            #unitPrice="ngModel"
+          />
+          <div *ngIf="unitPrice.invalid && (unitPrice.dirty || unitPrice.touched)" class="text-danger">
+            Unit Price is required.
+          </div>
+        </div>
+      </div>
+
+      <!-- Total Price -->
+      <div class="col-md-6">
+        <div class="form-group mb-3">
+          <label for="totalPrice">Total Price</label>
+          <input
+            type="number"
+            class="form-control"
+            id="totalPrice"
+            [(ngModel)]="sales.totalPrice"
+            name="totalPrice"
+            readonly
+          />
+        </div>
       </div>
     </div>
 
-    <!-- Quantity -->
-    <div class="form-group mb-3">
-      <label for="quantity">Quantity</label>
-      <input
-        type="number"
-        class="form-control"
-        id="quantity"
-        [(ngModel)]="sales.quantity"
-        name="quantity"
-        (input)="updateTotalPrice()"
-        required
-        #quantity="ngModel"
-      />
-      <div *ngIf="quantity.invalid && (quantity.dirty || quantity.touched)" class="text-danger">
-        Quantity is required.
+    <div class="row">
+      <div class="col-md-6">
+        <div class="form-group mb-3">
+          <label for="status">Status</label>
+          <select
+            class="form-control"
+            id="status"
+            [(ngModel)]="sales.status"
+            name="status"
+            required
+            #status="ngModel"
+          >
+            <option *ngFor="let status of salesStatusOptions" [value]="status">
+              {{ status }}
+            </option>
+          </select>
+          <div *ngIf="status.invalid && (status.dirty || status.touched)" class="text-danger">
+            Status is required.
+          </div>
+        </div>
       </div>
     </div>
 
-    <!-- Unit Price -->
-    <div class="form-group mb-3">
-      <label for="unitPrice">Unit Price</label>
-      <input
-        type="number"
-        class="form-control"
-        id="unitPrice"
-        [(ngModel)]="sales.unitPrice"
-        name="unitPrice"
-        (input)="updateTotalPrice()"
-        required
-        #unitPrice="ngModel"
-      />
-      <div *ngIf="unitPrice.invalid && (unitPrice.dirty || unitPrice.touched)" class="text-danger">
-        Unit Price is required.
+
+    <div class="row">
+      <div class="col-md-12 text-end">
+        <button type="submit" class="btn btn-primary mt-4" [disabled]="salesForm.invalid">
+          {{ isEditMode ? 'Update Sales' : 'Save Sales' }}
+        </button>
       </div>
     </div>
-
-    <!-- Total Price (Read-Only) -->
-    <div class="form-group mb-3">
-      <label for="totalPrice">Total Price</label>
-      <input
-        type="number"
-        class="form-control"
-        id="totalPrice"
-        [(ngModel)]="sales.totalPrice"
-        name="totalPrice"
-        readonly
-      />
-    </div>
-
-    <!-- Status Selection -->
-    <div class="form-group mb-3">
-      <label for="status">Status</label>
-      <select
-        class="form-control"
-        id="status"
-        [(ngModel)]="sales.status"
-        name="status"
-        required
-        #status="ngModel"
-      >
-        <option *ngFor="let status of salesStatusOptions" [value]="status">
-          {{ status }}
-        </option>
-      </select>
-      <div *ngIf="status.invalid && (status.dirty || status.touched)" class="text-danger">
-        Status is required.
-      </div>
-    </div>
-
-    <!-- Submit Button -->
-    <button type="submit" class="btn btn-primary mt-4" [disabled]="salesForm.invalid">
-      {{ isEditMode ? 'Update Sales' : 'Save Sales' }}
-    </button>
   </form>
 </div>

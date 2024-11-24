@@ -7,6 +7,7 @@ import {Retailer} from "../model/retailer.model";
 import {RetailerService} from "../retailer.service";
 import {RetailerCreateDialogComponent} from "../retailer-create-dialog/retailer-create-dialog.component";
 import {MatDialog} from "@angular/material/dialog";
+import {OverlayContainer} from "@angular/cdk/overlay";
 
 @Component({
   selector: 'app-retailer-list',
@@ -20,7 +21,8 @@ export class RetailerListComponent {
 
   constructor(
     private retailerService: RetailerService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private overlayContainer: OverlayContainer
   ) { }
 
   ngOnInit(): void {
@@ -64,11 +66,15 @@ export class RetailerListComponent {
 
   editRetailer(retailer: Retailer): void {
     const dialogRef = this.dialog.open(RetailerCreateDialogComponent, {
+      data: { retailer },
       width: '600px',
-      data: { retailer }
+      height: 'auto',
+      panelClass: 'custom-dialog-container',
     });
+    this.overlayContainer.getContainerElement().style.overflow = 'hidden';
 
     dialogRef.afterClosed().subscribe((result) => {
+      this.overlayContainer.getContainerElement().style.overflow = '';
       if (result) {
         this.loadRetailers();
       }
@@ -77,7 +83,9 @@ export class RetailerListComponent {
 
   addRetailer(): void {
     const dialogRef = this.dialog.open(RetailerCreateDialogComponent, {
-      width: '600px'
+      width: '600px',
+      height: 'auto',
+      panelClass: 'custom-dialog-container',
     });
 
     dialogRef.afterClosed().subscribe((result) => {

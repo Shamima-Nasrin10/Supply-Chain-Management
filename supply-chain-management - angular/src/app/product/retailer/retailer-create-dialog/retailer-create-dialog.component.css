@@ -1,33 +1,26 @@
-/* Center the dialog on the screen */
 .dialog-container {
-  max-width: 600px; /* Limit dialog width */
-  margin: auto;
-  background-color: #fff; /* White background */
-  border-radius: 8px; /* Rounded corners */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Subtle shadow for floating effect */
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   padding: 20px;
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%); /* Center the dialog */
-  z-index: 1050; /* Ensure it floats above other elements */
+
 }
 
-/* Title styling */
 .dialog-title {
   font-size: 1.5rem;
   font-weight: bold;
   margin-bottom: 20px;
+  text-align: center;
+  color: #027e70;
 }
 
-/* Dialog actions (buttons) */
 .dialog-actions {
   margin-top: 20px;
+  text-align: right;
 }
 
-/* Save button styling */
 .btn.save {
-  background-color: #007bff;
+  background-color: #039b89;
   color: #fff;
   font-weight: bold;
   border: none;
@@ -36,7 +29,7 @@
 }
 
 .btn.save:hover {
-  background-color: #0056b3;
+  background-color: #027e70;
 }
 
 .btn.cancel {
@@ -50,3 +43,9 @@
 .btn.cancel:hover {
   background-color: #5a6268;
 }
+
+
+body {
+  overflow: hidden;
+}
+
