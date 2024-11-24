@@ -1,4 +1,4 @@
-# Supply Chain and Logistics System
+# Supply Chain Management System
 
 A robust web application designed to optimize the procurement of raw materials, streamline production planning and processes, and efficiently manage suppliers, retailers, stock, warehouse operations and sales. The system incorporates secure payment integrations, advanced role-based access control, and real-time status tracking for enhanced operational efficiency.
 
