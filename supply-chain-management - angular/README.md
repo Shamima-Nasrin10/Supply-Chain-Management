@@ -144,7 +144,7 @@ A robust web application designed to optimize the procurement of raw materials, 
 ### Sales is approved
 ![Warehouse Tracking](screenshots/17_sales_status_approved.PNG)
 
-### Apple Juice stock deducted before sale
+### Apple Juice stock deducted after sale
 ![Warehouse Tracking](screenshots/18_apple_juice_stock_reduced_after_sale_approval.PNG)
 
 ### Dashboard
