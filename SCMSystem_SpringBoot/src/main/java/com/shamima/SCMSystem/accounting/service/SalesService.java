@@ -33,6 +33,7 @@ public class SalesService {
         return apiResponse;
     }
 
+    @Transactional
     public ApiResponse getAllMovedToWarehouseProducts() {
         ApiResponse apiResponse = new ApiResponse(false);
         try {
