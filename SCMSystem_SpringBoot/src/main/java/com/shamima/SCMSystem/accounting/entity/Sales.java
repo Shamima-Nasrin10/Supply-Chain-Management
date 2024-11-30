@@ -43,6 +43,10 @@ public class Sales {
     @Column(name = "status")
     private Sales.Status status;
 
+    public Sales(long id) {
+        this.id = id;
+    }
+
     public enum Status {
         PENDING,
         APPROVED,

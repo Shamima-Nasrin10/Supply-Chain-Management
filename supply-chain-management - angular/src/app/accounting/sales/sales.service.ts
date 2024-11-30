@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
 import {ApiResponse} from "../../util/api.response";
-import {ProcurementModel} from "../procurement/procurement.model";
 import {SalesModel} from "./model/sales.model";
 
 @Injectable({

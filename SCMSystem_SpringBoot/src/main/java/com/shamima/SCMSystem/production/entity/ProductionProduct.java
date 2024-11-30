@@ -51,4 +51,8 @@ public class ProductionProduct {
     public ProductionProduct(Long id) {
         this.id = id;
     }
+
+    public ProductionProduct(Status status) {
+        this.status = status;
+    }
 }
