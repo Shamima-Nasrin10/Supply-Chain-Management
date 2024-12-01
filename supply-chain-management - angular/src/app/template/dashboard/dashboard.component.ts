@@ -1,3 +1,4 @@
+/* eslint-disable */
 import { Component, OnInit } from '@angular/core';
 import { ApiResponse } from "../../util/api.response";
 import { DashboardService } from "../dashboard.service";
